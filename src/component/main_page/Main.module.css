@@ -1,0 +1,11 @@
+.box {
+    background-color: rgb(165, 165, 165);
+    height: 200px;
+    width: 300px;
+}
+
+.filter{
+    background-color: rgb(165, 165, 165);;
+    height: 600px;
+    width: 300px;
+}
