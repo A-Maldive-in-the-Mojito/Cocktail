@@ -24,7 +24,7 @@ def isCocktail(cocktails):
                 'flavor': flavor
             }
             print(doc)
-            db.flavor.insert_one(doc)
+            db.flavor_liquor.insert_one(doc)
 
 #flavor 페이지마다 크롤링
 for flavor in flavor_list:
