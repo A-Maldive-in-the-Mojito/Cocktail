@@ -11,7 +11,7 @@ db = client.dbmojito
 
 driver = webdriver.Chrome()
 
-keywords = ["time-for-you", "house-party","movie-nights","birthday","christmas","valentines-day","new-years-eve"]
+keywords = ["time-for-you", "house-party","movie-nights","birthday","christmas","valentines-day","new-years-eve","beach", "anniversary","allseason-classics","downtown"]
 
 for keyword in keywords:
     driver.get("https://cocktailflow.com/collection/" + keyword)
@@ -19,6 +19,7 @@ for keyword in keywords:
 
     time.sleep(2)
     html = driver.page_source
+    soup = BeautifulSoup(html, "html.parser")
     soup = BeautifulSoup(html, "html.parser")
 
     names = soup.select("#collection-body>ul >li")
