@@ -9,7 +9,7 @@ import time
 client = MongoClient('mongodb+srv://mojito_maldives:cocktaillove@cluster0.yfcan.mongodb.net/Cluster0?retryWrites=true&w=majority')
 db = client.dbmojito
 
-driver = webdriver.Chrome()
+driver = webdriver.Chrome('/usr/local/bin/chromedriver')
 
 keywords = ["time-for-you", "house-party","movie-nights","birthday","christmas","valentines-day","new-years-eve","beach", "anniversary","allseason-classics","downtown"]
 
