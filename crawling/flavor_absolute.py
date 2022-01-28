@@ -10,33 +10,13 @@ from pymongo import MongoClient
 client = MongoClient('mongodb+srv://mojito_maldives:cocktaillove@cluster0.yfcan.mongodb.net/Cluster0?retryWrites=true&w=majority')
 db = client.dbmojito
 
-flavor_list = [
-    {
-        'flavor':'프레시',
-        'link':'https://www.absolutdrinks.com/ko/drinks/tasting/fresh/',
-        'click': 6
-    },
-    {
-        'flavor':'아이써',
-        'link': 'https://www.absolutdrinks.com/ko/drinks/tasting/bitter/',
-        'click': 0
-    },
-    {
-        'flavor':'프루티',
-        'link': 'https://www.absolutdrinks.com/ko/drinks/tasting/fruity/',
-        'click': 3
-    },
-    {
-        'flavor':'아이셔',
-        'link': 'https://www.absolutdrinks.com/ko/drinks/tasting/sour/',
-        'click': 0
-    },
-    {
-        'flavor':'허브',
-        'link': 'https://www.absolutdrinks.com/ko/drinks/tasting/herb/',
-        'click': 1
-    }
-]
+flavor_list = {
+                '프레시': 'https://www.absolutdrinks.com/ko/drinks/tasting/fresh/',
+                '아이써': 'https://www.absolutdrinks.com/ko/drinks/tasting/bitter/',
+                '프루티': 'https://www.absolutdrinks.com/ko/drinks/tasting/fruity/',
+                '아이셔': 'https://www.absolutdrinks.com/ko/drinks/tasting/sour/',
+                '허브': 'https://www.absolutdrinks.com/ko/drinks/tasting/herb/'
+            }
 
 
 driver = webdriver.Chrome('/usr/local/bin/chromedriver')
@@ -46,9 +26,9 @@ elem.clear()
 elem.send_keys('2000')
 
 
-for flavors in flavor_list:
+for flavor in flavor_list:
 
-    driver.get(flavors['link'])
+    driver.get(flavor_list[flavor])
 
     html = driver.page_source
     soup = BeautifulSoup(html, "html.parser")
@@ -56,9 +36,12 @@ for flavors in flavor_list:
     driver.execute_script("window.scrollTo(0, 1200)")
     time.sleep(2)
 
-    for i in range(flavors['click']):
-        driver.find_element(By.CLASS_NAME,"load-more").click()
-        time.sleep(3)
+    while True:
+        try:
+            driver.find_element(By.CLASS_NAME, "load-more").click()
+            time.sleep(2)
+        except:
+            break
 
     html = driver.page_source
     soup = BeautifulSoup(html, "html.parser")
@@ -67,7 +50,7 @@ for flavors in flavor_list:
     for cocktail in cocktails[:-1]:
         doc = {
             'name': cocktail.text,
-            'flavor': flavors['flavor']
+            'flavor': flavor
         }
         print(doc)
         db.flavor_absolute.insert_one(doc)
