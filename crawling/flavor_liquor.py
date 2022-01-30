@@ -30,8 +30,5 @@ def isCocktail(cocktails):
 for flavor in flavor_list:
     data = requests.get(flavor_list[flavor])
     soup = BeautifulSoup(data.text, 'html.parser')
-    cocktails = soup.find("div", class_="comp spotlight__secondary-list card-list mntl-block").find_all("span", class_="card__underline")
-    isCocktail(cocktails)
-
-    cocktails = soup.find("div", id="card-list_1-0").find_all("span", class_="card__underline")
+    cocktails = soup.find_all("span", class_="card__underline")
     isCocktail(cocktails)
