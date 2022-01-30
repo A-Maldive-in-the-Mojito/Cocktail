@@ -20,7 +20,7 @@ for cocktail in ct_list:
     results = driver.find_elements(By.CSS_SELECTOR, 'div.cell.small-12 > div.grid-x.grid-margin-x > div > ul > li > a')
     for result in results:
         # print(result.text)
-        if result.text.replace(' ', '').lower() == name.replace(' ', '').lower():
+        if result.text.replace(' ', '').lower() == name.replace(' ', '').lower() or result.text.replace(' ', '').lower() == name.replace(' ', '').lower() + 'cocktail':
             ct_data = requests.get(result.get_attribute('href'))
             ct_soup = BeautifulSoup(ct_data.text, 'html.parser')
 
@@ -58,8 +58,8 @@ for cocktail in ct_list:
                     'howtomake': howtomake
                 }
 
-                db.flavor_liquor.update_many({'name': name}, {'$set': doc})
-                # db.flavor_absolute.update_many({'name': name}, {'$set': doc})
+                # db.flavor_liquor.update_many({'name': name}, {'$set': doc})
+                db.flavor_absolute.update_many({'name': name}, {'$set': doc})
             except:
                 print(result.get_attribute('href'))
         else:
