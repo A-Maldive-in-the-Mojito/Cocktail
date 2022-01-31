@@ -11,11 +11,18 @@ db = client.dbmojito
 
 ct_list = list(db.flavor_liquor.find({},{'_id':0,'name':1}))
 # ct_list = list(db.flavor_absolute.find({},{'_id':0,'name':1}))
+# ct_list = list(db.base_liquor.find({},{'_id':0,'name':1}))
+# ct_list = list(db.hashtag_imsi.find({},{'_id':0,'cocktail':1, 'hashtag':1}))
 
 driver = webdriver.Chrome('/usr/local/bin/chromedriver')
 
+# checkCocktail = 0
+
 for cocktail in ct_list:
-    name = cocktail['name']
+    checkCocktail = 0
+    name = cocktail['cocktail']
+    # if 'Absolut' in name:
+    #     name = name.replace('Absolut', '')
     driver.get(f"https://www.diffordsguide.com/search?q={name}")
     results = driver.find_elements(By.CSS_SELECTOR, 'div.cell.small-12 > div.grid-x.grid-margin-x > div > ul > li > a')
     for result in results:
@@ -51,6 +58,8 @@ for cocktail in ct_list:
                     sweetness = 'no info'
 
                 doc = {
+                    'name': name,
+                    'hashtag': cocktail['hashtag'],
                     'img': img_url,
                     'booziness': booziness,
                     'sweetness': sweetness,
@@ -58,9 +67,19 @@ for cocktail in ct_list:
                     'howtomake': howtomake
                 }
 
-                # db.flavor_liquor.update_many({'name': name}, {'$set': doc})
-                db.flavor_absolute.update_many({'name': name}, {'$set': doc})
+                db.flavor_liquor.update_many({'name': name}, {'$set': doc})
+                # db.flavor_absolute.update_many({'name': cocktail['name']}, {'$set': doc})
+                # db.base_liquor.update_many({'name': cocktail['name']}, {'$set': doc})
+                # db.hashtag.insert_one(doc)
+                # checkCocktail = 1
             except:
                 print(result.get_attribute('href'))
         else:
             pass
+
+    # if checkCocktail == 0:
+    #     doc = {
+    #         'name': cocktail['cocktail'],
+    #         'hashtag': cocktail['hashtag']
+    #     }
+    #     db.hashtag.insert_one(doc)
