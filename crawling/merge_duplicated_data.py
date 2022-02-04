@@ -1,5 +1,4 @@
 from pymongo import MongoClient
-from operator import itemgetter
 
 client = MongoClient('mongodb+srv://mojito_maldives:cocktaillove@cluster0.yfcan.mongodb.net/Cluster0?retryWrites=true&w=majority')
 db = client.dbmojito
@@ -17,11 +16,8 @@ for cocktail in ct_list:
 for cocktail in new_list:
     data = list(db.flavor.find({'name': cocktail}, {'_id': 0}))
     flavor_list = []
-    if len(data) >= 2:
-        for i in range(len(data)):
-            flavor_list.append(data[i]['flavor'])
-    else:
-        flavor_list.append(data[0]['flavor'])
+    for i in range(len(data)):
+        flavor_list.append(data[i]['flavor'])
 
     doc = {
         'name': cocktail,
@@ -49,11 +45,8 @@ for cocktail in ct_list:
 for cocktail in new_list:
     data = list(db.hashtag.find({'name': cocktail}, {'_id': 0}))
     hashtag_list = []
-    if len(data) >= 2:
-        for i in range(len(data)):
+    for i in range(len(data)):
             hashtag_list.append(data[i]['hashtag'])
-    else:
-        hashtag_list.append(data[0]['hashtag'])
 
     doc = {
         'name': cocktail,
@@ -81,8 +74,7 @@ for cocktail in ct_list:
 for cocktail in new_list:
     data = list(db.base.find({'name': cocktail}, {'_id': 0}))
     base_list = []
-    if len(data) >= 2:
-        for i in range(len(data)):
+    for i in range(len(data)):
             base_list.append(data[i]['base'])
     else:
         base_list.append(data[0]['base'])
