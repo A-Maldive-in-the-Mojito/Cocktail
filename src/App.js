@@ -23,7 +23,7 @@ function App() {
           <Route path="/" element={<Main />} />   //Top100+Filter
           <Route path="/find" element={<Find />}/>  //칵테일 검색(모든칵테일) 
           <Route path="/home" element={<Home />}/>  //고향칵테일
-          <Route path="/storage" element={<Storage />}/>  //내 칵테일
+          <Route path="/storage" element={<Storage />} />  //내 칵테일
           <Route path="/login" element={<Login />}/>  //로그인
           <Route path="/desc" element={<Desc />}/>
         </Routes>
