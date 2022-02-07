@@ -1,0 +1,13 @@
+img {
+  width: 100px;
+  height: 180px;
+  margin: auto;
+  display: block;
+}
+
+.imgContainer {
+  border: solid 10px;
+  border-radius: 15%;
+  width: 180px;
+  height: 200px;
+}
