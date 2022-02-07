@@ -1,5 +1,6 @@
 import styles from './Header.module.css';
 import { Link } from 'react-router-dom';
+import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 
 export default function Header() {
     return (
@@ -23,7 +24,11 @@ export default function Header() {
                 </ul>
             </div>
             {/* 스크롤업 화살표 */}
-            <span className={styles.scroll}>스크롤업</span>
+            <div className={styles.scroll}>
+            <img src="arrow-up-circle.svg"></img></div>
+            <ArrowCircleUpIcon />
+            
+            
 
         
 

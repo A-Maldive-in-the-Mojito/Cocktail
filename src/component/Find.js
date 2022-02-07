@@ -24,7 +24,7 @@ export default function Find() {
                     <span className={Styles.hashtag}>#산타랑_건배🎅🏻</span>
                     <span className={Styles.hashtag}>#데일리</span>
                     <span className={Styles.hashtag}>#해피뉴이어🎆</span>
-                    <span className={Styles.hashtag}>#홀리데이🌈</span>
+                    <span className={Styles.hashtag}>#불금🌈</span>
                     <span className={Styles.hashtag}>#핫써머🏖️</span>
                     <span className={Styles.hashtag}>#HBD🎂</span>
                     <span className={Styles.hashtag}>#나를위한시️간🕯</span>
