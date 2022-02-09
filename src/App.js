@@ -21,41 +21,27 @@ import { useEffect } from "react";
 
 function App() {
 
-  // function a() {
+// API GET
+  const getCocktails = async() => {
+      const {data: {all_cocktails}} = await axios.get('http://localhost:5000/cocktails');
+      console.log(all_cocktails);
+  };
+  useEffect(()=> { getCocktails()} );
+
+
+
+  // function mojito() {
   //   $.ajax({
   //     type: "GET",
-  //     url: "http://localhost:5000/",
+  //     url: "http://localhost:5000/cocktails",
   //     data: {},
   //     success: function (response) {
-  //       let games = response['all_games'];
-  //       // console.log(response);
-  //       console.log(games);
+  //       let cocktails = response['all_cocktails'];
+  //       console.log(cocktails);
   //     }
   //   })
   // }
-  // a();
-
-    // 엑시오스
-  // const getA = async() => {
-  //     const {data: {all_games}} = await axios.get('http://localhost:5000/search');
-  //     console.log(all_games[0]);
-  // };
-  // useEffect(()=> { getA()} );
-
-
-
-  function mojito() {
-    $.ajax({
-      type: "GET",
-      url: "http://localhost:5000/cocktails",
-      data: {},
-      success: function (response) {
-        let cocktails = response['all_cocktails'];
-        console.log(cocktails);
-      }
-    })
-  }
-  mojito();
+  // mojito();
 
 
   return (
