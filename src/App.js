@@ -24,37 +24,40 @@ function App() {
   // function a() {
   //   $.ajax({
   //     type: "GET",
-  //     url: "http://localhost:5000/search",
+  //     url: "http://localhost:5000/",
   //     data: {},
   //     success: function (response) {
   //       let games = response['all_games'];
+  //       // console.log(response);
   //       console.log(games);
   //     }
   //   })
   // }
   // a();
 
+    // 엑시오스
+  // const getA = async() => {
+  //     const {data: {all_games}} = await axios.get('http://localhost:5000/search');
+  //     console.log(all_games[0]);
+  // };
+  // useEffect(()=> { getA()} );
 
-  const getA = async() => {
-      const {data: {all_games}} = await axios.get('http://localhost:5000/search');
-      console.log(all_games[0]);
-  };
-  useEffect(()=> { getA()} );
 
 
+  function mojito() {
+    $.ajax({
+      type: "GET",
+      url: "http://localhost:5000/cocktails",
+      data: {},
+      success: function (response) {
+        let cocktails = response['all_cocktails'];
+        console.log(cocktails);
+      }
+    })
+  }
+  mojito();
 
-  // function mojoto() {
-  //   $.ajax({
-  //     type: "GET",
-  //     url: "http://localhost:5000/cocktails",
-  //     data: {},
-  //     success: function (response) {
-  //       let cocktails = response['all_cocktails'];
-  //       console.log(cocktails);
-  //     }
-  //   })
-  // }
-  // mojoto();
+
   return (
 
     <BrowserRouter>
