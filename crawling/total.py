@@ -135,10 +135,10 @@ for cocktail in new_list:
     data = list(db.top100.find({'name': cocktail}, {'_id': 0}))
     doc = {
         'name': cocktail,
-				'rank': data[0]['rank'],
+		'rank': data[0]['rank'],
         'base': 'no info',
         'flavor': 'no info',
-				'hashtag': 'no info',
+		'hashtag': 'no info',
         'img': data[0]['img'],
         'booziness': data[0]['booziness'],
         'sweetness': data[0]['sweetness'],
@@ -163,7 +163,7 @@ for cocktail in new_list:
 		'rank': 'no info',
         'base': data[0]['base'],
 		'flavor': data[0]['flavor'],
-        'hashtag': data[0]['flavor'],
+        'hashtag': data[0]['hashtag'],
         'img': data[0]['img'],
         'booziness': data[0]['booziness'],
         'sweetness': data[0]['sweetness'],
