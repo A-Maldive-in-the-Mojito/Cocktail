@@ -1,43 +1,84 @@
-.mainPage{
-    display: grid;
-    grid-template-rows: 600px auto;
+.mainPage {
+  display: grid;
+  /* grid-template-rows: 600px auto; */
 }
-.Top100{
-    display: grid;
-    justify-items: center;
+.Top100 {
+  margin-top: 100px;
+  display: grid;
+  justify-items: center;
+  grid-template-rows: 1fr 1fr 8fr;
 }
 .box {
-    background-color: rgb(165, 165, 165);
-    height: 200px;
-    width: 300px;
+  background-color: rgb(165, 165, 165);
+  height: 200px;
+  width: 300px;
+}
+.swiper {
+  height: 300px;
+  width: 500px;
+}
+.slider_wrapper {
+  align-items: center;
+}
+.slide {
+  width: 100px;
+
+  border-radius: 7px;
+}
+.slide img {
+  align-items: center;
+  /* background-color: orange; */
+  width: 100px;
+
+  border-radius: 7px;
+}
+.active img {
+  color: orangered;
+  width: 150px;
+  transform: scale(1.2);
+  transition: 0.4s;
 }
 
-.filterSection{
-    display: grid;
+.filterSection {
+  display: grid;
 }
-.filterContainer{
-    display: flex;
-    align-items: flex-start;
+.filterContainer {
+  display: flex;
+  align-items: flex-start;
 }
-.filter{
-    display: grid;
-    align-items: start;
-    background-color: rgb(211, 211, 211);;
-    height: 100vh;
-    width: 500px;
-    margin-right: 40px;
-}
-
-.result{
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    justify-content: space-around;
+.filter_box {
+  display: grid;
+  grid-template-rows: 1fr 1fr 2fr 2fr 1fr;
+  row-gap: 50px;
+  /* justify-items: center; */
+  align-items: start;
+  background-color: rgb(211, 211, 211);
+  height: 100vh;
+  width: 300px;
+  margin-right: 40px;
 }
 
+.result {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: space-around;
+}
 
 /* 필터 */
 
-.slider{
-    margin-left: 30px;
+.slider {
+  margin-left: 40px;
+}
+
+#checkBoxList {
+  display: grid;
+  grid-template-rows: auto;
+}
+
+#filterBtn {
+  height: 30px;
+  width: 50px;
+  border-radius: 5px;
+  text-align: center;
 }
