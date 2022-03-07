@@ -3,15 +3,16 @@ import { Link } from 'react-router-dom';
 
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import { Style } from '@material-ui/icons';
+import { style } from '@mui/system';
 
 export default function Header() {
     return (
         <div>
-            <div className={styles.box}>
+            <div className={styles.menu_box}>
                 <h1 className={styles.logo}> 
                 <Link to="/">
-                    <span>🍹</span>
-                    모히또에서<p>몰디브 한 잔</p></Link></h1>
+                    <span id={styles.emogi}>🍹</span>
+                    모히또에서 몰디브 한 잔</Link></h1>
                 <ul>
                     <li>
                         <Link to="/find">칵테일 검색</Link>
@@ -24,7 +25,11 @@ export default function Header() {
                     </li>
                     <li>
                         <Link to="/login">
-                            <AccountCircleOutlinedIcon sx={{ fontSize: 30 }} className={styles.loginIcon} />
+                            <div id={styles.login}>
+                                login
+                                {/* <AccountCircleOutlinedIcon sx={{ fontSize: 30 }} className={styles.loginIcon} /> */}
+                            </div>
+                            
                         </Link>
                     </li>
                 </ul>
