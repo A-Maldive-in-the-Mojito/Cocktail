@@ -1,14 +1,15 @@
 .card{
     
-      mask-repeat: no-repeat;
-      background-position: center;
-      background-size: 80%;
-      /* background-color: rgb(255, 187, 0); */
-      height: 180px;
-      width: 180px;
-      border: 3px solid orange;
-      border-radius: 25px;
-      display: flex;
-    }
+  mask-repeat: no-repeat;
+  background-position: center;
+  background-size: 80%;
+  /* background-color: rgb(255, 187, 0); */
+  height: 180px;
+  width: 180px;
+  border: 3px solid orange;
+  border-radius: 25px;
+  display: flex;
+}
+
 
 
