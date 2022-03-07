@@ -48,7 +48,7 @@ export default function Filter() {
       <div className={mainStyles.filterContainer}>
         {/* 필터 */}
         <div className={mainStyles.filter_box}>
-          <div className="tastingNote">
+          <div className={mainStyles.tastingNote}>
             <h3>테이스팅 노트</h3>
             <div id={mainStyles.checkBoxList}>
 
