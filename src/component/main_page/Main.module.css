@@ -76,7 +76,7 @@
   }
   .filter_box {
     display: grid;
-    height: 100vh;
+    height: 800px;
     width: 440px;
     grid-template-rows: 1fr 1fr 1fr 1fr;
     row-gap: 50px;
@@ -86,11 +86,19 @@
     border-radius: 0px 50px 0px 0px;
     box-shadow: var(--main-box-shadow);
     margin-right: 40px;
+
+    position: sticky;
+    top: 30px;
   }
   
   h3 {
     font-size: 22px;
   }
+
+  .filter_box:first-child {
+    padding-top: 50px;
+  }
+
 
   /* 체크박스 */
   .circle{
@@ -137,6 +145,7 @@
     text-align: center;
     color: white;
     font-size: 18px;
+    
   }
 
   .result {
