@@ -1,5 +1,6 @@
 from pymongo import MongoClient
-from flask import Flask, render_template, jsonify, request, send_from_directory
+from flask import Flask, render_template, jsonify, request, send_from_directory, redirect
+
 import json
 from flask_cors import CORS
 # from app import app
@@ -29,11 +30,36 @@ def cocktail():
     cocktails = list(db.base.find({}, {'_id': False}))
     return jsonify({'all_cocktails': cocktails})
 
+
+@app.route('/kakao', methods=['POST'])
+def kakao():
+    email = request.form['email']
+    print(email)
+    return jsonify({'hi': email})
+
+
+
+
 # storage.js 에서 post한 인가코드 받아오는 코드
-# @app.route("/code", methods=['POST'])
+# @app.route("/oauth", methods=['GET', 'POST'])
 # def auth():
-#     code_receive = request.form['code_give']
-#     print(code_receive)
+#     code = request.form['code_give']
+#     print(code)
+#
+#     # 전달받은 authorization code를 통해서 access_token, refresh_token을발급
+#     oauth = Oauth()
+#     auth_info = oauth.auth(code)
+#     print(auth_info)
+#
+#     user = oauth.userinfo("Bearer " + auth_info['access_token'])
+#     print(user)
+#
+#     # return jsonify(user)
+#     return (user)
+
+
+
+
     # return ({'tokens': response})
 #
 #
@@ -59,26 +85,38 @@ def cocktail():
 #         % (CLIENT_ID, REDIRECT_URI)
 #     )
 
-
-백에서 인가코드-토큰 받기
-@app.route("/oauth")
-def oauth_api():
-   # 사용자로부터 authorization code를 인자로 받음
-    code = str(request.args.get('code'))
-
-    print(code)
-
-    # 전달받은 authorization code를 통해서 access_token, refresh_token을발급
-    oauth = Oauth()
-    auth_info = oauth.auth(code)
-    print(auth_info)
-
-
-    user = oauth.userinfo("Bearer " + auth_info['access_token'])
-    #몽고db넣기
-
-    print(user)
+# user=[]
+#
+# # 백에서 인가코드-토큰 받기
+# @app.route("/oauth", methods=['GET'])
+# def oauth_api():
+#    # 사용자로부터 authorization code를 인자로 받음
+#     code = str(request.args.get('code'))
+#
+#     print(code)
+#
+#     # 전달받은 authorization code를 통해서 access_token, refresh_token을발급
+#     oauth = Oauth()
+#     auth_info = oauth.auth(code)
+#     print(auth_info)
+#
+#
+#     user = oauth.userinfo("Bearer " + auth_info['access_token'])
+#     #몽고db넣기
+#
+#     print(user)
+#     return (user)
+#
+#     # return(render_template("index.html"))
+#     # return "redirect:storage"
+#
+#     # return redirect("http://localhost:3000/")
+#
+#     @app.route("/user", methods=['GET'])
+#     def user_info():
+#         return jsonify(user)
 
 
 if __name__ == '__main__':
+    app.debug = True
     app.run('0.0.0.0', port=5000, debug=True)
