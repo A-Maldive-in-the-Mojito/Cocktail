@@ -1,84 +1,147 @@
-.mainPage {
-  display: grid;
-  /* grid-template-rows: 600px auto; */
-}
-.Top100 {
-  margin-top: 100px;
-  display: grid;
-  justify-items: center;
-  grid-template-rows: 1fr 1fr 8fr;
-}
-.box {
-  background-color: rgb(165, 165, 165);
-  height: 200px;
-  width: 300px;
-}
-.swiper {
-  height: 300px;
-  width: 500px;
-}
-.slider_wrapper {
-  align-items: center;
-}
-.slide {
-  width: 100px;
+  .mainPage {
+    display: grid;
+    /* grid-template-rows: 600px auto; */
+  }
 
-  border-radius: 7px;
-}
-.slide img {
-  align-items: center;
-  /* background-color: orange; */
-  width: 100px;
+  .Top100 {
+    height: 1000px;
+    display: grid;
+    justify-items: center;
+    /* grid-template-rows: 1fr 1fr 8fr; */
+  }
+  
+  h1 {
+    margin-top: 75px;
+    
+    font-size: 55px;
+    text-align: center;
+    line-height: 75px;
+    color: var(--main-color);
+  }  
+  .box {
+    background-color: rgb(165, 165, 165);
+    height: 200px;
+    width: 300px;
+  }
+  
+  .swiper {
+    height: 300px;
+    width: 1000px;
+  }
+  .slider_wrapper {
+    align-items: center;
+  }
+  .slide {
+    width: 100px;
+  
+    border-radius: 7px;
+  }
+  .slide img {
+    align-items: center;
+    /* background-color: orange; */
+    width: 100px;
+  
+    border-radius: 7px;
+  }
+  .active img {
+    color: orangered;
+    width: 150px;
+    transform: scale(1.2);
+    transition: 0.4s;
+  }
+  .more {
+    width: 380px;
+    height: 53px;
+    background-color: white;
+    border-radius: 40px;
+    box-shadow: var(--main-box-shadow);
+    font-size: 18px;
+    text-align: center;
+    
+  }
+  
+  /* 필터 */
+  .filterSection {
+    display: grid;
+  }
+  h2 {
+    font-size: 55px;
+    /* color:#FE900F; */
+    color: var(--main-color);
+    
+  }
+  .filterContainer {
+    display: flex;
+    align-items: flex-start;
+  }
+  .filter_box {
+    display: grid;
+    height: 100vh;
+    width: 440px;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    row-gap: 50px;
+    /* justify-items: center; */
+    align-items: start;
+    background-color: white;
+    border-radius: 0px 50px 0px 0px;
+    box-shadow: var(--main-box-shadow);
+    margin-right: 40px;
+  }
+  
+  h3 {
+    font-size: 22px;
+  }
 
-  border-radius: 7px;
-}
-.active img {
-  color: orangered;
-  width: 150px;
-  transform: scale(1.2);
-  transition: 0.4s;
-}
+  /* 체크박스 */
+  .circle{
+    /* 영역적용 */
+    display: inline-block; 
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ff9922;
+    /* 테두리를 영역안으로 인사이드 */
+    box-sizing: border-box;
+    border-radius: 100%;
+    position: relative; top: 4px;
+    /* 마우스 손모양 */
+    cursor: pointer;
+  }
+  /* 체크박스가 체크되면  */
+  .cBox:checked + .circle {
+    background-color: #ff9922;
+    transition: 0.1s;
+  }
+  /* 체크박스 안보이기 */
+  .cBox{
+    appearance: none;
+  }
+  
+  /* 필터 */
+  
+  .slider {
+    margin-left: 40px;
+  }
+  
+  #checkBoxList {
+    display: grid;
+    grid-template-rows: auto;
+  }
+  
+  /* 버튼 */
+  #filterBtn {
+    
+    height: 40px;
+    width: 330px;
+    background-color: var(--main-color);
+    border-radius: 30px;
+    text-align: center;
+    color: white;
+    font-size: 18px;
+  }
 
-.filterSection {
-  display: grid;
-}
-.filterContainer {
-  display: flex;
-  align-items: flex-start;
-}
-.filter_box {
-  display: grid;
-  grid-template-rows: 1fr 1fr 2fr 2fr 1fr;
-  row-gap: 50px;
-  /* justify-items: center; */
-  align-items: start;
-  background-color: rgb(211, 211, 211);
-  height: 100vh;
-  width: 300px;
-  margin-right: 40px;
-}
-
-.result {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  justify-content: space-around;
-}
-
-/* 필터 */
-
-.slider {
-  margin-left: 40px;
-}
-
-#checkBoxList {
-  display: grid;
-  grid-template-rows: auto;
-}
-
-#filterBtn {
-  height: 30px;
-  width: 50px;
-  border-radius: 5px;
-  text-align: center;
-}
+  .result {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-around;
+  }

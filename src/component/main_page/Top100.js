@@ -24,14 +24,14 @@ export default function Top100() {
 
     return (
         <div className={mainStyles.Top100}>
-            <h1>World's Top 100</h1>
-            <h1>Cocktails</h1>
+            <h1>World's Top 100
+            <p>Cocktails</p></h1>
 
             <Swiper className={mainStyles.swiper}
                 // install Swiper modules
                 modules={[Navigation, Pagination, Autoplay]}
                 spaceBetween={40}
-                slidesPerView={3}
+                slidesPerView={5}
                 centeredSlides={'true'}
                 grabCursor={'true'}
                 // autoplay={{
@@ -44,12 +44,12 @@ export default function Top100() {
                 onSwiper={(swiper) => console.log(swiper)}
             >
                 <div className={mainStyles.slider_wrapper}>
-                    <SwiperSlide>
+                    {/* <SwiperSlide>
                         {({ isActive }) => (
                             <div> {isActive ? changeSlideClass() : 'not active'}</div>
                             // classname 바꾸기
                         )}
-                    </SwiperSlide>
+                    </SwiperSlide> */}
                     <SwiperSlide className={slide}>
                         <img src="https://images.cocktailflow.com/v1/cocktail/w_300,h_540/cocktail_mango_lime_virgin_margarita-1.png" />
                     </SwiperSlide>
@@ -68,6 +68,9 @@ export default function Top100() {
                 </div>
 
             </Swiper>
+            <div className={mainStyles.more}>
+                + Top 100 Cocktails 더보기
+            </div>
         </div>
 
 

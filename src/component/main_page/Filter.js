@@ -48,59 +48,39 @@ export default function Filter() {
       <div className={mainStyles.filterContainer}>
         {/* 필터 */}
         <div className={mainStyles.filter_box}>
-          <div className="alcohol">
-            얼마나 취할래
-            <div className={mainStyles.slider}>
-              <Box sx={{ width: 200 }}>
-                <Slider
-                  min={1}
-                  max={5}
-                  marks={alcoholMarks}
-                  valueLabelDisplay="on"
-                />
-              </Box>
-            </div>
-          </div>
-          <div className="dry">
-            Sweet or Dry?
-            <div className={mainStyles.slider}>
-              <Box sx={{ width: 200 }}>
-                <Slider
-                  min={1}
-                  max={5}
-                  marks={dryMarks}
-                  valueLabelDisplay="on"
-                />
-              </Box>
-            </div>
-          </div>
           <div className="tastingNote">
-            테이스팅 노트
+            <h3>테이스팅 노트</h3>
             <div id={mainStyles.checkBoxList}>
+
               <label>
-                <input type="checkbox" />
-                프레시
+                <input type="checkbox" className={mainStyles.cBox} />
+                <i className={mainStyles.circle}></i>
+                <span>프레시</span>
               </label>
               <label>
-                <input type="checkbox" />
+                <input type="checkbox" className={mainStyles.cBox} />
+                <i className={mainStyles.circle}></i>
                 과일
               </label>
               <label>
-                <input type="checkbox" />
+              <input type="checkbox" className={mainStyles.cBox}/>
+                <i className={mainStyles.circle}></i>
                 아이셔
               </label>
               <label>
-                <input type="checkbox" />
+              <input type="checkbox" className={mainStyles.cBox}/>
+                <i className={mainStyles.circle}></i>
                 허브
               </label>
               <label>
-                <input type="checkbox" />
+              <input type="checkbox" className={mainStyles.cBox}/>
+                <i className={mainStyles.circle}></i>
                 아이써
               </label>
             </div>
           </div>
           <div className="base">
-            베이스
+            <h3>베이스</h3>
             <div id={mainStyles.checkBoxList}>
               <label>
                 <input type="checkbox" />진
@@ -122,7 +102,34 @@ export default function Filter() {
               </label>
             </div>
           </div>
-          <button id={mainStyles.filterBtn}>검색</button>
+          <div className="alcohol">
+            <h3>얼마나 취할래</h3>
+            <div className={mainStyles.slider}>
+              <Box sx={{ width: 200 }}>
+                <Slider
+                  min={1}
+                  max={5}
+                  marks={alcoholMarks}
+                  valueLabelDisplay="on"
+                />
+              </Box>
+            </div>
+          </div>
+          <div className="dry">
+            <h3>Sweet or Dry?</h3>
+            <div className={mainStyles.slider}>
+              <Box sx={{ width: 200 }}>
+                <Slider
+                  min={1}
+                  max={5}
+                  marks={dryMarks}
+                  valueLabelDisplay="on"
+                />
+              </Box>
+            </div>
+          </div>
+
+          <div id={mainStyles.filterBtn}>검색</div>
         </div>
 
         <Card />
