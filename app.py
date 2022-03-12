@@ -31,11 +31,33 @@ def cocktail():
     return jsonify({'all_cocktails': cocktails})
 
 
-@app.route('/kakao', methods=['POST'])
-def kakao():
-    email = request.form['email']
-    print(email)
-    return jsonify({'hi': email})
+@app.route('/login', methods=['POST'])
+def saving():
+    email_receive = request.form['email_give']
+    data = db.member_list.find({"email": email_receive})
+    if len(list(data)) == 0:
+        name_receive = request.form['name_give']
+        img_receive = request.form['img_give']
+        doc = {
+            'email': email_receive,
+            'name': name_receive,
+            'img': img_receive,
+            'store': [""]
+        }
+        db.member_list.insert_one(doc)
+
+        return jsonify({'msg':'회원가입을 축하합니다!'})
+    return jsonify({'msg':'로그인 완료!'})
+
+
+@app.route('/login', methods=['GET'])
+def listing():
+    print("전달")
+    email_receive = request.args.get('email_give')
+    member_info = list(db.member_list.find({"email": email_receive}))
+    member_info[0]['_id'] = str(member_info[0]['_id'])
+    return jsonify({'member_info': member_info})
+    return jsonify({'member_info': member_info})
 
 
 
