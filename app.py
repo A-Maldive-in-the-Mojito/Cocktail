@@ -57,7 +57,6 @@ def listing():
     member_info = list(db.member_list.find({"email": email_receive}))
     member_info[0]['_id'] = str(member_info[0]['_id'])
     return jsonify({'member_info': member_info})
-    return jsonify({'member_info': member_info})
 
 
 
