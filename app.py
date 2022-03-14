@@ -3,7 +3,7 @@ from flask import Flask, render_template, jsonify, request, send_from_directory,
 
 import json
 from flask_cors import CORS
-# from app import app
+
 
 from config import CLIENT_ID, REDIRECT_URI
 from controller import Oauth
@@ -31,111 +31,30 @@ def cocktail():
     return jsonify({'all_cocktails': cocktails})
 
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['POST','GET'])
 def saving():
-    email_receive = request.form['email_give']
-    data = db.member_list.find({"email": email_receive})
-    if len(list(data)) == 0:
-        name_receive = request.form['name_give']
-        img_receive = request.form['img_give']
-        doc = {
-            'email': email_receive,
-            'name': name_receive,
-            'img': img_receive,
-            'store': [""]
-        }
-        db.member_list.insert_one(doc)
+    if request.method == 'POST':
+        datas = request.get_json()
+        email_receive = datas['email_give']
+        data = db.member_list.find({"email": email_receive})
+        if len(list(data)) == 0:
+            name_receive = datas['name_give']
+            img_receive = datas['img_give']
+            doc = {
+                'email': email_receive,
+                'name': name_receive,
+                'img': img_receive,
+                'store': [""]
+            }
+            db.member_list.insert_one(doc)
 
-        return jsonify({'msg':'회원가입을 축하합니다!'})
-    return jsonify({'msg':'로그인 완료!'})
-
-
-@app.route('/login', methods=['GET'])
-def listing():
-    print("전달")
-    email_receive = request.args.get('email_give')
-    member_info = list(db.member_list.find({"email": email_receive}))
-    member_info[0]['_id'] = str(member_info[0]['_id'])
-    return jsonify({'member_info': member_info})
-
-
-
-
-# storage.js 에서 post한 인가코드 받아오는 코드
-# @app.route("/oauth", methods=['GET', 'POST'])
-# def auth():
-#     code = request.form['code_give']
-#     print(code)
-#
-#     # 전달받은 authorization code를 통해서 access_token, refresh_token을발급
-#     oauth = Oauth()
-#     auth_info = oauth.auth(code)
-#     print(auth_info)
-#
-#     user = oauth.userinfo("Bearer " + auth_info['access_token'])
-#     print(user)
-#
-#     # return jsonify(user)
-#     return (user)
-
-
-
-
-    # return ({'tokens': response})
-#
-#
-#     url = "https://kauth.kakao.com/oauth/token"
-#     data = {
-#         "grant_type": "authorization_code",
-#         "client_id": "f7b88ddd4ef9dae165bb00a4bd660fe3",
-#         "redirect_uri": "http://localhost:3000/storage",
-#         "code": code_receive
-#     }
-#     response = request.post(url, data=data)
-#     tokens = response.json()
-#     print(tokens)
-#
-
-# @app.route('/oauth/url')
-# def oauth_url_api():
-#     """
-#     Kakao OAuth URL 가져오기
-#     """
-#     return jsonify(
-#         kakao_oauth_url="https://kauth.kakao.com/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code" \
-#         % (CLIENT_ID, REDIRECT_URI)
-#     )
-
-# user=[]
-#
-# # 백에서 인가코드-토큰 받기
-# @app.route("/oauth", methods=['GET'])
-# def oauth_api():
-#    # 사용자로부터 authorization code를 인자로 받음
-#     code = str(request.args.get('code'))
-#
-#     print(code)
-#
-#     # 전달받은 authorization code를 통해서 access_token, refresh_token을발급
-#     oauth = Oauth()
-#     auth_info = oauth.auth(code)
-#     print(auth_info)
-#
-#
-#     user = oauth.userinfo("Bearer " + auth_info['access_token'])
-#     #몽고db넣기
-#
-#     print(user)
-#     return (user)
-#
-#     # return(render_template("index.html"))
-#     # return "redirect:storage"
-#
-#     # return redirect("http://localhost:3000/")
-#
-#     @app.route("/user", methods=['GET'])
-#     def user_info():
-#         return jsonify(user)
+            return jsonify({'msg':'회원가입을 축하합니다!'})
+        return jsonify({'msg':'로그인 완료!'})
+    else:
+        email_receive = request.args.get('email_give')
+        member_info = list(db.member_list.find({"email": email_receive}))
+        member_id = str(member_info[0]['_id'])
+        return jsonify({'member_id': member_id})
 
 
 if __name__ == '__main__':
