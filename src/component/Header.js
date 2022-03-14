@@ -10,10 +10,17 @@ import $ from "jquery";
 
 import { useEffect } from "react";
 
+// 임시 로컬주소
 const URL = 'http://localhost:5000'
 
 export default function Header() {
 
+    // id GET
+    // 보낼 데이터를 URL에 넣음
+    const member = async (email) => {
+        const {data:{member_id}} = await axios.get(`${URL}/login?email_give=${email}`);
+        console.log(member_id);
+    };
 
     // kakao login api
     function kakaoLogin() {
@@ -32,42 +39,30 @@ export default function Header() {
                         const email = kakao_account.email
                         const nickname = kakao_account.profile.nickname
                         const profile_img = kakao_account.profile.profile_image_url
+                  
+                        //axios 이용하여 Backend 로 보내기.
+                        axios.post(
+                            `${URL}/login`,
 
-                        // BackEnd로 보내기
-                        $.ajax({
-                            type: "post",
-                            url: `${URL}/kakao`,
-                            data: {
-                                email: email,
-                                nickname: nickname,
-                                profile_img: profile_img,
-                            },
-                            success: function (response) {
+                            {
+                                email_give: email,
+                                name_give: nickname,
+                                img_give: profile_img,
+
+                            })
+                            .then((res) => {
+                                console.log(res);
                                 alert("성공");
-                            }
-                        })
+                                // history.push("/main/feed");
+                            })
+                            .catch((error) => {
+                                // console.log(error);
+                                console.error(error);
+                                alert("카카오 로그인 에러?");
+                            });
 
-                    
-                        // axios.post(
-                        //     `${URL}/kakao`,
-
-                        //     {
-                        //         hi: "hihi",
-                        //         //   email: email,
-                        //         //   nickname: nickname,
-                        //         //   profile_img : profile_img,
-
-                        //     })
-                        //     .then((res) => {
-                        //         console.log(res);
-                        //         alert("성공");
-                        //         // history.push("/main/feed");
-                        //     })
-                        //     .catch((error) => {
-                        //         // console.log(error);
-                        //         console.error(error);
-                        //         alert("카카오 로그인 에러?");
-                        //     });
+                        // id GET 호출    
+                        member(email);
 
                     },
                     fail: function (error) {
@@ -76,6 +71,8 @@ export default function Header() {
                     }
                 });
                 // window.location.href='/' //리다이렉트 되는 코드
+                
+
             },
             fail: function (error) {
                 console.log(error);
