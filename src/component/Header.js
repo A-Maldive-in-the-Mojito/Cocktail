@@ -14,11 +14,17 @@ import { useEffect, useState } from "react";
 const URL = 'http://localhost:5000'
 
 export default function Header() {
+    //로그인 했을때 버튼:logout으로 바꾸기
     const [loginBtn, setLoginBtn] = useState("login")
     function login() {
         setLoginBtn("logout")
     }    
     
+    function LoginOrOut (){
+        const ValToken = window.Kakao.Auth.getAccessToken();
+        ValToken == null ? kakaoLogin() : kakaoLogout();
+    }
+
     // 카카오 로그인
     function kakaoLogout() {
         if (!window.Kakao.Auth.getAccessToken()) {
@@ -121,7 +127,7 @@ export default function Header() {
                         <Link to="/storage">내 칵테일 창고</Link>
                     </li>
                     <li>
-                        <div className={styles.login} onClick={kakaoLogin}>
+                        <div className={styles.login} onClick={LoginOrOut}>
                             <span className={styles.loginText}>{loginBtn}</span>
                             {/* <AccountCircleOutlinedIcon sx={{ fontSize: 30 }} className={styles.loginIcon} /> */}
                         </div>

@@ -11,7 +11,7 @@ a {
     border-bottom: 2px solid #FFE9CF;
     position: fixed;
     top: 0;
-    width: 100%;
+    width: 100vw;
     z-index: 1;
     display: grid;
     align-items: center;
@@ -40,15 +40,20 @@ a {
     /* 가로로 배열 */
     margin-left: 40px;
   }
-  #login {
+  .login {
     width: 100px;
     height: 40px;
     background: #FF9922;
     border-radius: 60px;
     color: white;
     text-align: center;
-  
+    cursor: pointer;
   }
+  .loginText {
+    position: relative;
+    top: 8px;
+  }
+
   li:nth-child(4) {
     justify-self: end;
     margin-right: 50px;
