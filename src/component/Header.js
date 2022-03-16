@@ -8,18 +8,39 @@ import { style } from '@mui/system';
 import axios from "axios";
 import $ from "jquery";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // 임시 로컬주소
 const URL = 'http://localhost:5000'
 
 export default function Header() {
+    const [loginBtn, setLoginBtn] = useState("login")
+    function login() {
+        setLoginBtn("logout")
+    }    
+    
+    // 카카오 로그인
+    function kakaoLogout() {
+        if (!window.Kakao.Auth.getAccessToken()) {
+          alert('Not logged in.')
+          return
+        }
+        window.Kakao.Auth.logout(function() {
+          alert('logout ok\naccess token -> ' + window.Kakao.Auth.getAccessToken())
+          //usestate 변경
+          setLoginBtn("login")
+        })
+        console.log(window.Kakao.Auth.getAccessToken())
+      }
+    
 
+        
     // id GET
     // 보낼 데이터를 URL에 넣음
     const member = async (email) => {
         const {data:{member_id}} = await axios.get(`${URL}/login?email_give=${email}`);
         console.log(member_id);
+        
     };
 
     // kakao login api
@@ -63,6 +84,7 @@ export default function Header() {
 
                         // id GET 호출    
                         member(email);
+                        login();
 
                     },
                     fail: function (error) {
@@ -99,8 +121,8 @@ export default function Header() {
                         <Link to="/storage">내 칵테일 창고</Link>
                     </li>
                     <li>
-                        <div className={styles.login} onClick={() => kakaoLogin()}>
-                            <span className={styles.loginText}>login</span>
+                        <div className={styles.login} onClick={kakaoLogin}>
+                            <span className={styles.loginText}>{loginBtn}</span>
                             {/* <AccountCircleOutlinedIcon sx={{ fontSize: 30 }} className={styles.loginIcon} /> */}
                         </div>
 
