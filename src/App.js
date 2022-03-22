@@ -16,13 +16,13 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
 import $ from "jquery";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { code } from './Oauth.js'
 
-// //리액트 리덕스 생활코딩 참고
-// import { createStore } from 'redux';
-// import { Provider, useSelector, useDispatch } from 'react-redux'; 
+// 리액트 리덕스
+import { createStore } from 'redux';
+import { Provider, useSelector, useDispatch } from 'react-redux'; 
 
 // function reducer(currentState, action){
 //     if(currentState == undefined){
@@ -38,19 +38,30 @@ import { code } from './Oauth.js'
 const URL = 'http://localhost:5000'
 
 function App() {
+    let [cocktailsInfo, setcocktailsInfo] = useState([]);
 
     // API GET
     const getCocktails = async () => {
         const { data: { all_cocktails } } = await axios.get(`${URL}/cocktails`);
-        console.log(all_cocktails);
+        setcocktailsInfo(all_cocktails)        
     };
+    
+    console.log(cocktailsInfo); 
+    
+    function reducer(state = cocktailsInfo, action){
+        return state
+    }
+
+    let store = createStore(reducer)
+
     useEffect(() => {
-        getCocktails()
-    });
+            getCocktails()
+    },[]);
 
 
         return (  
             <BrowserRouter>
+            <Provider store={store}>
                 <div className="App">
                     <Header />
                     <div id="pages">
@@ -64,6 +75,7 @@ function App() {
                         </Routes>
                     </div>
                 </div>
+                </Provider>
             </BrowserRouter>
         );
     }
