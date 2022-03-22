@@ -1,3 +1,4 @@
+import * as React from 'react';
 // import appStyles from '../../App.module.css'
 import mainStyles from "./Main.module.css";
 import Card from "../Card.js";
@@ -7,6 +8,7 @@ import { Form } from "react-bootstrap";
 
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
+import { styled } from '@mui/material/styles';
 
 export default function Filter() {
   // 함수
@@ -41,6 +43,44 @@ export default function Filter() {
     },
   ];
 
+  const SliderStyle = styled(Slider)({                 
+      color: '#ff9924',
+      height: 6,
+      // 단추
+      '& .MuiSlider-thumb': {
+        '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
+          boxShadow: 'inherit',
+        },
+      },
+
+      // 밸류값 태그
+      '& .MuiSlider-valueLabel': {
+        lineHeight: 1.3,
+        fontSize: 12,
+        background: 'unset',
+        padding: 0,
+        width: 32,
+        height: 32,
+        borderRadius: '50% 50% 50% 0',
+        backgroundColor: '#ff9924',
+        transformOrigin: 'bottom left',
+        transform: 'translate(50%, -100%) rotate(-45deg) scale(0)',
+        '&:before': { display: 'none' },
+        '&.MuiSlider-valueLabelOpen': {
+          transform: 'translate(50%, -100%) rotate(-45deg) scale(1)',
+        },
+        '& > *': {
+          transform: 'rotate(45deg)',
+        },
+      },
+      // 라벨 이모티콘 사이즈
+      "& .MuiSlider-markLabel": {
+        fontSize: "25px",
+        marginTop: "5px"
+      },
+    }
+  )
+
   return (
     <div className={mainStyles.filterSection}>
       <h2>Filter Section</h2>
@@ -51,66 +91,73 @@ export default function Filter() {
           <div className={mainStyles.tastingNote}>
             <h3>테이스팅 노트</h3>
             <div id={mainStyles.checkBoxList}>
-
               <label>
                 <input type="checkbox" className={mainStyles.cBox} />
                 <i className={mainStyles.circle}></i>
-                <span>프레시</span>
+                <span className={mainStyles.text}>과일</span>
               </label>
               <label>
                 <input type="checkbox" className={mainStyles.cBox} />
                 <i className={mainStyles.circle}></i>
-                과일
+                <span className={mainStyles.text}>허브</span>
               </label>
               <label>
               <input type="checkbox" className={mainStyles.cBox}/>
                 <i className={mainStyles.circle}></i>
-                아이셔
+                <span className={mainStyles.text}>아이셔</span>
               </label>
               <label>
               <input type="checkbox" className={mainStyles.cBox}/>
                 <i className={mainStyles.circle}></i>
-                허브
+                <span className={mainStyles.text}>아이써</span>
               </label>
               <label>
               <input type="checkbox" className={mainStyles.cBox}/>
                 <i className={mainStyles.circle}></i>
-                아이써
+                <span className={mainStyles.text}>프레시</span>
               </label>
             </div>
           </div>
           <div className="base">
             <h3>베이스</h3>
             <div id={mainStyles.checkBoxList}>
-              <label>
-                <input type="checkbox" />진
+            <label>
+              <input type="checkbox" className={mainStyles.cBox}/>
+                <i className={mainStyles.circle}></i>
+                <span className={mainStyles.text}>진</span>
               </label>
               <label>
-                <input type="checkbox" />럼
+              <input type="checkbox" className={mainStyles.cBox}/>
+                <i className={mainStyles.circle}></i>
+                <span className={mainStyles.text}>럼</span>
               </label>
               <label>
-                <input type="checkbox" />
-                위스키
+              <input type="checkbox" className={mainStyles.cBox}/>
+                <i className={mainStyles.circle}></i>
+                <span className={mainStyles.text}>위스키</span>
               </label>
               <label>
-                <input type="checkbox" />
-                데킬라
+              <input type="checkbox" className={mainStyles.cBox}/>
+                <i className={mainStyles.circle}></i>
+                <span className={mainStyles.text}>데킬라</span>
               </label>
               <label>
-                <input type="checkbox" />
-                보드카
+              <input type="checkbox" className={mainStyles.cBox}/>
+                <i className={mainStyles.circle}></i>
+                <span className={mainStyles.text}>보드카</span>
               </label>
             </div>
           </div>
           <div className="alcohol">
             <h3>얼마나 취할래</h3>
             <div className={mainStyles.slider}>
-              <Box sx={{ width: 200 }}>
-                <Slider
+              <Box sx={{ width: 250 }}>
+                <SliderStyle
                   min={1}
                   max={5}
+                  defaultValue={2}
                   marks={alcoholMarks}
-                  valueLabelDisplay="on"
+                  valueLabelDisplay="outo"
                 />
               </Box>
             </div>
@@ -118,12 +165,14 @@ export default function Filter() {
           <div className="dry">
             <h3>Sweet or Dry?</h3>
             <div className={mainStyles.slider}>
-              <Box sx={{ width: 200 }}>
-                <Slider
+              <Box sx={{ width: 250,
+                       }}>
+                <SliderStyle
                   min={1}
                   max={5}
+                  defaultValue={3}
                   marks={dryMarks}
-                  valueLabelDisplay="on"
+                  valueLabelDisplay="outo"
                 />
               </Box>
             </div>
