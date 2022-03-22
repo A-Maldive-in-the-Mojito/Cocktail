@@ -13,8 +13,6 @@ import { Provider, useSelector, useDispatch } from 'react-redux';
 // 백에서 토큰 받아오는 axios
 export default function Storage() {
  
-    const code = useSelector(state=> state.code);
-    console.log(code)
 
     return(
         <div>

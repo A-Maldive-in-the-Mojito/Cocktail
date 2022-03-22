@@ -70,7 +70,6 @@ export default function Header() {
                         //axios 이용하여 Backend 로 보내기.
                         axios.post(
                             `${URL}/login`,
-
                             {
                                 email_give: email,
                                 name_give: nickname,
@@ -112,11 +111,13 @@ export default function Header() {
     return (
         <div>
             <div className={styles.menu_box}>
-                <h1 className={styles.logo}>
-                    <Link to="/">
-                        <span id={styles.emogi}>🍹</span>
-                        모히또에서 몰디브 한 잔</Link></h1>
                 <ul>
+                    <li>
+                    <h1 className={styles.logo}>
+                    <Link to="/">
+                        <span id={styles.emogi}>🏝 </span>
+                        모히또에서 몰디브 한 잔</Link></h1>
+                    </li>
                     <li>
                         <Link to="/find">칵테일 검색</Link>
                     </li>

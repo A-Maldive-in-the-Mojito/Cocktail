@@ -13,8 +13,6 @@ a {
     top: 0;
     width: 100vw;
     z-index: 1;
-    display: grid;
-    align-items: center;
   }
   
   .logo {
@@ -23,6 +21,8 @@ a {
     margin-left: 50px;
     margin-top: -5px;
     color:  #121212;
+    /* 줄바꿈 없애기 */
+    white-space: nowrap;
   }
   #emogi {
     font-size: 28px;
@@ -30,15 +30,19 @@ a {
   }
   ul {
     display: grid;
-    grid-column-start: 4;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-column-start: 5;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 1.5fr;
     align-items: center;
   }
   li {
     font-size: 16px;
     list-style-type: none;
     /* 가로로 배열 */
-    margin-left: 40px;
+    /* margin-left: 40px; */
+    justify-self: center;
+    /* 줄바꿈 없애기 */
+    white-space: nowrap;
+    padding: 0px 15px 0px 15px;
   }
   .login {
     width: 100px;
@@ -54,7 +58,7 @@ a {
     top: 8px;
   }
 
-  li:nth-child(4) {
+  li:nth-child(5) {
     justify-self: end;
     margin-right: 50px;
   }
