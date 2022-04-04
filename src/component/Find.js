@@ -1,6 +1,7 @@
 import appStyles from '../App.module.css' // ../은 상위폴더
 import Styles from './Find.module.css'
 import SearchIcon from '@mui/icons-material/Search';
+import cardStyles from './Card.module.css'
 
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -15,10 +16,17 @@ export default function Find() {
     useEffect(() => {
         console.log(cocktail_api)
     }, []);
-
-
     let imgurl = cocktail_api[0].img
-    let name = cocktail_api[0].name
+
+   
+    // function NewCard(){
+    //     for (let i = 0; i < 10; i++) {
+    //         let name_a = cocktail_api[i].name
+    //         console.log(name_a)
+    //         return <h2>{name_a}</h2>
+    //     }
+    // }
+    
 
 
 
@@ -51,16 +59,23 @@ export default function Find() {
                     <span className={Styles.hashtag}>#무비나잇🎬</span>
                     <span className={Styles.hashtag}>#뜨밤🔥</span>
 
-
                 </div>
             </div>
             {/* 하단 */}
             <div>
+                <div>{cocktail_api.map(cocktail=> 
+                    <div key={cocktail.id} className={cardStyles.imgContainer}>
+                        <img className={cardStyles.imgCocktail} src={cocktail.img} /> 
+                        <h3 className={cardStyles.cocktailName}>{cocktail.name}</h3>
+                    </div>)}</div>
+
                 <Link to="/desc">
-                    <div className={appStyles.card} id="aa">
-                        <img src={imgurl} />
-                        <span>{name}</span>
+                    <div className={appStyles.card}>
+                        <img src={imgurl} />                        
                     </div>
+                    <div id="temp_card"></div>
+                    {/* <NewCard /> */}
+
                 </Link>
             </div>
 
