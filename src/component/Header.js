@@ -1,9 +1,9 @@
 import styles from './Header.module.css';
 import { Link } from 'react-router-dom';
 
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import { Email, Style } from '@material-ui/icons';
-import { style } from '@mui/system';
+// import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+// import { Email, Style } from '@material-ui/icons';
+// import { style } from '@mui/system';
 
 import axios from "axios";
 import $ from "jquery";
@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 // 임시 로컬주소
 const URL = 'http://localhost:5000'
 
-export default function Header() {
+function Header() {
     //로그인 했을때 버튼:logout으로 바꾸기
     const [loginBtn, setLoginBtn] = useState("login")
     function login() {
@@ -42,7 +42,7 @@ export default function Header() {
 
         
     // id GET
-    // 보낼 데이터를 URL에 넣음
+    // member_id 가져오는 get axios
     const member = async (email) => {
         const {data:{member_id}} = await axios.get(`${URL}/login?email_give=${email}`);
         console.log(member_id);
@@ -141,11 +141,8 @@ export default function Header() {
             <div className={styles.scroll}>
                 <img src="arrow-up-circle.svg"></img></div>
 
-
-
-
-
-
         </div>
     );
 }
+
+export default Header;

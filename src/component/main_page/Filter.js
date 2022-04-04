@@ -10,7 +10,7 @@ import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { styled } from '@mui/material/styles';
 
-export default function Filter() {
+function Filter() {
   // 함수
   // -> 카드들 생겨요
   // 가짜 html카드 ~~~~~~~
@@ -190,7 +190,6 @@ export default function Filter() {
                             칵테일
                         </div>
                     </Link>
-
                     <Link to="/desc">
                         <div className={appStyles.card}>
                             칵테일
@@ -207,9 +206,10 @@ export default function Filter() {
                         </div>
                     </Link> 
                     
-
                 </div> */}
       </div>
     </div>
   );
 }
+
+export default Filter;

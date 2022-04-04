@@ -5,10 +5,9 @@ import Header from './component/Header.js';
 import Main from './component/main_page/Main.js';
 import Find from './component/Find.js';
 import Storage from './component/Storage.js';
-import Login from './component/Login.js';
+// import Login from './component/Login.js';
 import Home from './component/Home.js';
 import Desc from './component/Desc.js';
-import Oauth from './Oauth.js';
 
 
 //라우터
@@ -18,7 +17,6 @@ import $ from "jquery";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-import { code } from './Oauth.js'
 
 // 리액트 리덕스
 import { createStore } from 'redux';
@@ -38,7 +36,7 @@ import { Provider, useSelector, useDispatch } from 'react-redux';
 const URL = 'http://localhost:5000'
 
 function App() {
-    let [cocktailsInfo, setcocktailsInfo] = useState([]);
+    let [cocktailsInfo, setcocktailsInfo] = useState();
 
     // API GET
     const getCocktails = async () => {
@@ -71,11 +69,11 @@ function App() {
                             <Route path="/home" element={<Home />} /> //고향칵테일
                             <Route path="/storage" element={<Storage />} /> //내 칵테일
                             <Route path="/desc" element={<Desc />} />
-                            <Route path="/oauth" element={<Oauth />} />
+                            {/* <Route path="/oauth" element={<Oauth />} /> */}
                         </Routes>
                     </div>
                 </div>
-                </Provider>
+            </Provider>
             </BrowserRouter>
         );
     }

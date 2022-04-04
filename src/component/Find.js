@@ -1,15 +1,14 @@
 import appStyles from '../App.module.css' // ../은 상위폴더
 import Styles from './Find.module.css'
 import SearchIcon from '@mui/icons-material/Search';
-import cardStyles from './Card.module.css'
-
+import cardStyles from "./Card.module.css"
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from "react";
 
 import $ from "jquery";
 
-export default function Find() {
+function Find() {
 
     const cocktail_api = useSelector((state) => state
     )
@@ -82,3 +81,5 @@ export default function Find() {
         </div>
     );
 }
+
+export default Find;

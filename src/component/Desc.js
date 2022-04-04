@@ -1,6 +1,6 @@
 import styles from './Desc.module.css'
 
-export default function Desc() {
+function Desc() {
     return (
         <div id="desc">
             {/* 이미지+설명 */}
@@ -33,3 +33,5 @@ export default function Desc() {
         </div>
     );
 }
+
+export default Desc;

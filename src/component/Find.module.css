@@ -1,22 +1,20 @@
-.search_box{
-    width: 600px;
-    height: 40px;
-    border: 2px solid var(--main-color);
-    border-radius: 20px;
-
+.search_box {
+  width: 600px;
+  height: 40px;
+  border: 2px solid var(--main-color);
+  border-radius: 20px;
 }
 
-
-#TOP{
-    border: 2px solid hotpink;
+#TOP {
+  border: 2px solid hotpink;
 }
 
-.hashtag{
-    border: 2px solid #5271e4;
-    border-radius: 30px;
-    padding: 3px 7px 3px 7px;    
+.hashtag {
+  border: 2px solid #5271e4;
+  border-radius: 30px;
+  padding: 3px 7px 3px 7px;
 }
 
 .hihi {
-    background-color: blue;
+  background-color: blue;
 }
