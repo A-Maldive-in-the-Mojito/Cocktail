@@ -16,32 +16,25 @@ function Find() {
     // useEffect(() => {
     //     console.log(cocktail_api)
     // }, []);
-
-    const [finding, setFinding] = useState([])
-    console.log(finding)
+    
+    //해시태그Array
+    const [hashArray, setHashArray] = useState([])
+    console.log(hashArray)
 
     const onClick = (event) => {
         const ID = event.target.id
 
-
-        // 해시태그 배열
-        // const hashtags = cocktail_api.map(item => item.hashtag)
         for (var i = 0; i < 4; i++) {
-            const findHas = cocktail_api.filter(item => item.hashtag[i] === ID)
-            setFinding(current => [findHas, ...current]);
-            // const findID = finding.map(item => item._id.$oid)
-            console.log(findHas)
-
-
-            // const HasCard = () => {
-            //     finding.map(item =>
-            //         <Card
-            //             id={item._id.$oid}
-            //             img={item.img}
-            //             name={item.name}
-
-            //         />)
-            // }
+            const findHash0 = cocktail_api.filter(item => item.hashtag[0] === ID)
+            const findHash1 = cocktail_api.filter(item => item.hashtag[1] === ID)
+            const findHash2 = cocktail_api.filter(item => item.hashtag[2] === ID)
+            const findHash3 = cocktail_api.filter(item => item.hashtag[3] === ID)
+            // 노가다로 합치기~~!
+            const allHash = findHash0.concat(findHash1).concat(findHash2).concat(findHash3)
+        
+            setHashArray(allHash);
+ 
+            console.log(allHash)
         }
     }
 
@@ -78,7 +71,9 @@ function Find() {
             </div>
             {/* 하단 */}
             <div>
-                {/* {cocktail_api.map((cocktail) =>
+                
+                {/* 모든카드 보기 
+                {cocktail_api.map((cocktail) =>
                 (<Card
                     key={cocktail._id.$oid}
                     id={cocktail._id.$oid}
@@ -86,8 +81,9 @@ function Find() {
                     name={cocktail.name}
                 />
                 ))} */}
-
-                {finding.map((cocktail) =>
+                
+                {/* 해시태그 검색 */}
+                {hashArray.map((cocktail) =>
                 (<Card
                     key={cocktail._id.$oid}
                     id={cocktail._id.$oid}
