@@ -13,10 +13,32 @@ function Find() {
 
     const cocktail_api = useSelector((state) => state
     )
-    useEffect(() => {
-        console.log(cocktail_api)
-    }, []);
+    // useEffect(() => {
+    //     console.log(cocktail_api)
+    // }, []);
 
+    const onClick = (event) => {
+        const ID = event.target.id
+        
+        
+        // 해시태그 배열
+        // const hashtags = cocktail_api.map(item => item.hashtag)
+        for (var i = 0; i < 4; i++) {
+        const finding = cocktail_api.filter(item => item.hashtag[i] === ID)
+        const findID = finding.map(item => item._id.$oid)
+        console.log(findID)
+
+
+        const HasCard = () => {
+            findID.map( item => 
+                <Card 
+                    id={item}
+                />)
+        }
+        }
+    }
+
+    
 
     return (
         <div>
@@ -32,18 +54,18 @@ function Find() {
                 </div>
                 {/* 해시태그 */}
                 <div className={Styles.tags_box}>
-                    <span className={`${Styles.TOP} ${Styles.hashtag}`}>#TOP 100🏆</span>
-                    <span className={Styles.hashtag}>#홈파티🏡</span>
-                    <span className={Styles.hashtag}>#데일리</span>
-                    <span className={Styles.hashtag}>#산타랑_건배🎅🏻</span>
-                    <span className={Styles.hashtag}>#무비나잇🎬</span>
-                    <span className={Styles.hashtag}>#해피뉴이어🎆</span>
-                    <span className={Styles.hashtag}>#불금🌈</span>
+                    <button onClick={onClick} id="top100" className={`${Styles.TOP} ${Styles.hashtag}`} >#TOP 100🏆</button>
+                    <span onClick={onClick} id="house-party" className={Styles.hashtag}>#홈파티🏡</span>
+                    <span onClick={onClick} id="allseason-classics" className={Styles.hashtag}>#데일리</span>
+                    <span onClick={onClick} id="christmas" className={Styles.hashtag}>#산타랑_건배🎅🏻</span>
+                    <span onClick={onClick} id="movie-nights" className={Styles.hashtag}>#무비나잇🎬</span>
+                    <span onClick={onClick} id="new-years-eve" className={Styles.hashtag}>#해피뉴이어🎆</span>
+                    <span onClick={onClick} id="downtown" className={Styles.hashtag}>#불금🌈</span>
                     <span className={Styles.hashtag}>#핫써머🏖️</span>
-                    <span className={Styles.hashtag}>#HBD🎂</span>
-                    <span className={Styles.hashtag}>#나를위한시️간🕯</span>
-                    <span className={Styles.hashtag}>#발렌타인데이🍷</span>
-                    <span className={Styles.hashtag}>#뜨밤🔥</span>
+                    <span onClick={onClick} id="birthday" className={Styles.hashtag}>#HBD🎂</span>
+                    <span onClick={onClick} id="time-for-you" className={Styles.hashtag}>#나를위한시️간🕯</span>
+                    <span onClick={onClick} id="valentines-day" className={Styles.hashtag}>#발렌타인데이🍷</span>
+                    <span onClick={onClick} id="anniversary" className={Styles.hashtag}>#뜨밤🔥</span>
 
                 </div>
             </div>
@@ -57,6 +79,10 @@ function Find() {
                     name={cocktail.name}
                 />
                 ))}
+
+                <HasCard 
+                    
+                />
 
                 <Link to="/desc">
                     
