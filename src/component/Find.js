@@ -17,28 +17,35 @@ function Find() {
     //     console.log(cocktail_api)
     // }, []);
 
+    const [finding, setFinding] = useState([])
+    console.log(finding)
+
     const onClick = (event) => {
         const ID = event.target.id
-        
-        
+
+
         // 해시태그 배열
         // const hashtags = cocktail_api.map(item => item.hashtag)
         for (var i = 0; i < 4; i++) {
-        const finding = cocktail_api.filter(item => item.hashtag[i] === ID)
-        const findID = finding.map(item => item._id.$oid)
-        console.log(findID)
+            const findHas = cocktail_api.filter(item => item.hashtag[i] === ID)
+            setFinding(current => [findHas, ...current]);
+            // const findID = finding.map(item => item._id.$oid)
+            console.log(findHas)
 
 
-        const HasCard = () => {
-            findID.map( item => 
-                <Card 
-                    id={item}
-                />)
-        }
+            // const HasCard = () => {
+            //     finding.map(item =>
+            //         <Card
+            //             id={item._id.$oid}
+            //             img={item.img}
+            //             name={item.name}
+
+            //         />)
+            // }
         }
     }
 
-    
+
 
     return (
         <div>
@@ -49,7 +56,7 @@ function Find() {
                     <h3>칵테일 이름이나 재료를 검색해보세요</h3>
                     <div className={Styles.search_box}>
                         <input className={Styles.search_input} type="text" />
-                        <i ><SearchIcon className={Styles.search_btn}/></i> 
+                        <i ><SearchIcon className={Styles.search_btn} /></i>
                     </div>
                 </div>
                 {/* 해시태그 */}
@@ -71,22 +78,25 @@ function Find() {
             </div>
             {/* 하단 */}
             <div>
-                {cocktail_api.map((cocktail) => 
+                {/* {cocktail_api.map((cocktail) =>
                 (<Card
-                    key={cocktail._id.$oid} 
+                    key={cocktail._id.$oid}
                     id={cocktail._id.$oid}
-                    img={cocktail.img} 
+                    img={cocktail.img}
+                    name={cocktail.name}
+                />
+                ))} */}
+
+                {finding.map((cocktail) =>
+                (<Card
+                    key={cocktail._id.$oid}
+                    id={cocktail._id.$oid}
+                    img={cocktail.img}
                     name={cocktail.name}
                 />
                 ))}
 
-                <HasCard 
-                    
-                />
-
                 <Link to="/desc">
-                    
-
                 </Link>
             </div>
 
