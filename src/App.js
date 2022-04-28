@@ -37,7 +37,8 @@ function App() {
         setcocktailsInfo(cocktails);        
     };
     
-    console.log(cocktailsInfo); 
+    console.log(cocktailsInfo);
+    // console.table(cocktailsInfo);
     
     // 리덕스
     function reducer(state = cocktailsInfo, action){
@@ -71,4 +72,4 @@ function App() {
         );
     }
 
-    export default App;
+export default App;
