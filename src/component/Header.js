@@ -42,7 +42,7 @@ function Header() {
 
         
     // id GET
-    // member_id 가져오는 get axios
+    // 보낼 데이터를 URL에 넣음
     const member = async (email) => {
         const {data:{member_id}} = await axios.get(`${URL}/login?email_give=${email}`);
         console.log(member_id);
@@ -141,8 +141,12 @@ function Header() {
             <div className={styles.scroll}>
                 <img src="arrow-up-circle.svg"></img></div>
 
+
+
+
+
+
         </div>
     );
 }
-
 export default Header;

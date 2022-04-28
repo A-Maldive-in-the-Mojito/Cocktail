@@ -4,11 +4,43 @@ import PropTypes from 'prop-types';
 
 import { Link } from 'react-router-dom';
 
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import { useState } from 'react';
+import axios from "axios";
+
 function Card({ id, img, name }) {
+  // 임시 로컬주소
+  const URL = 'http://localhost:5000'
+  const [checked, setChecked] = useState(false)
+
+  const onClick = () => {
+
+    setChecked((prev)=> !prev);
+      console.log(checked)
+    
+    axios.post(
+      `${URL}/favourite`,
+      {
+          member_id_give: member_id,
+          name_give: name,
+          checked_give: (checked ? 1 : 0)
+      })
+      .then((res) => {
+          console.log(res);
+          alert("성공");
+
+      })
+      .catch((error) => {
+          // console.log(error);
+          console.error(error);
+          
+      });
+  }
+
 
   return (
-    <div className={cardStyles.cardContainer}>
-
+    <div className={cardStyles.card}>
+      <StarBorderIcon onClick={onClick} className={cardStyles.star_icon}/>
       <Link to={`/desc:${id}`}>
         <div className={cardStyles.imgContainer}>
           <img className={cardStyles.imgCocktail} src={img} />

@@ -1,3 +1,23 @@
+.Find{
+    /* 가운데 정렬 페이지*/
+    display: grid;
+    grid-template-rows: 250px;
+    place-items: center;
+    min-height: 100vh;
+}
+
+/* 검색창 */
+.search_space{
+    margin-top: 60px;
+    display: grid;
+    place-items: center;
+}
+.search_space > h3 {
+    font-size: 20px;
+    color: rgb(136, 136, 136);
+    
+}
+
 .search_box{
     width: 600px;
     height: 40px;
@@ -5,14 +25,17 @@
     border-radius: 20px;
 
 }
+
 .search_btn {
     color: var(--main-color);
     float: right;
-    height: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
     padding-right: 10px;
+    margin-top: 7px;
+    /* 사이즈 */
+    transform: scale(1.5);
    
 }
 .search_input {
@@ -27,24 +50,49 @@
     padding-left: 30px;
     
 }
+
+/* 체크박스가 체크되면  */
+.cBox:checked + .hashtag {
+    background-color: #5271e4;
+    color: white;
+    transition: 0.1s;
+  }
+  /* 체크박스 안보이기 */
+.cBox{
+    appearance: none;
+}
+
+/* 해시태그 */
 .tags_box{
-    width: 800px;
+    margin-top: 30px;
+    width: 750px;
     display: flex;
     grid-template-columns: repeat(6, auto);
+    /* 줄바꿈 */
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     justify-items: center;
-    gap: 10px;
+    gap: 15px;
 }
 .hashtag{
     border: 2px solid #5271e4;
     border-radius: 30px;
     padding: 3px 7px 3px 7px;    
 }
+
 .TOP{
     border: 2px solid hotpink;
 }
-
-.hihi {
-    background-color: blue;
+/* 카드 */
+.cardContainer {
+    margin-top: 70px;
+    width: 800px;
+    /* 아이템 가운데 정렬 */
+    place-items: center center;
+    /* 그리드 */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 50px;
+    
 }

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useParams } from 'react-router-dom';
 
 function Desc() {
+    //주소에서 id받기
     const { id } = useParams();
     console.log(id);
 
@@ -25,11 +26,10 @@ function Desc() {
     const sweetness = cocktail_api[n].sweetness
     const flavor = cocktail_api[n].flavor
     const hashtag = cocktail_api[n].hashtag
-    const howtomake = cocktail_api[n].howtomake
+    const howtomake = cocktail_api[n].korean
     const ingredients = cocktail_api[n].ingredients
 
 
-    console.log(ingredients)
 
 
     return (

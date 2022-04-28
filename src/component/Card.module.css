@@ -1,26 +1,33 @@
-.imgContainer {
-  display: grid;
-  grid-template-rows: 87% 13%;
-  width: 230px;
-  height: 250px;
-  background: #FFFFFF;
-  box-shadow: var(--main-box-shadow);
-  border-radius: 40px;
-}
-.imgCocktail {
-  width: 100px;
-  height: 180px;
-  margin: auto;
-  display: block;
-}
+  /* .card {
+    flex-basis: auto;
+  } */
+  .imgContainer {
+    display: grid;
+    grid-template-rows: 87% 13%;
+    width: 230px;
+    height: 250px;
+    background: #FFFFFF;
+    box-shadow: var(--main-box-shadow);
+    border-radius: 40px;
+  }
+  .imgCocktail {
+    width: 100px;
+    height: 180px;
+    margin: auto;
+    display: block;
+  }
+  
+  .cocktailName {
+    font-size: 16px;
+    text-align: center;
+    /* position: absolute; */
+  }
 
-.cocktailName {
-  font-size: 16px;
-  text-align: center;
-  /* position: absolute; */
-
-
-}
+  .star_icon{
+    display: block;
+    transform: scale(5);
+    background-color: yellow;
+  }
 .molba {
-  width: 50px;
+    width: 50px;
 }
