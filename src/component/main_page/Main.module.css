@@ -1,174 +1,220 @@
-.mainPage {
-  display: grid;
-  /* grid-template-rows: 600px auto; */
-}
+  .mainPage {
+    display: grid;
+    /* grid-template-rows: 600px auto; */
+  }
 
-.Top100 {
-  height: 1000px;
-  display: grid;
-  justify-items: center;
-  /* grid-template-rows: 1fr 1fr 8fr; */
-}
-
-h1 {
-  margin-top: 75px;
-
-  font-size: 55px;
-  text-align: center;
-  line-height: 75px;
-  color: var(--main-color);
-}
-.box {
-  background-color: rgb(165, 165, 165);
-  height: 200px;
-  width: 300px;
-}
-
-.swiper {
-  height: 300px;
-  width: 1000px;
-}
-.slider_wrapper {
-  align-items: center;
-}
-.slide {
-  width: 100px;
-
-  border-radius: 7px;
-}
-.slide img {
-  align-items: center;
-  /* background-color: orange; */
-  width: 100px;
-
-  border-radius: 7px;
-}
-.active img {
-  color: orangered;
-  width: 150px;
-  transform: scale(1.2);
-  transition: 0.4s;
-}
-.more {
-  width: 380px;
-  height: 53px;
-  background-color: white;
-  border-radius: 40px;
-  box-shadow: var(--main-box-shadow);
-  font-size: 18px;
-  text-align: center;
-}
-
-/* 필터 */
-.filterSection {
-  display: grid;
-}
-h2 {
-  font-size: 55px;
-  /* color:#FE900F; */
-  color: var(--main-color);
-
-  /* position: sticky;
+  .Top100 {
+    height: 1000px;
+    display: grid;
+    justify-items: center;
+    /* grid-template-rows: 1fr 1fr 8fr; */
+  }
+  
+  h1 {
+    margin-top: 75px;
+    
+    font-size: 55px;
+    text-align: center;
+    line-height: 75px;
+    color: var(--main-color);
+  }  
+  .box {
+    background-color: rgb(165, 165, 165);
+    height: 200px;
+    width: 300px;
+  }
+  
+  .swiper {
+    height: 300px;
+    width: 1000px;
+  }
+  .slider_wrapper {
+    align-items: center;
+  }
+  .slide {
+    width: 100px;
+  
+    border-radius: 7px;
+  }
+  .slide img {
+    align-items: center;
+    /* background-color: orange; */
+    width: 100px;
+  
+    border-radius: 7px;
+  }
+  .active img {
+    color: orangered;
+    width: 150px;
+    transform: scale(1.2);
+    transition: 0.4s;
+  }
+  .more {
+    width: 380px;
+    height: 53px;
+    background-color: white;
+    border-radius: 40px;
+    box-shadow: var(--main-box-shadow);
+    text-align: center;
+  }
+  .more > span {
+    position: relative;
+    top: 13px;
+    font-size: 18px;
+  }
+  
+  /* 필터 */
+  .filterSection {
+    display: grid;
+  }
+  h2 {
+    font-size: 55px;
+    /* color:#FE900F; */
+    color: var(--main-color);
+    
+    /* position: sticky;
     top: 80px; */
-}
-.filterContainer {
-  display: flex;
-  align-items: flex-start;
-}
-.filter_box {
-  display: grid;
-  height: 100vh;
-  width: 380px;
-  padding-left: 30px;
-  grid-template-rows: 1fr 1fr 1fr 1fr 2fr;
-  row-gap: 50px;
-  /* justify-items: center; */
-  align-items: start;
-  background-color: white;
-  border-radius: 0px 50px 0px 0px;
-  box-shadow: var(--main-box-shadow);
-  margin-right: 40px;
+    
+  }
+  .filterContainer {
+    display: grid;
+    grid-template-columns: 460px 70vw;
+    place-items: start;
+  }
+  .filter_box {
+    display: grid;
+    height: 100vh;
+    width: 380px;
+    padding-left: 30px;
+    grid-template-rows: 1fr 1fr 1fr 1fr 2fr;
+    row-gap: 50px;
+    /* justify-items: center; */
+    align-items: start;
+    background-color: white;
+    border-radius: 0px 50px 0px 0px;
+    box-shadow: var(--main-box-shadow);
+    /* margin-right: 40px; */
 
-  position: sticky;
-  top: 30px;
+    position: sticky;
+    top: 30px;
+  }
+  /* 필터 타이틀 */
+  h3 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+
+  .filter_box:first-child {
+    padding-top: 50px;
+  }
+
+
+  /* 체크박스 */
+  #checkBoxList{
+    display: grid;
+    grid-template-columns: 1fr 1fr;   
+  }
+
+  #checkBoxList > label{
+    margin: 5px;
+  }
+
+  .circle{
+    /* 영역적용 */
+    display: inline-block; 
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ff9922;
+    /* 테두리를 영역안으로 인사이드 */
+    box-sizing: border-box;
+    border-radius: 100%;
+    position: relative; top: 4px;
+    /* 마우스 손모양 */
+    cursor: pointer;
+  }
+  /* 체크박스가 체크되면  */
+  .cBox:checked + .circle {
+    background-color: #ff9922;
+    transition: 0.1s;
+  }
+  /* 체크박스 안보이기 */
+  .cBox{
+    appearance: none;
+  }
+  
+  .text {
+    margin-left: 20px;
+  }
+
+  /* 슬라이더 */
+  
+  .slider {
+    margin-left: 35px;
+  }
+  
+  #checkBoxList {
+    display: grid;
+    grid-template-rows: auto;
+  }
+
+  .MuiSlider-markLabel{
+    font-size: 20px;
+  }
+  
+  /* 버튼 */
+  #filterBtn {
+    
+    height: 40px;
+    width: 330px;
+    background-color: var(--main-color);
+    border-radius: 30px;
+    text-align: center;
+    color: white;
+    font-size: 18px;
+    
+  }
+
+  .result {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  .cardContainer {
+    /* 아이템 가운데 정렬 */
+    justify-self: center;
+    
+    /* 그리드 */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 50px;
+    place-items: center center;
+
+    /* display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: space-evenly; */
+
+  }
+
+/* 반응형 */
+@media (max-width: 1530px) {
+  .cardContainer {
+    grid-template-columns: repeat(3, 1fr);
+
+    }
 }
-/* 필터 타이틀 */
-h3 {
-  font-size: 22px;
-  margin-bottom: 20px;
+@media (max-width: 1300px) {
+  .filterContainer {
+    grid-template-columns: 410px 600px;
+  }
+
+  .cardContainer {
+    grid-template-columns: repeat(2, 1fr);
+
+    }
 }
 
-.filter_box:first-child {
-  padding-top: 50px;
-}
 
-/* 체크박스 */
-#checkBoxList {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-
-#checkBoxList > label {
-  margin: 5px;
-}
-
-.circle {
-  /* 영역적용 */
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border: 2px solid #ff9922;
-  /* 테두리를 영역안으로 인사이드 */
-  box-sizing: border-box;
-  border-radius: 100%;
-  position: relative;
-  top: 4px;
-  /* 마우스 손모양 */
-  cursor: pointer;
-}
-/* 체크박스가 체크되면  */
-.cBox:checked + .circle {
-  background-color: #ff9922;
-  transition: 0.1s;
-}
-/* 체크박스 안보이기 */
-.cBox {
-  appearance: none;
-}
-
-.text {
-  margin-left: 20px;
-}
-
-/* 슬라이더 */
-
-.slider {
-  margin-left: 35px;
-}
-
-#checkBoxList {
-  display: grid;
-  grid-template-rows: auto;
-}
-
-.MuiSlider-markLabel {
-  font-size: 20px;
-}
-
-/* 버튼 */
-#filterBtn {
-  height: 40px;
-  width: 330px;
-  background-color: var(--main-color);
-  border-radius: 30px;
-  text-align: center;
-  color: white;
-  font-size: 18px;
-}
-
-.result {
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-  justify-content: space-around;
-}
