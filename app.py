@@ -4,19 +4,16 @@ from flask import Flask, render_template, jsonify, request, send_from_directory,
 import json
 from flask_cors import CORS
 
-
 from config import CLIENT_ID, REDIRECT_URI
 from controller import Oauth
+
+from bson.json_util import dumps
 
 app = Flask(__name__, static_folder='./public') # html.index 가 있는 폴더 연결
 CORS(app) # 리액트(3000)랑 파이썬(5000) 주소 오류제거
 
-client = MongoClient('mongodb://dice:dice4@15.164.214.224/', 27017)
-
-# mojoto db 주소 인식안됨
 client = MongoClient('mongodb+srv://mojito_maldives:cocktaillove@cluster0.yfcan.mongodb.net/Cluster0?retryWrites=true&w=majority')
 db = client.dbmojito
-
 
 # html 연결
 @app.route('/')
@@ -27,8 +24,8 @@ def connect():
 # 칵테일
 @app.route('/cocktails', methods=['GET'])
 def cocktail():
-    cocktails = list(db.base.find({}, {'_id': False}))
-    return jsonify({'all_cocktails': cocktails})
+    cocktails = list(db.final_cocktail.find({}))
+    return jsonify({'all_cocktails': dumps(cocktails)})
 
 
 @app.route('/login', methods=['POST','GET'])
@@ -60,3 +57,4 @@ def saving():
 if __name__ == '__main__':
     app.debug = True
     app.run('0.0.0.0', port=5000, debug=True)
+

@@ -51,5 +51,3 @@ desc = list(db.D.find({}, {'_id': 1, 'howtomake': 1}))
 #     except:
 #         print(n, '오류입니다.')
 #         pass
-
-
