@@ -4,30 +4,34 @@ import { useEffect, useState } from "react";
 
 import { useParams } from 'react-router-dom';
 
+//contect
+import { useContext } from 'react';
+import { APIContext } from '../context/APIContext';
+
+
 function Desc() {
     //주소에서 id받기
     const { id } = useParams();
     console.log(id);
 
     // 리덕스로 api받기
-    const cocktail_api = useSelector((state) => state
-    )
-    // useEffect(() => {
-    //     console.log(cocktail_api)
-    // }, []);
+    // const cocktail_api = useSelector((state) => state)
 
-    const n = cocktail_api.findIndex(item => `:${item._id.$oid}` === id)
+    //context API받기
+    const API = useContext(APIContext);
+
+    const n = API.findIndex(item => `:${item._id.$oid}` === id)
     console.log(n)
 
-    const name = cocktail_api[n].name
-    const img = cocktail_api[n].img
-    const base = cocktail_api[n].base
-    const booziness = cocktail_api[n].booziness
-    const sweetness = cocktail_api[n].sweetness
-    const flavor = cocktail_api[n].flavor
-    const hashtag = cocktail_api[n].hashtag
-    const howtomake = cocktail_api[n].korean
-    const ingredients = cocktail_api[n].ingredients
+    const name = API[n].name
+    const img = API[n].img
+    const base = API[n].base
+    const booziness = API[n].booziness
+    const sweetness = API[n].sweetness
+    const flavor = API[n].flavor
+    const hashtag = API[n].hashtag
+    const howtomake = API[n].korean
+    const ingredients = API[n].ingredients
 
 
 

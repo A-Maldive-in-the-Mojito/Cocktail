@@ -8,15 +8,21 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from "react";
 
+//contect
+import { useContext } from 'react';
+import { APIContext } from '../context/APIContext';
+
 
 function Find() {
     const [a, setA] = useState(0);
 
-    const cocktail_api = useSelector((state) => state
-    )
-    // useEffect(() => {
-    //     console.log(cocktail_api)
-    // }, []);
+    // 리덕스
+    // const cocktail_api = useSelector((state) => state
+    // )
+ 
+
+    //context API받기
+    const API = useContext(APIContext);
 
 
     //해시태그Array
@@ -27,10 +33,10 @@ function Find() {
         const ID = event.target.id
 
         for (var i = 0; i < 4; i++) {
-            const findHash0 = cocktail_api.filter(item => item.hashtag[0] === ID)
-            const findHash1 = cocktail_api.filter(item => item.hashtag[1] === ID)
-            const findHash2 = cocktail_api.filter(item => item.hashtag[2] === ID)
-            const findHash3 = cocktail_api.filter(item => item.hashtag[3] === ID)
+            const findHash0 = API.filter(item => item.hashtag[0] === ID)
+            const findHash1 = API.filter(item => item.hashtag[1] === ID)
+            const findHash2 = API.filter(item => item.hashtag[2] === ID)
+            const findHash3 = API.filter(item => item.hashtag[3] === ID)
             // 노가다로 합치기~~!
             const allHash = findHash0.concat(findHash1).concat(findHash2).concat(findHash3)
 
@@ -44,9 +50,14 @@ function Find() {
     const [searchText, setSearchText] = useState("");
     const onChange = (event) => {
         setSearchText(event.target.value);
-        console.log(searchText)
+        // console.log(searchText);
     };
 
+    //검색창 비우기
+    const onSubmit = (event) => {
+        event.preventDefault();
+        setSearchText("");
+    };
 
 
     return (
@@ -56,10 +67,10 @@ function Find() {
                 {/* 검색창 */}
                 <div className={Styles.search_space}>
                     <h3>칵테일 이름이나 재료를 검색해보세요</h3>
-                    <div className={Styles.search_box}>
-                        <input onChange={onChange} className={Styles.search_input} type="text" />
+                    <form onSubmit={onSubmit} className={Styles.search_box}>
+                        <input onChange={onChange} className={Styles.search_input} type="text" value={searchText} />
                         <i ><SearchIcon className={Styles.search_btn} /></i>
-                    </div>
+                    </form>
                 </div>
                 {/* 해시태그 */}
                 <div className={Styles.tags_box}>
@@ -125,7 +136,7 @@ function Find() {
             
             {/* 하단 */}
             <div className={Styles.cardContainer}>
-                {(a == 1 ? hashArray : cocktail_api).filter((val) => {
+                {(a == 1 ? hashArray : API).filter((val) => {
                     if (searchText == "") {
                         return val
                     } else if (val.name.toLowerCase().includes(searchText.toLowerCase())) {

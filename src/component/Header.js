@@ -16,16 +16,14 @@ const URL = 'http://localhost:5000'
 function Header() {
     //로그인 했을때 버튼:logout으로 바꾸기
     const [loginBtn, setLoginBtn] = useState("login")
-    function login() {
-        setLoginBtn("logout")
-    }    
-    
+
+    // 로그인 상태 판별
     function LoginOrOut (){
         const ValToken = window.Kakao.Auth.getAccessToken();
         ValToken == null ? kakaoLogin() : kakaoLogout();
     }
 
-    // 카카오 로그인
+    // 카카오 로그아웃
     function kakaoLogout() {
         if (!window.Kakao.Auth.getAccessToken()) {
           alert('Not logged in.')
@@ -84,12 +82,13 @@ function Header() {
                             .catch((error) => {
                                 // console.log(error);
                                 console.error(error);
-                                alert("카카오 로그인 에러?");
+                                alert("카카오 로그인 에러");
                             });
 
                         // id GET 호출    
                         member(email);
-                        login();
+                        // 버튼 글자 바꾸기
+                        setLoginBtn("logout")
 
                     },
                     fail: function (error) {

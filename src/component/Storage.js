@@ -7,11 +7,16 @@ import { useEffect } from "react";
 
 import { Provider, useSelector, useDispatch } from 'react-redux'; 
 
-
+//contect
+import { useContext } from 'react';
+import { APIContext } from '../context/APIContext';
 
 
 // 백에서 토큰 받아오는 axios
 function Storage() {
+
+    //context API받기
+    const API = useContext(APIContext);
  
 
     return(

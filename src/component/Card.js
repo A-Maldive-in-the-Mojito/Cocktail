@@ -21,14 +21,13 @@ function Card({ id, img, name }) {
     axios.post(
       `${URL}/favourite`,
       {
-          member_id_give: member_id,
+          // member_id_give: member_id,
           name_give: name,
           checked_give: (checked ? 1 : 0)
       })
       .then((res) => {
           console.log(res);
           alert("성공");
-
       })
       .catch((error) => {
           // console.log(error);
