@@ -11,8 +11,14 @@ import Slider from "@mui/material/Slider";
 import { styled } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
 
+import { useContext , useEffect } from 'react';
+import { APIContext } from '../../context/APIContext';
+  
 function Filter() {
-  const cocktail_api = useSelector((state) => state)
+  //  const cocktail_api = useSelector((state) => state)
+  const API = useContext(APIContext);
+  
+
 
   const alcoholMarks = [
     {
@@ -185,7 +191,7 @@ function Filter() {
         {/* <Card /> */}
         {/* 결과 칵테일 카드 */}
         <div className={mainStyles.cardContainer}>
-          {cocktail_api.map((cocktail) =>
+          {API.map((cocktail) =>
           (<Card
             key={cocktail._id.$oid}
             id={cocktail._id.$oid}
