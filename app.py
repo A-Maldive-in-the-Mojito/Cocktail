@@ -53,6 +53,18 @@ def saving():
         member_id = str(member_info[0]['_id'])
         return jsonify({'member_id': member_id})
 
+@app.route('/favourite', methods=['POST'])
+def like():
+    data = request.get_json()
+    member_id_receive = data['member_id_give']
+    name_receive = data['name_give']
+    checked_receive = data['checked_give']
+    if checked_receive == 1:
+        db.member_list.update_one({'_id': member_id_receive}, {'$push': {'store': name_receive}})
+        return jsonify({'msg': '즐겨찾기 완료!'})
+    else:
+        db.member_list.update_one({'_id': member_id_receive}, {'$pull': {'store': name_receive}})
+        return jsonify({'msg': '즐겨찾기를 취소하였습니다.'})
 
 if __name__ == '__main__':
     app.debug = True
