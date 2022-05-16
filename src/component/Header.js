@@ -17,6 +17,13 @@ function Header() {
   //로그인 했을때 버튼:logout으로 바꾸기
   const [loginBtn, setLoginBtn] = useState("login");
 
+  const remainToken = localStorage.length
+        useEffect(() =>{
+            if (remainToken == 1){
+            setLoginBtn("logout")
+            }
+        })
+  
   // 로그인 상태 판별
   function LoginOrOut() {
     const ValToken = window.Kakao.Auth.getAccessToken();
