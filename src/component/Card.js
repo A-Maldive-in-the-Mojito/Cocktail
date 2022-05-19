@@ -13,16 +13,16 @@ function Card({ id, img, name }) {
   // 임시 로컬주소
   const URL = 'http://localhost:5000'
   const [checked, setChecked] = useState(false)
-  const MembersID = useSelector(state => state);
+  const MemberEmail = useSelector(state => state);
 
 
   const onClick = () => {
     setChecked(current => !current);
-      console.log(MembersID)
+      console.log(MemberEmail)
     axios.post(
       `${URL}/favourite`,
       {
-          member_id_give: MembersID,
+          email_give: MemberEmail.email.email,
           name_give: name,
           checked_give: (checked ? 1 : 0)
       })
