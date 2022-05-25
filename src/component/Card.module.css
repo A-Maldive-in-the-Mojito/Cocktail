@@ -1,5 +1,5 @@
   /* .card {
-    flex-basis: auto;
+
   } */
   .imgContainer {
     display: grid;
@@ -10,6 +10,8 @@
     box-shadow: var(--main-box-shadow);
     border-radius: 40px;
   }
+
+
   .imgCocktail {
     width: 100px;
     height: 180px;
@@ -23,10 +25,21 @@
     /* position: absolute; */
   }
 
-  .star_icon{
+  .true_star_icon{
     display: block;
-    transform: scale(5);
+    transform: scale(2);
     background-color: yellow;
+    position: relative;
+    /* top: 40px; */
+    
+    left: 46%;
+  
+  }
+  .false_star_icon{
+    display: block;
+    transform: scale(2);
+    background-color: white;
+
   }
 .molba {
     width: 50px;
