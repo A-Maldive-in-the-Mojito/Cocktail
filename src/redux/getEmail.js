@@ -12,7 +12,7 @@ const getEmailReducer = createSlice({
   }
 });
 
-export const { getEmail, removeEmail } = getEmailReducer.actions;
 
+export const { getEmail, removeEmail } = getEmailReducer.actions;
 
 export default getEmailReducer;
