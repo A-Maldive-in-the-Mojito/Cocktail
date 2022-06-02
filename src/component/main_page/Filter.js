@@ -195,7 +195,7 @@ function Filter() {
           (<Card
             key={cocktail._id.$oid}
             id={cocktail._id.$oid}
-            img={cocktail.img}
+            img={cocktail.S3_img}
             name={cocktail.name}
           />
           ))}
