@@ -5,58 +5,79 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import StarBorderIcon from '@mui/icons-material/StarBorder';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import axios from "axios";
 
 import { connect, useSelector } from "react-redux";
 import { Construction } from '@mui/icons-material';
+
 // 임시 로컬주소
 const URL = 'http://localhost:5000'
 
 
-// const postAxios = async (MemberEmail, name, checked) => {
-//   axios.post(
-//     `${URL}/favourite`,
-//     {
-//         email_give: MemberEmail.email.email,
-//         name_give: name,
-//         checked_give: (checked ? 1 : 0)
-//     })
-//     .then((res) => {
-//         console.log(res);
-//         alert("통신성공");
-//     })
-//     .catch((error) => {
-//         // console.log(error);
-//         console.error(error);
-
-//   });
-// };
-
-
-// const useCheck = ({name}) => {
-//   const [checked, setChecked] = useState(false);
-//   const MemberEmail = useSelector(state => state);
-
-//   useEffect(() => {
-//     // postAxios(MemberEmail, name, checked);
-//     console.log(name, checked);
-//   }, [checked])
-// };
-
 function Card({ id, img, name }) {
-  const use = useCheck(name)
-  // const [checked, setChecked] = useState(false);
+  const URL = 'http://localhost:5000'
+  // 리덕스 email 
+  const reduxState = useSelector(state => state);
+  const email = reduxState.email.email
+  const storeCocktail = reduxState.store.store
+  
 
-  // const MemberEmail = useSelector(state => state);
+  // console.log(email);
+  
+  // const getMemberInfo = async () => {
+  //   const response = await axios.get(`${URL}/login?email_give=${email}`);
+  //   const memberInfo = JSON.parse(response.data.member_info);
+  //   console.log(memberInfo);  
+  // };
+
+  useEffect(()=>{
+    If();
+  },[])
+
+  // 렌더링용 useState
+  const [render, setRender] = useState(false);
+  // 데이터변경 useRef
+  const checked = useRef(false);
+
+  //별표표시 조건문-수정해야함
+  const If = () => {
+  if (name == storeCocktail.map(res => res)) {
+    setRender(true);
+    checked.current = true;
+    return
+    console.log(render)
+    }
+  };
 
   
-  const OnClick = () => {
-    use.setChecked(current => !current)
-    // postAxios(MemberEmail, name, checked);
 
-    // console.log(MemberEmail)
-    // console.log(use.checked);
+  function onClick(){
+    checked.current = !checked.current;
+    console.log(checked);
+    //렌더링
+    setRender((current) => !current);
+    axiosPost();
+    // axiosGet()-> 디스패치
+    console.log(storeCocktail)
+  };
+
+  const axiosPost = () => {
+    axios.post(
+      `${URL}/favourite`,
+      {
+          email_give: email,
+          name_give: name,
+          checked_give: (checked.current? parseInt(1) : parseInt(0))
+      })
+      .then((res) => {
+          console.log(res);
+          alert("통신성공");
+      })
+      .catch((error) => {
+          // console.log(error);
+          console.error(error);
+      });
   };
 
 
@@ -66,7 +87,7 @@ function Card({ id, img, name }) {
   return (
     <div className={cardStyles.card}>
       {/* {hover == 0 ? "" : <StarBorderIcon onClick={onClick} className={cardStyles.star_icon} />}       */}
-      <StarBorderIcon onClick={OnClick} className={`${ use.checked ? cardStyles.true_star_icon : cardStyles.false_star_icon}`}  />
+      <StarBorderIcon onClick={() => {onClick()}} className={`${ render ? cardStyles.true_star_icon : cardStyles.false_star_icon}`}  />
       <Link to={`/desc:${id}`}>
         <div
           onMouseOver={() => setHover(1)}

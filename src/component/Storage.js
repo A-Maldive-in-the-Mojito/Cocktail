@@ -10,6 +10,8 @@ import { Provider, useSelector, useDispatch } from 'react-redux';
 //contect
 import { useContext } from 'react';
 import { APIContext } from '../context/APIContext';
+import { store } from '../redux/store';
+import storage from 'redux-persist/lib/storage';
 
 
 // 백에서 토큰 받아오는 axios
@@ -17,14 +19,21 @@ function Storage() {
 
     //context API받기
     const API = useContext(APIContext);
+    const useID = useSelector((state) => state)
+    console.log(useID);
+
+
  
 
     return(
         <div>
         <div className='wrapper'>
-            <Link to="/desc">
-                <Card />
-            </Link>
+            {/* <Link to="/desc">
+                <Card key={cocktail._id.$oid}
+                    id={cocktail._id.$oid}
+                    img={cocktail.img}
+                    name={cocktail.name}/>
+            </Link> */}
             
         </div>
         

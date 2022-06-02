@@ -66,7 +66,7 @@ function Find() {
             <div>
                 {/* 검색창 */}
                 <div className={Styles.search_space}>
-                    <h3>칵테일 이름이나 재료를 검색해보세요</h3>
+                    <h3>칵테일 이름 또는 재료를 검색해보세요</h3>
                     <form onSubmit={onSubmit} className={Styles.search_box}>
                         <input onChange={onChange} className={Styles.search_input} type="text" value={searchText} />
                         <i ><SearchIcon className={Styles.search_btn} /></i>
@@ -146,7 +146,7 @@ function Find() {
                 (<Card
                     key={cocktail._id.$oid}
                     id={cocktail._id.$oid}
-                    img={cocktail.img}
+                    img={cocktail.S3_img}
                     name={cocktail.name}
                 />
                 ))}

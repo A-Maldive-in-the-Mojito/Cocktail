@@ -13,11 +13,12 @@ import { useEffect, useState } from "react";
 //리덕스
 import { connect, useSelector } from "react-redux";
 import { getEmail, removeEmail } from "../redux/getEmail.js"
+import { getStore } from "../redux/getStore.js"
 
 // 임시 로컬주소
 const URL = 'http://localhost:5000'
 
-function Header({ dispatchGetEmail }) {
+function Header({ dispatchGetEmail, dispatchGetStore }) {
 
     const useID = useSelector((state) => state)
 
@@ -54,15 +55,20 @@ function Header({ dispatchGetEmail }) {
 
 
 
-    // id GET
+    // member GET
     // 보낼 데이터를 URL에 넣음
-    const getMemberID = async (email) => {
-        const { data: { _id } } = await axios.get(`${URL}/login?email_give=${email}`);
-        // console.log(member_id);
-                                         
+    const getMemberInfo = async (email) => {
+        const response = await axios.get(`${URL}/login?email_give=${email}`);
+        const memberInfo = JSON.parse(response.data.member_info);
+        const storeCocktail = memberInfo[0].store
+        // console.log(memberInfo); 
+        console.log(storeCocktail);                               
         // 리덕스 디스패치
-        // dispatchID(member_id);
+        dispatchGetStore(storeCocktail);
+
     };
+   
+    
 
     // kakao login api
     function kakaoLogin() {
@@ -75,8 +81,8 @@ function Header({ dispatchGetEmail }) {
                     success: (res) => {
                         const kakao_account = res.kakao_account;
                         console.log(kakao_account.email);
-                        console.log(kakao_account.profile.nickname);
-                        console.log(kakao_account.profile.profile_image_url);
+                        // console.log(kakao_account.profile.nickname);
+                        // console.log(kakao_account.profile.profile_image_url);
 
                         const email = kakao_account.email
                         const nickname = kakao_account.profile.nickname
@@ -103,8 +109,9 @@ function Header({ dispatchGetEmail }) {
                             });
 
                         // id GET 호출    
-                        // getMemberID(email);
+                        getMemberInfo(email);
                         dispatchGetEmail(email);
+                        
                         
 
                         // 버튼 글자 바꾸기
@@ -180,7 +187,8 @@ function Header({ dispatchGetEmail }) {
 function mapDispatchToProps(dispatch) {
     return {
         dispatchGetEmail: email => dispatch(getEmail(email)),
-        dispatchRemoveEmail: email => dispatch(removeEmail(email))
+        dispatchRemoveEmail: email => dispatch(removeEmail(email)),
+        dispatchGetStore: array => dispatch(getStore(array))
     };
 }
 
