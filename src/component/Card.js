@@ -14,7 +14,6 @@ import { Construction } from '@mui/icons-material';
 // 임시 로컬주소
 const URL = 'http://localhost:5000'
 
-
 function Card({ id, img, name }) {
   const URL = 'http://localhost:5000'
   // 리덕스 email 
@@ -24,35 +23,25 @@ function Card({ id, img, name }) {
   
 
   // console.log(email);
-  
-  // const getMemberInfo = async () => {
-  //   const response = await axios.get(`${URL}/login?email_give=${email}`);
-  //   const memberInfo = JSON.parse(response.data.member_info);
-  //   console.log(memberInfo);  
-  // };
 
-  useEffect(()=>{
+  useEffect(() => {
     If();
-  },[])
+  }, [])
 
+  // console.log(name)
   // 렌더링용 useState
   const [render, setRender] = useState(false);
   // 데이터변경 useRef
   const checked = useRef(false);
 
-  //별표표시 조건문-수정해야함
+
+  // 저장한 칵테일 별표 표시 
   const If = () => {
-  if (name == storeCocktail.map(res => res)) {
-    setRender(true);
-    checked.current = true;
-    return
-    console.log(render)
-    }
+    storeCocktail.map(res => res == name ? (checked.current = true, setRender(true)) : null)
   };
 
-  
 
-  function onClick(){
+  function onClick() {
     checked.current = !checked.current;
     console.log(checked);
     //렌더링
@@ -66,17 +55,17 @@ function Card({ id, img, name }) {
     axios.post(
       `${URL}/favourite`,
       {
-          email_give: email,
-          name_give: name,
-          checked_give: (checked.current? parseInt(1) : parseInt(0))
+        email_give: email,
+        name_give: name,
+        checked_give: (checked.current ? parseInt(1) : parseInt(0))
       })
       .then((res) => {
-          console.log(res);
-          alert("통신성공");
+        console.log(res);
+        alert("통신성공");
       })
       .catch((error) => {
-          // console.log(error);
-          console.error(error);
+        // console.log(error);
+        console.error(error);
       });
   };
 
@@ -87,7 +76,7 @@ function Card({ id, img, name }) {
   return (
     <div className={cardStyles.card}>
       {/* {hover == 0 ? "" : <StarBorderIcon onClick={onClick} className={cardStyles.star_icon} />}       */}
-      <StarBorderIcon onClick={() => {onClick()}} className={`${ render ? cardStyles.true_star_icon : cardStyles.false_star_icon}`}  />
+      <StarBorderIcon onClick={() => { onClick() }} className={`${render ? cardStyles.true_star_icon : cardStyles.false_star_icon}`} />
       <Link to={`/desc:${id}`}>
         <div
           onMouseOver={() => setHover(1)}

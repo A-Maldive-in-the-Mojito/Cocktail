@@ -13,7 +13,6 @@ import { useEffect, useState } from "react";
 //리덕스
 import { connect, useSelector } from "react-redux";
 import { getEmail, removeEmail } from "../redux/getEmail.js"
-import { getStore } from "../redux/getStore.js"
 
 // 임시 로컬주소
 const URL = 'http://localhost:5000'
@@ -57,16 +56,16 @@ function Header({ dispatchGetEmail, dispatchGetStore }) {
 
     // member GET
     // 보낼 데이터를 URL에 넣음
-    const getMemberInfo = async (email) => {
-        const response = await axios.get(`${URL}/login?email_give=${email}`);
-        const memberInfo = JSON.parse(response.data.member_info);
-        const storeCocktail = memberInfo[0].store
-        // console.log(memberInfo); 
-        console.log(storeCocktail);                               
-        // 리덕스 디스패치
-        dispatchGetStore(storeCocktail);
+    // const getMemberInfo = async (email) => {
+    //     const response = await axios.get(`${URL}/login?email_give=${email}`);
+    //     const memberInfo = JSON.parse(response.data.member_info);
+    //     const storeCocktail = memberInfo[0].store
+    //     // console.log(memberInfo); 
+    //     console.log(storeCocktail);                               
+    //     // 리덕스 디스패치
+    //     dispatchGetStore(storeCocktail);
 
-    };
+    // };
    
     
 
@@ -75,7 +74,7 @@ function Header({ dispatchGetEmail, dispatchGetStore }) {
         window.Kakao.Auth.login({
             scope: 'profile_nickname, profile_image', //동의항목 페이지에 있는 개인정보 보호 테이블의 활성화된 ID값을 넣습니다.
             success: function (response) {
-                console.log(response) // 로그인 성공하면 받아오는 데이터
+                // console.log(response) // 로그인 성공하면 받아오는 데이터
                 window.Kakao.API.request({ // 사용자 정보 가져오기
                     url: '/v2/user/me',
                     success: (res) => {
@@ -109,7 +108,7 @@ function Header({ dispatchGetEmail, dispatchGetStore }) {
                             });
 
                         // id GET 호출    
-                        getMemberInfo(email);
+                        // getMemberInfo(email);
                         dispatchGetEmail(email);
                         
                         
@@ -188,7 +187,6 @@ function mapDispatchToProps(dispatch) {
     return {
         dispatchGetEmail: email => dispatch(getEmail(email)),
         dispatchRemoveEmail: email => dispatch(removeEmail(email)),
-        dispatchGetStore: array => dispatch(getStore(array))
     };
 }
 
