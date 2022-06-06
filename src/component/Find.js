@@ -5,22 +5,42 @@ import cardStyles from './Card.module.css'
 import Card from './Card';
 
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
+// 리덕스
+import { useSelector, connect } from 'react-redux';
+// 리덕스 액션
+import { getStore } from "../redux/getStore.js"
+import axios from "axios";
+
 
 //contect
 import { useContext } from 'react';
 import { APIContext } from '../context/APIContext';
 
+const URL = 'http://localhost:5000'
 
-function Find() {
+function Find({ dispatchGetStore }) {
+    // 칵테일 즐겨찾기 데이터 get
+    // 이메일 가져오기
+    const reduxState = useSelector(state => state);
+    const email = reduxState.email.email
+
+    const getMemberInfo = async (email) => {
+        const response = await axios.get(`${URL}/login?email_give=${email}`);
+        const memberInfo = JSON.parse(response.data.member_info);
+        const storeCocktail = memberInfo[0].store
+        console.log(storeCocktail);
+
+        dispatchGetStore(storeCocktail);
+    };
+
+    useEffect(() => {
+        getMemberInfo(email);
+    }, [])
+
+
     const [a, setA] = useState(0);
-
-    // 리덕스
-    // const cocktail_api = useSelector((state) => state
-    // )
- 
-
+    const [isPending, startTransition] = useTransition()
     //context API받기
     const API = useContext(APIContext);
 
@@ -119,40 +139,38 @@ function Find() {
                         <span className={Styles.hashtag}>#뜨밤🔥</span>
                     </label>
 
-                    {/* <input  onClick={onClick} id="house-party" className={Styles.hashtag}>#홈파티🏡</input>
-                    <span onClick={onClick} id="allseason-classics" className={Styles.hashtag}>#데일리</span>
-                    <span onClick={onClick} id="christmas" className={Styles.hashtag}>#산타랑_건배🎅🏻</span>
-                    <span onClick={onClick} id="movie-nights" className={Styles.hashtag}>#무비나잇🎬</span>
-                    <span onClick={onClick} id="new-years-eve" className={Styles.hashtag}>#해피뉴이어🎆</span>
-                    <span onClick={onClick} id="downtown" className={Styles.hashtag}>#불금🌈</span>
-                    <span className={Styles.hashtag}>#핫써머🏖️</span>
-                    <span onClick={onClick} id="birthday" className={Styles.hashtag}>#HBD🎂</span>
-                    <span onClick={onClick} id="time-for-you" className={Styles.hashtag}>#나를위한시️간🕯</span>
-                    <span onClick={onClick} id="valentines-day" className={Styles.hashtag}>#발렌타인데이🍷</span>
-                    <span onClick={onClick} id="anniversary" className={Styles.hashtag}>#뜨밤🔥</span> */}
 
                 </div>
             </div>
-            
+
             {/* 하단 */}
             <div className={Styles.cardContainer}>
-                {(a == 1 ? hashArray : API).filter((val) => {
-                    if (searchText == "") {
-                        return val
-                    } else if (val.name.toLowerCase().includes(searchText.toLowerCase())) {
-                        return val
-                    }
-                }).map((cocktail) =>
-                (<Card
-                    key={cocktail._id.$oid}
-                    id={cocktail._id.$oid}
-                    img={cocktail.S3_img}
-                    name={cocktail.name}
-                />
-                ))}
+                {
+                    (a == 1 ? hashArray : API).filter((val) => {
+                        if (searchText == "") {
+                            return val
+                        } else if (val.name.toLowerCase().includes(searchText.toLowerCase())) {
+                            return val
+                        }
+                    }).map((cocktail) =>
+                    (<Card
+                        key={cocktail._id.$oid}
+                        id={cocktail._id.$oid}
+                        img={cocktail.S3_img}
+                        name={cocktail.name}
+                    />                    
+                    ))
+                
+                }
             </div>
 
         </div>
     );
 }
-export default Find;
+function mapDispatchToProps(dispatch) {
+    return {
+        dispatchGetStore: array => dispatch(getStore(array))
+    };
+}
+
+export default connect(null, mapDispatchToProps)(Find);
