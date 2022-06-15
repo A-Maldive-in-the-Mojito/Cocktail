@@ -5,27 +5,76 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import StarBorderIcon from '@mui/icons-material/StarBorder';
-import { useEffect, useState } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import axios from "axios";
-import { useSelector } from 'react-redux';
 
-function Card({ id, img, name }) {
-  // 임시 로컬주소
+import { connect, useSelector } from "react-redux";
+import { Construction } from '@mui/icons-material';
+import { getStore, removeStore } from "../redux/getStore.js"
+
+
+function Card({ id, img, name, dispatchGetStore }) {
   const URL = 'http://localhost:5000'
-  const [checked, setChecked] = useState(false)
-  const MemberEmail = useSelector(state => state);
+  // 리덕스 email, store 값 가져오기
+  const reduxState = useSelector(state => state)
+  const email = reduxState.email
+  const storeCocktail = reduxState.store
+  //onClick 시 db member 의 store 값 가져오기 axios
+  const getMemberInfo = async () => {
+    const response = await axios.get(`${URL}/login?email_give=${email}`);
+    const memberInfo = JSON.parse(response.data.member_info);
+    const DBstoreCocktail = memberInfo[0].store
+    console.log(DBstoreCocktail);  
+    dispatchGetStore(DBstoreCocktail)
+  };
+
+  // 렌더링용 useState
+  const [render, setRender] = useState(false);
+  // 데이터변경 useRef
+  const checked = useRef(false);
+    
+  // 로그인체크 및 로그인/아웃에 따른 별표표기 함수 및
+  // redux store 값에 반응하는 useEffect
+      function If() {
+        if(storeCocktail !== null){
+          return(
+            storeCocktail.map(res => 
+              res === name ? (setRender(true), checked.current=true):null
+              )
+            )
+        } else {
+          return (
+            setRender(false),
+            checked.current=false
+          )
+        }
+      }
+      
+  useEffect(() => If(), [storeCocktail])
+
   
   function onClick(){
-    setChecked((current) => !current);
-    console.log(MemberEmail);
+    //로그인 상태 판별 토큰 가져오기
+    const ValToken = window.Kakao.Auth.getAccessToken();
+    if (ValToken == null) {
+      alert("로그인 먼저 해주세요😎")
+    } else {
+    checked.current = !checked.current;
+    //별표렌더링 및 db 에 post
+    setRender((current) => !current);
+    axiosPost();
+    //redux store 값
+    console.log(storeCocktail)
+    }
   };
+
   const axiosPost = () => {
     axios.post(
       `${URL}/favourite`,
       {
-          email_give: MemberEmail.email.email,
+          email_give: email,
           name_give: name,
-          checked_give: (checked? parseInt(1) : parseInt(0))
+          checked_give: (checked.current? parseInt(1) : parseInt(0))
       })
       .then((res) => {
           console.log(res);
@@ -35,27 +84,28 @@ function Card({ id, img, name }) {
           // console.log(error);
           console.error(error);
       });
-  }
+      setTimeout(() => getMemberInfo(), 500);
+  };
 
-  useEffect(() => {
-    if(checked) {
-      axiosPost();
-    }    },[checked])
 
-  
+  const [hover, setHover] = useState(0);
+
+
   return (
     <div className={cardStyles.card}>
-      <div  onClick={() => {onClick()}}>
-      <StarBorderIcon className={cardStyles.star_icon}/>
-      </div>
+      {/* {hover == 0 ? "" : <StarBorderIcon onClick={onClick} className={cardStyles.star_icon} />}       */}
+      <StarBorderIcon onClick={() => {onClick()}} className={`${ render ? cardStyles.true_star_icon : cardStyles.false_star_icon}`}  />
       <Link to={`/desc:${id}`}>
-        <div className={cardStyles.imgContainer}>
+        <div
+          onMouseOver={() => setHover(1)}
+          onMouseOut={() => setHover(0)}
+          className={cardStyles.imgContainer}>
           <img className={cardStyles.imgCocktail} src={img} />
           <h3 className={cardStyles.cocktailName}>{name}</h3>
         </div>
       </Link>
-    
-      
+
+
 
       {/* 
       <div className={styles.imgContainer}>
@@ -72,6 +122,12 @@ Card.propTypes = {
   id: PropTypes.string.isRequired,
   img: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired
+};
+
+function mapDispatchToProps(dispatch) {
+  return {
+      dispatchGetStore: array => dispatch(getStore(array))
+  };
 }
 
-export default Card;
+export default connect(null, mapDispatchToProps) (Card);
