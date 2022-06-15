@@ -10,21 +10,14 @@ import Storage from './component/Storage.js';
 import Login from './component/Login.js';
 import Home from './component/Home.js';
 import Desc from './component/Desc.js';
-import Oauth from './Oauth.js';
-// 리덕스
-import { useSelector, useDispatch, connect } from 'react-redux';
-//리덕스 액션
-import { getStore } from "./redux/getStore.js"
 // import { PersistGate } from 'redux-persist/integration/react';
 
 //라우터
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import $ from "jquery";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-import { code } from './Oauth.js'
 
 // context
 import { createContext } from 'react';
@@ -33,29 +26,8 @@ import { APIContext } from './context/APIContext'
 
 const URL = 'http://localhost:5000'
 
-function App({ dispatchGetStore }) {
+function App() {
     let [cocktailsInfo, setcocktailsInfo] = useState([]);
-
-    // 이메일 가져오기
-    const reduxState = useSelector(state => state);
-    const email = reduxState.email.email
-    // console.log(email)
-
-    // 로그인한 멤버 저장칵테일 GET
-    const getMemberInfo = async (email) => {
-        console.log(email)
-        const response = await axios.get(`${URL}/login?email_give=${email}`);
-        const memberInfo = JSON.parse(response.data.member_info);
-        const storeCocktail = memberInfo[0].store
-        console.log(storeCocktail);
-        
-        dispatchGetStore(storeCocktail);
-    };
-    // axios get 호출
-    useEffect(() => {
-        getMemberInfo(email)
-    }, []);
-
 
     // API GET
     const getCocktails = async () => {
@@ -63,21 +35,11 @@ function App({ dispatchGetStore }) {
         const cocktails = JSON.parse(all_cocktails)
 
         setcocktailsInfo(cocktails);
-
-        //redux store로 보내기      
-        // getArray(cocktails); 
-        // console.log(store.getState());    
     };
-
     useEffect(() => {
         getCocktails()
     }, []);
-
-    console.log(store.getState());
-
-    // const useID = useSelector((state) => state)
-    // console.log(useID);
-
+   
 
     return (
         <BrowserRouter>
@@ -93,7 +55,6 @@ function App({ dispatchGetStore }) {
                             <Route path="/home" element={<Home />} /> //고향칵테일
                             <Route path="/storage" element={<Storage />} /> //내 칵테일
                             <Route path="/desc:id" element={<Desc />} />
-                            <Route path="/oauth" element={<Oauth />} />
                         </Routes>
                     </div>
                 </div>
@@ -104,11 +65,5 @@ function App({ dispatchGetStore }) {
     );
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        dispatchGetStore: array => dispatch(getStore(array))
-    };
-}
 
-export default connect(null, mapDispatchToProps)(App);
-// export default App;
+export default App;
