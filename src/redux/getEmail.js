@@ -2,12 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const getEmailReducer = createSlice({
   name: "getEmail",
-  initialState: {email: ''},
+  initialState: [],
   reducers: {
     getEmail: (state, action) => {
-      { state.email = action.payload };
+      return (state = action.payload );
     },
-    removeEmail: (state, action) => state= [],
+    removeEmail: (state, action) => {
+      return (state = null)
+    },
     default: (state, action) => {return {...state}}
   }
 });
