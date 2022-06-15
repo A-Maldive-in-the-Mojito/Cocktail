@@ -10,63 +10,81 @@ import axios from "axios";
 
 import { connect, useSelector } from "react-redux";
 import { Construction } from '@mui/icons-material';
+import { getStore, removeStore } from "../redux/getStore.js"
 
-// 임시 로컬주소
-const URL = 'http://localhost:5000'
 
-function Card({ id, img, name }) {
+function Card({ id, img, name, dispatchGetStore }) {
   const URL = 'http://localhost:5000'
-  // 리덕스 email 
-  const reduxState = useSelector(state => state);
-  const email = reduxState.email.email
-  const storeCocktail = reduxState.store.store
-  
+  // 리덕스 email, store 값 가져오기
+  const reduxState = useSelector(state => state)
+  const email = reduxState.email
+  const storeCocktail = reduxState.store
+  //onClick 시 db member 의 store 값 가져오기 axios
+  const getMemberInfo = async () => {
+    const response = await axios.get(`${URL}/login?email_give=${email}`);
+    const memberInfo = JSON.parse(response.data.member_info);
+    const DBstoreCocktail = memberInfo[0].store
+    console.log(DBstoreCocktail);  
+    dispatchGetStore(DBstoreCocktail)
+  };
 
-  // console.log(email);
-
-  useEffect(() => {
-    If();
-  }, [])
-
-  // console.log(name)
   // 렌더링용 useState
   const [render, setRender] = useState(false);
   // 데이터변경 useRef
   const checked = useRef(false);
+    
+  // 로그인체크 및 로그인/아웃에 따른 별표표기 함수 및
+  // redux store 값에 반응하는 useEffect
+      function If() {
+        if(storeCocktail !== null){
+          return(
+            storeCocktail.map(res => 
+              res === name ? (setRender(true), checked.current=true):null
+              )
+            )
+        } else {
+          return (
+            setRender(false),
+            checked.current=false
+          )
+        }
+      }
+      
+  useEffect(() => If(), [storeCocktail])
 
-
-  // 저장한 칵테일 별표 표시 
-  const If = () => {
-    storeCocktail.map(res => res == name ? (checked.current = true, setRender(true)) : null)
-  };
-
-
-  function onClick() {
+  
+  function onClick(){
+    //로그인 상태 판별 토큰 가져오기
+    const ValToken = window.Kakao.Auth.getAccessToken();
+    if (ValToken == null) {
+      alert("로그인 먼저 해주세요😎")
+    } else {
     checked.current = !checked.current;
-    console.log(checked);
-    //렌더링
+    //별표렌더링 및 db 에 post
     setRender((current) => !current);
     axiosPost();
-    // axiosGet()-> 디스패치
+    //redux store 값
     console.log(storeCocktail)
+    }
   };
 
   const axiosPost = () => {
     axios.post(
       `${URL}/favourite`,
       {
-        email_give: email,
-        name_give: name,
-        checked_give: (checked.current ? parseInt(1) : parseInt(0))
+          email_give: email,
+          name_give: name,
+          checked_give: (checked.current? parseInt(1) : parseInt(0))
       })
       .then((res) => {
-        console.log(res);
-        alert("통신성공");
+          console.log(res);
+          alert("통신성공");
       })
       .catch((error) => {
-        // console.log(error);
-        console.error(error);
+          // console.log(error);
+          console.error(error);
       });
+      setTimeout(() => getMemberInfo(), 500);
   };
 
 
@@ -76,7 +94,7 @@ function Card({ id, img, name }) {
   return (
     <div className={cardStyles.card}>
       {/* {hover == 0 ? "" : <StarBorderIcon onClick={onClick} className={cardStyles.star_icon} />}       */}
-      <StarBorderIcon onClick={() => { onClick() }} className={`${render ? cardStyles.true_star_icon : cardStyles.false_star_icon}`} />
+      <StarBorderIcon onClick={() => {onClick()}} className={`${ render ? cardStyles.true_star_icon : cardStyles.false_star_icon}`}  />
       <Link to={`/desc:${id}`}>
         <div
           onMouseOver={() => setHover(1)}
@@ -105,4 +123,11 @@ Card.propTypes = {
   img: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired
 };
-export default Card;
+
+function mapDispatchToProps(dispatch) {
+  return {
+      dispatchGetStore: array => dispatch(getStore(array))
+  };
+}
+
+export default connect(null, mapDispatchToProps) (Card);
