@@ -11,14 +11,12 @@ import Slider from "@mui/material/Slider";
 import { styled } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
 
-import { useContext , useEffect } from 'react';
+import { useContext, useEffect, useState, useRef } from 'react';
 import { APIContext } from '../../context/APIContext';
-  
+
 function Filter() {
   //  const cocktail_api = useSelector((state) => state)
   const API = useContext(APIContext);
-  
-
 
   const alcoholMarks = [
     {
@@ -87,6 +85,110 @@ function Filter() {
   }
   )
 
+  // 테이스팅 값
+  // useRef
+  const tastingValue = useRef([]);
+  const tastingOnChange = (event) => {
+    const eventValue = event.target.value
+    const checked = event.target.checked
+     //useRef에 저장
+    checked ? tastingValue.current = [eventValue, ...tastingValue.current] : tastingValue.current = tastingValue.current.filter(val => val != eventValue);
+  };
+
+
+  // 베이스 값
+  const baseValue = useRef([]);
+  const baseOnChange = (event) => {
+    const eventValue = event.target.value
+    const baseChecked = event.target.checked
+    baseChecked ? baseValue.current = [eventValue, ...baseValue.current] : baseValue.current = baseValue.current.filter(val => val != eventValue);
+  };
+
+
+
+  // 얼마나 취할래 값
+  const boozyValue = useRef(10);
+  const boozyOnChange = (event) => {
+    const parseBoozyValue = parseInt(event.target.value)
+    boozyValue.current = parseBoozyValue * 2
+  };
+
+
+  // sweet or dry 값
+  const sweetValue = useRef(6);
+  const sweetOnchange = (event) => {
+    const parseSweetValue = parseInt(event.target.value)
+    sweetValue.current = parseSweetValue * 2
+  };
+ 
+
+  // 필터링
+  const [useArry, setUseArray] = useState([]);
+
+  const searchOnClick = () => {
+    console.log(tastingValue.current);
+    console.log(baseValue.current);
+    console.log(boozyValue.current);
+    console.log(sweetValue.current);
+
+    // 테이스팅
+    // 빈배열 만들기
+    const tastingArray = [];
+    // 결과값 반복문
+    for (let tValue of tastingValue.current) {
+      const search = API.filter(val => val.flavor.includes(tValue));
+      tastingArray.push(search)
+    }
+    console.log(tastingArray)
+    const concatTA = tastingArray[0].concat(tastingArray[1]).concat(tastingArray[2]).concat(tastingArray[3]).concat(tastingArray[4]);
+    console.log(concatTA)
+
+    // 베이스
+    const baseArray = [];
+    for (let bValue of baseValue.current) {
+      const search = API.filter(val => val.base.includes(bValue));
+      // console.log(search)
+      baseArray.push(search)
+    }
+    console.log(baseArray)
+    const concatBA = baseArray[0].concat(baseArray[1]).concat(baseArray[2]).concat(baseArray[3]).concat(baseArray[4]);
+    console.log(concatBA)
+
+    // 얼마나 취할래
+    const boozyArray = [];
+    const searchBoozy = API.filter(val => val.booziness <= boozyValue.current);
+    // console.log(search)
+    boozyArray.push(searchBoozy);
+    console.log(boozyArray)
+
+    // sweet or dry
+    const sweetArray = [];
+    const searchSweet = API.filter(val => val.sweetness <= sweetValue.current);
+    // console.log(search)
+    sweetArray.push(searchSweet);
+    console.log(sweetArray)
+
+
+    // 네 가지 항목 필터링
+    const allFilter = concatTA.filter(
+      val => concatBA.includes(val)
+    ).filter(
+      val => boozyArray[0].includes(val)
+    ).filter(
+      val => sweetArray[0].includes(val)
+    );
+    console.log(allFilter);
+
+    // 중복제거
+    const removeDuplicate = Array.from(new Set(allFilter));
+    console.log(removeDuplicate);
+    setUseArray(removeDuplicate);
+    // setUseArray(removeDuplicate.filter(item => item !== undefined));
+
+
+
+  }
+
   return (
     <div className={mainStyles.filterSection}>
       <h2>Filter Section</h2>
@@ -98,27 +200,27 @@ function Filter() {
             <h3>테이스팅 노트</h3>
             <div id={mainStyles.checkBoxList}>
               <label>
-                <input type="checkbox" className={mainStyles.cBox} />
+                <input onChange={tastingOnChange} value="프루티" type="checkbox" className={mainStyles.cBox} />
                 <i className={mainStyles.circle}></i>
                 <span className={mainStyles.text}>과일</span>
               </label>
               <label>
-                <input type="checkbox" className={mainStyles.cBox} />
+                <input onChange={tastingOnChange} value="허브" type="checkbox" className={mainStyles.cBox} />
                 <i className={mainStyles.circle}></i>
                 <span className={mainStyles.text}>허브</span>
               </label>
               <label>
-                <input type="checkbox" className={mainStyles.cBox} />
+                <input onChange={tastingOnChange} value="아이셔" type="checkbox" className={mainStyles.cBox} />
                 <i className={mainStyles.circle}></i>
                 <span className={mainStyles.text}>아이셔</span>
               </label>
               <label>
-                <input type="checkbox" className={mainStyles.cBox} />
+                <input onChange={tastingOnChange} value="아이써" type="checkbox" className={mainStyles.cBox} />
                 <i className={mainStyles.circle}></i>
                 <span className={mainStyles.text}>아이써</span>
               </label>
               <label>
-                <input type="checkbox" className={mainStyles.cBox} />
+                <input onChange={tastingOnChange} value="프레시" type="checkbox" className={mainStyles.cBox} />
                 <i className={mainStyles.circle}></i>
                 <span className={mainStyles.text}>프레시</span>
               </label>
@@ -128,27 +230,27 @@ function Filter() {
             <h3>베이스</h3>
             <div id={mainStyles.checkBoxList}>
               <label>
-                <input type="checkbox" className={mainStyles.cBox} />
+                <input onChange={baseOnChange} value="gin" type="checkbox" className={mainStyles.cBox} />
                 <i className={mainStyles.circle}></i>
                 <span className={mainStyles.text}>진</span>
               </label>
               <label>
-                <input type="checkbox" className={mainStyles.cBox} />
+                <input onChange={baseOnChange} value="rum" type="checkbox" className={mainStyles.cBox} />
                 <i className={mainStyles.circle}></i>
                 <span className={mainStyles.text}>럼</span>
               </label>
               <label>
-                <input type="checkbox" className={mainStyles.cBox} />
+                <input onChange={baseOnChange} value="whiskey" type="checkbox" className={mainStyles.cBox} />
                 <i className={mainStyles.circle}></i>
                 <span className={mainStyles.text}>위스키</span>
               </label>
               <label>
-                <input type="checkbox" className={mainStyles.cBox} />
+                <input onChange={baseOnChange} value="tequila" type="checkbox" className={mainStyles.cBox} />
                 <i className={mainStyles.circle}></i>
                 <span className={mainStyles.text}>데킬라</span>
               </label>
               <label>
-                <input type="checkbox" className={mainStyles.cBox} />
+                <input onChange={baseOnChange} value="vodka" type="checkbox" className={mainStyles.cBox} />
                 <i className={mainStyles.circle}></i>
                 <span className={mainStyles.text}>보드카</span>
               </label>
@@ -159,9 +261,10 @@ function Filter() {
             <div className={mainStyles.slider}>
               <Box sx={{ width: 250 }}>
                 <SliderStyle
+                  onChange={boozyOnChange}
                   min={1}
                   max={5}
-                  defaultValue={2}
+                  defaultValue={5}
                   marks={alcoholMarks}
                   valueLabelDisplay="outo"
                 />
@@ -175,6 +278,7 @@ function Filter() {
                 width: 250,
               }}>
                 <SliderStyle
+                  onChange={sweetOnchange}
                   min={1}
                   max={5}
                   defaultValue={3}
@@ -185,21 +289,37 @@ function Filter() {
             </div>
           </div>
 
-          <div id={mainStyles.filterBtn}>검색</div>
+          <div onClick={searchOnClick} id={mainStyles.filterBtn}>검색</div>
         </div>
 
         {/* <Card /> */}
         {/* 결과 칵테일 카드 */}
-        <div className={mainStyles.cardContainer}>
-          {API.map((cocktail) =>
+        {/* <div className={mainStyles.cardContainer}>
+          {API.map((cocktail) => console.log(cocktail)
           (<Card
             key={cocktail._id.$oid}
             id={cocktail._id.$oid}
             img={cocktail.S3_img}
             name={cocktail.name}
           />
-          ))}
+          )
+          
+          )}
+        </div> */}
+
+        <div className={mainStyles.cardContainer}>
+          {useArry.map((cocktail) =>
+          (<Card
+            key={cocktail._id.$oid}
+            id={cocktail._id.$oid}
+            img={cocktail.S3_img}
+            name={cocktail.name}
+          />
+          )
+          )}
         </div>
+
+
         {/* <div className={mainStyles.result}>
                     <Link to="/desc">
                         <div className={appStyles.card}>
