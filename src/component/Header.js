@@ -13,31 +13,33 @@ import { useEffect, useState } from "react";
 //리덕스
 import { connect, useSelector } from "react-redux";
 import { getEmail, removeEmail } from "../redux/getEmail.js"
+import { getStore } from "../redux/getStore"
+
+import { store } from '../redux/store.js'
+import { removeStore } from "../redux/getStore.js"
+
 
 // 임시 로컬주소
 const URL = 'http://localhost:5000'
 
-function Header({ dispatchGetEmail, dispatchGetStore }) {
+function Header({ dispatchGetEmail, dispatchGetStore, dispatchRemoveEmail, dispatchRemoveStore }) {
 
-    const useID = useSelector((state) => state)
+    //카카오 로그인 허가 토큰 가져오는 코드
+    const ValToken = window.Kakao.Auth.getAccessToken();
 
-    const remainToken = localStorage.length
-    useEffect(() => {
-        if (remainToken == 1) {
-            setLoginBtn("logout")
-        }
-    })
+    // 페이지 처음 접속 시 로그인 상태 판별 및 버튼 글자 바꾸기
+    useEffect(() => 
+    ValToken == null ? setLoginBtn("Login") :  setLoginBtn("Logout")
+    , [])
 
-
-    //로그인 했을때 버튼:logout으로 바꾸기
+    //로그인 버튼 글자 조작하는 useState.
     const [loginBtn, setLoginBtn] = useState("login")
 
-    // 로그인 상태 판별
+    // onClick 시 실행되는 로그인 상태 판별
     function LoginOrOut() {
-        const ValToken = window.Kakao.Auth.getAccessToken();
         ValToken == null ? kakaoLogin() : kakaoLogout();
     }
-
+    
     // 카카오 로그아웃
     function kakaoLogout() {
         if (!window.Kakao.Auth.getAccessToken()) {
@@ -46,30 +48,22 @@ function Header({ dispatchGetEmail, dispatchGetStore }) {
         }
         window.Kakao.Auth.logout(function () {
             alert('logout ok\naccess token -> ' + window.Kakao.Auth.getAccessToken())
-            //usestate 변경
-            setLoginBtn("login")
+            //로그인버튼 글자 바꾸기.
+            setLoginBtn("Login")
         })
-        console.log(window.Kakao.Auth.getAccessToken())
+        //redux persist 에 저장된 Email 정보 삭제
+        dispatchRemoveEmail();
+        //redux persist 에 저장된 store 정보 삭제
+        dispatchRemoveStore();
+        //redux persist 삭제된 부분 확인
+        const reduxVAL = store.getState();
+        const reduxemails = reduxVAL.email
+        const reduxStore = reduxVAL.store
+        console.log(reduxemails, reduxStore)
     }
-
-
-
-    // member GET
-    // 보낼 데이터를 URL에 넣음
-    // const getMemberInfo = async (email) => {
-    //     const response = await axios.get(`${URL}/login?email_give=${email}`);
-    //     const memberInfo = JSON.parse(response.data.member_info);
-    //     const storeCocktail = memberInfo[0].store
-    //     // console.log(memberInfo); 
-    //     console.log(storeCocktail);                               
-    //     // 리덕스 디스패치
-    //     dispatchGetStore(storeCocktail);
-
-    // };
-   
     
 
-    // kakao login api
+    // 카카오 로그인 실행함수
     function kakaoLogin() {
         window.Kakao.Auth.login({
             scope: 'profile_nickname, profile_image', //동의항목 페이지에 있는 개인정보 보호 테이블의 활성화된 ID값을 넣습니다.
@@ -79,13 +73,17 @@ function Header({ dispatchGetEmail, dispatchGetStore }) {
                     url: '/v2/user/me',
                     success: (res) => {
                         const kakao_account = res.kakao_account;
-                        console.log(kakao_account.email);
-                        // console.log(kakao_account.profile.nickname);
-                        // console.log(kakao_account.profile.profile_image_url);
-
+                        
                         const email = kakao_account.email
                         const nickname = kakao_account.profile.nickname
                         const profile_img = kakao_account.profile.profile_image_url
+                        
+                        //확인용 console log 
+                        console.log(email);
+                        console.log(nickname);
+                        console.log(profile_img);
+                        //redux store로 email 값 보내기.
+                        dispatchGetEmail(email);
 
                         //axios 이용하여 Backend 로 보내기.
                         axios.post(
@@ -94,10 +92,8 @@ function Header({ dispatchGetEmail, dispatchGetStore }) {
                                 email_give: email,
                                 name_give: nickname,
                                 img_give: profile_img,
-
                             })
                             .then((res) => {
-                                console.log(res);
                                 alert("성공");
                                 // history.push("/main/feed");
                             })
@@ -106,32 +102,32 @@ function Header({ dispatchGetEmail, dispatchGetStore }) {
                                 console.error(error);
                                 alert("카카오 로그인 에러");
                             });
-
-                        // id GET 호출    
-                        // getMemberInfo(email);
-                        dispatchGetEmail(email);
+                        //db의 member_list store값 가져오는 함수 call
+                        getMemberInfo(email);
+                        //로그인버튼 글자 바꾸기
+                        setLoginBtn("Logout")
                         
-                        
-
-                        // 버튼 글자 바꾸기
-                        setLoginBtn("logout")
-
                     },
                     fail: function (error) {
                         console.log(error);
-
                     }
                 });
                 // window.location.href='/' //리다이렉트 되는 코드
-
-
             },
             fail: function (error) {
                 console.log(error);
             }
         })
     };
-
+        //member_list 의 store 값 가져오기
+        const getMemberInfo = async (email) => {
+        const response = await axios.get(`${URL}/login?email_give=${email}`);
+        const memberInfo = JSON.parse(response.data.member_info);
+        const DBstoreCocktail = memberInfo[0].store
+        console.log(DBstoreCocktail);  
+        dispatchGetStore(DBstoreCocktail)
+        };
+    
 
     return (
         <div>
@@ -173,12 +169,6 @@ function Header({ dispatchGetEmail, dispatchGetStore }) {
                 className={styles.scroll}
             >
                 <img src="arrow-up-circle.svg"></img></div>
-
-
-
-
-
-
         </div>
     );
 }
@@ -186,7 +176,9 @@ function Header({ dispatchGetEmail, dispatchGetStore }) {
 function mapDispatchToProps(dispatch) {
     return {
         dispatchGetEmail: email => dispatch(getEmail(email)),
+        dispatchGetStore: array => dispatch(getStore(array)),
         dispatchRemoveEmail: email => dispatch(removeEmail(email)),
+        dispatchRemoveStore: array => dispatch(removeStore(array))
     };
 }
 
