@@ -6,21 +6,18 @@ import { Link } from 'react-router-dom';
 // import { style } from '@mui/system';
 
 import axios from "axios";
-import $ from "jquery";
-
 import { useEffect, useState } from "react";
 
 //리덕스
 import { connect, useSelector } from "react-redux";
 import { getEmail, removeEmail } from "../redux/getEmail.js"
-import { getStore } from "../redux/getStore"
-
+import { getStore, removeStore } from "../redux/getStore.js"
 import { store } from '../redux/store.js'
-import { removeStore } from "../redux/getStore.js"
 
 
 // 임시 로컬주소
 const URL = 'http://localhost:5000'
+const mainURL = "http://localhost:3000/"
 
 function Header({ dispatchGetEmail, dispatchGetStore, dispatchRemoveEmail, dispatchRemoveStore }) {
 
@@ -37,8 +34,13 @@ function Header({ dispatchGetEmail, dispatchGetStore, dispatchRemoveEmail, dispa
 
     // onClick 시 실행되는 로그인 상태 판별
     function LoginOrOut() {
-        ValToken == null ? kakaoLogin() : kakaoLogout();
-    }
+        return(
+        ValToken == null ? (
+            kakaoLogin()
+        ) : (
+            kakaoLogout()
+            )
+        )}
     
     // 카카오 로그아웃
     function kakaoLogout() {
@@ -50,16 +52,12 @@ function Header({ dispatchGetEmail, dispatchGetStore, dispatchRemoveEmail, dispa
             alert('logout ok\naccess token -> ' + window.Kakao.Auth.getAccessToken())
             //로그인버튼 글자 바꾸기.
             setLoginBtn("Login")
+            window.location.href = `${mainURL}`
         })
         //redux persist 에 저장된 Email 정보 삭제
         dispatchRemoveEmail();
         //redux persist 에 저장된 store 정보 삭제
         dispatchRemoveStore();
-        //redux persist 삭제된 부분 확인
-        const reduxVAL = store.getState();
-        const reduxemails = reduxVAL.email
-        const reduxStore = reduxVAL.store
-        console.log(reduxemails, reduxStore)
     }
     
 
@@ -127,7 +125,14 @@ function Header({ dispatchGetEmail, dispatchGetStore, dispatchRemoveEmail, dispa
         console.log(DBstoreCocktail);  
         dispatchGetStore(DBstoreCocktail)
         };
-    
+        
+        //로그아웃 상태일 시 내 칵테일 창고 접속 막기 - Link 태그 안에 onClick 함수.
+        function loginfirst(event) {
+            if(ValToken == null){
+                event.preventDefault();
+                alert("로그인 먼저 해주세요😝");
+            }
+        }
 
     return (
         <div>
@@ -146,7 +151,7 @@ function Header({ dispatchGetEmail, dispatchGetStore, dispatchRemoveEmail, dispa
                         <Link to="/home">고향 칵테일</Link>
                     </li>
                     <li>
-                        <Link to="/storage">내 칵테일 창고</Link>
+                        <Link to="/storage" onClick={loginfirst}>내 칵테일 창고</Link>
                     </li>
                     <li>
                         <div className={styles.login} onClick={LoginOrOut}>
