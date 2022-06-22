@@ -3,6 +3,7 @@ import Styles from './Find.module.css'
 import SearchIcon from '@mui/icons-material/Search';
 import cardStyles from './Card.module.css'
 import Card from './Card';
+// import HashTag from './HashTag';
 
 import { Link } from 'react-router-dom';
 import { useEffect, useState, useTransition } from "react";
@@ -16,6 +17,7 @@ import axios from "axios";
 //contect
 import { useContext } from 'react';
 import { APIContext } from '../context/APIContext';
+import { val } from 'dom7';
 
 const URL = 'http://localhost:5000'
 
@@ -28,7 +30,7 @@ function Find({ dispatchGetStore }) {
     const getMemberInfo = async (email) => {
         const response = await axios.get(`${URL}/login?email_give=${email}`);
         const memberInfo = JSON.parse(response.data.member_info);
-        const storeCocktail = memberInfo[0].store
+        const storeCocktail = memberInfo[0]
         console.log(storeCocktail);
 
         dispatchGetStore(storeCocktail);
@@ -39,31 +41,65 @@ function Find({ dispatchGetStore }) {
     }, [])
 
 
-    const [a, setA] = useState(0);
+
     const [isPending, startTransition] = useTransition()
     //context API받기
     const API = useContext(APIContext);
 
+    // console.log(API.filter(val=> val.ingredients["재료"].includes("Gin")))
+    // for(let i = 0; i < 7; i++){
+    // console.log(API.filter(val=> val.ingredients[i]["재료"].toLowerCase().includes("gin")))
+    // }
+    // const filterIngredient = API.map(val=> val.ingredients.map(val=> val["재료"])).map(val=> val.map(val=> val.toLowerCase().includes("rum"))).map(val=> val.includes(true))
+    
+    // const filterI = API.map(val=> val.ingredients.map(val=> val["재료"].map(val=> val.map(val=> val.toLowerCase()))))
+    
+    // const aa = API.map(val=> val.ingredients)
+    // console.log(API.filter(val=> val.ingredients[0]["재료"]))
+
+    
+    
+
+        
+        // 
 
     //해시태그Array
     const [hashArray, setHashArray] = useState([])
     console.log(hashArray);
+    const getHashElements = document.getElementsByName("check")
 
-    const onClick = (event) => {
-        const ID = event.target.id
+    // 해시태그 checked 판별
+    const getHash = Array.prototype.slice.call(getHashElements);
+    // console.log(getHash)
 
+    const hashTagTrueFlaseArray = []
+    getHash.map(val=> hashTagTrueFlaseArray.push(val.checked))
+    console.log(hashTagTrueFlaseArray.includes(true))
+    
+
+
+    const onChangeCheckbox = (event) => {
+        const hashValue = event.target.value
+        
+        for(let tag of getHash) {
+            if (tag.value != hashValue){
+                tag.checked = false
+            }
+        }  
+
+    
         for (var i = 0; i < 4; i++) {
-            const findHash0 = API.filter(item => item.hashtag[0] === ID)
-            const findHash1 = API.filter(item => item.hashtag[1] === ID)
-            const findHash2 = API.filter(item => item.hashtag[2] === ID)
-            const findHash3 = API.filter(item => item.hashtag[3] === ID)
+            const findHash0 = API.filter(item => item.hashtag[0] === hashValue);
+            const findHash1 = API.filter(item => item.hashtag[1] === hashValue);
+            const findHash2 = API.filter(item => item.hashtag[2] === hashValue);
+            const findHash3 = API.filter(item => item.hashtag[3] === hashValue);
             // 노가다로 합치기~~!
             const allHash = findHash0.concat(findHash1).concat(findHash2).concat(findHash3)
 
             setHashArray(allHash);
             // console.log(allHash)
         }
-        setA(1);
+       
     }
 
     //검색기능
@@ -79,6 +115,67 @@ function Find({ dispatchGetStore }) {
         setSearchText("");
     };
 
+    const hashTagArray = [
+        {
+            "name": "#TOP 100🏆",
+            "value": "top100",
+            "key": 1
+        },
+        {
+            "name": "#홈파티🏡",
+            "value": "house-party",
+            "key": 2
+        },
+        {
+            "name": "#데일리",
+            "value": "allseason-classics",
+            "key": 3
+        },
+        {
+            "name": "#산타랑_건배🎅🏻",
+            "value": "christmas",
+            "key": 4
+        },
+        {
+            "name": "#무비나잇🎬",
+            "value": "movie-nights",
+            "key": 5
+        },
+
+        {
+            "name": "#해피뉴이어🎆",
+            "value": "new-years-eve",
+            "key": 6
+        },
+        {
+            "name": "#불금🌈",
+            "value": "downtown",
+            "key": 7
+        },
+        {
+            "name": "#HBD🎂",
+            "value": "birthday",
+            "key": 8
+        },
+        {
+            "name": "#나를위한시️간🕯",
+            "value": "time-for-you",
+            "key": 9
+        },
+        {
+            "name": "#발렌타인데이🍷",
+            "value": "valentines-day",
+            "key": 10
+        },
+        {
+            "name": "#뜨밤🔥",
+            "value": "anniversary",
+            "key": 11
+        },
+
+    ]
+
+
 
     return (
         <div className={Styles.Find}>
@@ -92,78 +189,47 @@ function Find({ dispatchGetStore }) {
                         <i ><SearchIcon className={Styles.search_btn} /></i>
                     </form>
                 </div>
+
                 {/* 해시태그 */}
                 <div className={Styles.tags_box}>
-                    <label>
-                        <input type="checkbox" onClick={onClick} id="top100" className={Styles.cBox} />
-                        <span className={`${Styles.TOP} ${Styles.hashtag}`}>#TOP 100🏆</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" onClick={onClick} id="house-party" className={Styles.cBox} />
-                        <span className={Styles.hashtag}>#홈파티🏡</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" onClick={onClick} id="allseason-classics" className={Styles.cBox} />
-                        <span className={Styles.hashtag}>#데일리</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" onClick={onClick} id="christmas" className={Styles.cBox} />
-                        <span className={Styles.hashtag}>#산타랑_건배🎅🏻</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" onClick={onClick} id="movie-nights" className={Styles.cBox} />
-                        <span className={Styles.hashtag}>#무비나잇🎬</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" onClick={onClick} id="new-years-eve" className={Styles.cBox} />
-                        <span className={Styles.hashtag}>#해피뉴이어🎆</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" onClick={onClick} id="downtown" className={Styles.cBox} />
-                        <span className={Styles.hashtag}>#불금🌈</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" onClick={onClick} id="birthday" className={Styles.cBox} />
-                        <span className={Styles.hashtag}>#HBD🎂</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" onClick={onClick} id="time-for-you" className={Styles.cBox} />
-                        <span className={Styles.hashtag}>#나를위한시️간🕯</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" onClick={onClick} id="valentines-day" className={Styles.cBox} />
-                        <span className={Styles.hashtag}>#발렌타인데이🍷</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" onClick={onClick} id="anniversary" className={Styles.cBox} />
-                        <span className={Styles.hashtag}>#뜨밤🔥</span>
-                    </label>
-
-
+                    {hashTagArray.map(val => 
+                        <label>
+                            <input type="checkbox" name="check" onChange={onChangeCheckbox} value={val.value} className={Styles.cBox} />
+                            <span className={
+                                (val.value == "top100" ? `${Styles.TOP} ${Styles.hashtag}` : Styles.hashtag)
+                                }>{val.name}</span>
+                        </label>
+                        )}
                 </div>
             </div>
 
             {/* 하단 */}
             <div className={Styles.cardContainer}>
-                {
-                    (a == 1 ? hashArray : API).filter((val) => {
+                {       
+                    ( hashTagTrueFlaseArray.includes(true) ? hashArray : API ).filter((val) => {
                         if (searchText == "") {
                             return val
-                        } else if (val.name.toLowerCase().includes(searchText.toLowerCase())) {
-                            return val
-                        }
+                        // } else if (val.name.toLowerCase().includes(searchText.toLowerCase())) {
+                        //     return val
+                        } else if (
+    
+                            val.ingredients.map(val=> val["재료"].toLowerCase().includes(searchText.toLowerCase()))
+                            ){
+                                console.log(
+                                    val.ingredients.map(val=> val["재료"].toLowerCase().includes(searchText.toLowerCase()))
+                                )
+                                return val
+                            }
                     }).map((cocktail) =>
                     (<Card
                         key={cocktail._id.$oid}
                         id={cocktail._id.$oid}
                         img={cocktail.S3_img}
                         name={cocktail.name}
-                    />                    
+                    />
                     ))
-                
                 }
             </div>
-
         </div>
     );
 }
