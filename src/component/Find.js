@@ -50,44 +50,45 @@ function Find({ dispatchGetStore }) {
     // for(let i = 0; i < 7; i++){
     // console.log(API.filter(val=> val.ingredients[i]["재료"].toLowerCase().includes("gin")))
     // }
-    // const filterIngredient = API.map(val=> val.ingredients.map(val=> val["재료"])).map(val=> val.map(val=> val.toLowerCase().includes("rum"))).map(val=> val.includes(true))
-    
+    const filterIngredient = API.map(val => val.ingredients.map(val => val["재료"])).map(val => val.map(val => val.toLowerCase().includes("rum"))).map(val => val.includes(true))
+
     // const filterI = API.map(val=> val.ingredients.map(val=> val["재료"].map(val=> val.map(val=> val.toLowerCase()))))
-    
+    // const filterxAPI = API.map(val => val.ingredients.map(val=> val["재료"]))
+    // console.log(filterxAPI)
     // const aa = API.map(val=> val.ingredients)
     // console.log(API.filter(val=> val.ingredients[0]["재료"]))
 
-    
-    
 
-        
-        // 
+
+
+
+    // 
 
     //해시태그Array
     const [hashArray, setHashArray] = useState([])
-    console.log(hashArray);
+    // console.log(hashArray);
     const getHashElements = document.getElementsByName("check")
 
     // 해시태그 checked 판별
     const getHash = Array.prototype.slice.call(getHashElements);
     // console.log(getHash)
 
-    const hashTagTrueFlaseArray = []
-    getHash.map(val=> hashTagTrueFlaseArray.push(val.checked))
-    console.log(hashTagTrueFlaseArray.includes(true))
-    
+    const hashTagTrueFalseArray = []
+    getHash.map(val => hashTagTrueFalseArray.push(val.checked))
+    // console.log(hashTagTrueFalseArray.includes(true))
+
 
 
     const onChangeCheckbox = (event) => {
         const hashValue = event.target.value
-        
-        for(let tag of getHash) {
-            if (tag.value != hashValue){
+
+        for (let tag of getHash) {
+            if (tag.value != hashValue) {
                 tag.checked = false
             }
-        }  
+        }
 
-    
+
         for (var i = 0; i < 4; i++) {
             const findHash0 = API.filter(item => item.hashtag[0] === hashValue);
             const findHash1 = API.filter(item => item.hashtag[1] === hashValue);
@@ -99,7 +100,7 @@ function Find({ dispatchGetStore }) {
             setHashArray(allHash);
             // console.log(allHash)
         }
-       
+
     }
 
     //검색기능
@@ -175,6 +176,12 @@ function Find({ dispatchGetStore }) {
 
     ]
 
+    const [selectValue, setSelectValue] = useState();
+    const selectOnChange = (event) =>{
+        setSelectValue(event.target.value);
+        console.log(event.target.value);
+    };
+
 
 
     return (
@@ -186,40 +193,42 @@ function Find({ dispatchGetStore }) {
                     <h3>칵테일 이름 또는 재료를 검색해보세요</h3>
                     <form onSubmit={onSubmit} className={Styles.search_box}>
                         <input onChange={onChange} className={Styles.search_input} type="text" value={searchText} />
+                        <select onChange={selectOnChange}>
+                            <option value="name">이름검색</option>
+                            <option value="ingredient">재료검색</option>
+                        </select>
                         <i ><SearchIcon className={Styles.search_btn} /></i>
                     </form>
                 </div>
 
                 {/* 해시태그 */}
                 <div className={Styles.tags_box}>
-                    {hashTagArray.map(val => 
+                    {hashTagArray.map(val =>
                         <label>
                             <input type="checkbox" name="check" onChange={onChangeCheckbox} value={val.value} className={Styles.cBox} />
                             <span className={
                                 (val.value == "top100" ? `${Styles.TOP} ${Styles.hashtag}` : Styles.hashtag)
-                                }>{val.name}</span>
+                            }>{val.name}</span>
                         </label>
-                        )}
+                    )}
                 </div>
             </div>
 
             {/* 하단 */}
             <div className={Styles.cardContainer}>
-                {       
-                    ( hashTagTrueFlaseArray.includes(true) ? hashArray : API ).filter((val) => {
+                {
+                    (hashTagTrueFalseArray.includes(true) ? hashArray : API).filter((val) => {
                         if (searchText == "") {
                             return val
-                        // } else if (val.name.toLowerCase().includes(searchText.toLowerCase())) {
-                        //     return val
-                        } else if (
-    
-                            val.ingredients.map(val=> val["재료"].toLowerCase().includes(searchText.toLowerCase()))
-                            ){
-                                console.log(
-                                    val.ingredients.map(val=> val["재료"].toLowerCase().includes(searchText.toLowerCase()))
-                                )
+                            } else if (selectValue == "name" && val.name.toLowerCase().includes(searchText.toLowerCase())) {
+                                    // console.log(val)
                                 return val
-                            }
+                        } else if ( selectValue == "ingredient" &&
+                            val.ingredients.map(val => val["재료"].toLowerCase().includes(searchText.toLowerCase())).includes(true)
+                        ) {
+                            // console.log(val)
+                            return val
+                        }
                     }).map((cocktail) =>
                     (<Card
                         key={cocktail._id.$oid}
