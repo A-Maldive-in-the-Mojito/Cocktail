@@ -91,10 +91,9 @@ function Filter() {
   const tastingOnChange = (event) => {
     const eventValue = event.target.value
     const checked = event.target.checked
-     //useRef에 저장
+    //useRef에 저장
     checked ? tastingValue.current = [eventValue, ...tastingValue.current] : tastingValue.current = tastingValue.current.filter(val => val != eventValue);
   };
-
 
   // 베이스 값
   const baseValue = useRef([]);
@@ -103,7 +102,6 @@ function Filter() {
     const baseChecked = event.target.checked
     baseChecked ? baseValue.current = [eventValue, ...baseValue.current] : baseValue.current = baseValue.current.filter(val => val != eventValue);
   };
-
 
 
   // 얼마나 취할래 값
@@ -120,12 +118,14 @@ function Filter() {
     const parseSweetValue = parseInt(event.target.value)
     sweetValue.current = parseSweetValue * 2
   };
- 
 
+
+  const [클릭함, set클릭함] = useState(0);
   // 필터링
   const [useArry, setUseArray] = useState([]);
 
   const searchOnClick = () => {
+    set클릭함(1);
     console.log(tastingValue.current);
     console.log(baseValue.current);
     console.log(boozyValue.current);
@@ -135,21 +135,30 @@ function Filter() {
     // 빈배열 만들기
     const tastingArray = [];
     // 결과값 반복문
-    for (let tValue of tastingValue.current) {
-      const search = API.filter(val => val.flavor.includes(tValue));
-      tastingArray.push(search)
-    }
-    console.log(tastingArray)
+    if (tastingValue.current.length == 0) {
+      tastingArray.push(API)
+      console.log("비어이씀")
+    } else {
+      for (let tValue of tastingValue.current) {
+        tastingArray.push(API.filter(val => val.flavor.includes(tValue)))
+      }
+    };
+
     const concatTA = tastingArray[0].concat(tastingArray[1]).concat(tastingArray[2]).concat(tastingArray[3]).concat(tastingArray[4]);
     console.log(concatTA)
 
     // 베이스
     const baseArray = [];
-    for (let bValue of baseValue.current) {
-      const search = API.filter(val => val.base.includes(bValue));
-      // console.log(search)
-      baseArray.push(search)
-    }
+    if (baseValue.current.length == 0) {
+      baseArray.push(API)
+      console.log("베이스 비어이씀")
+    } else {
+      for (let bValue of baseValue.current) {
+        const search = API.filter(val => val.base.includes(bValue));
+        // console.log(search)
+        baseArray.push(search)
+      }
+    };
     console.log(baseArray)
     const concatBA = baseArray[0].concat(baseArray[1]).concat(baseArray[2]).concat(baseArray[3]).concat(baseArray[4]);
     console.log(concatBA)
@@ -254,6 +263,11 @@ function Filter() {
                 <i className={mainStyles.circle}></i>
                 <span className={mainStyles.text}>보드카</span>
               </label>
+              <label>
+                <input onChange={baseOnChange} value="brandy" type="checkbox" className={mainStyles.cBox} />
+                <i className={mainStyles.circle}></i>
+                <span className={mainStyles.text}>브랜디</span>
+              </label>
             </div>
           </div>
           <div className="alcohol">
@@ -266,7 +280,7 @@ function Filter() {
                   max={5}
                   defaultValue={5}
                   marks={alcoholMarks}
-                  valueLabelDisplay="outo"
+                  valueLabelDisplay="auto"
                 />
               </Box>
             </div>
@@ -283,7 +297,7 @@ function Filter() {
                   max={5}
                   defaultValue={3}
                   marks={dryMarks}
-                  valueLabelDisplay="outo"
+                  valueLabelDisplay="auto"
                 />
               </Box>
             </div>
@@ -292,60 +306,30 @@ function Filter() {
           <div onClick={searchOnClick} id={mainStyles.filterBtn}>검색</div>
         </div>
 
-        {/* <Card /> */}
         {/* 결과 칵테일 카드 */}
-        {/* <div className={mainStyles.cardContainer}>
-          {API.map((cocktail) => console.log(cocktail)
-          (<Card
-            key={cocktail._id.$oid}
-            id={cocktail._id.$oid}
-            img={cocktail.S3_img}
-            name={cocktail.name}
-          />
-          )
-          
-          )}
-        </div> */}
-
         <div className={mainStyles.cardContainer}>
-          {useArry.map((cocktail) =>
-          (<Card
-            key={cocktail._id.$oid}
-            id={cocktail._id.$oid}
-            img={cocktail.S3_img}
-            name={cocktail.name}
-          />
+          {(클릭함 == 1 ? (useArry.length > 0 ?
+            useArry.map((cocktail) =>
+            (<Card
+              key={cocktail._id.$oid}
+              id={cocktail._id.$oid}
+              img={cocktail.S3_img}
+              name={cocktail.name}
+            />
+            ))
+            : <div>데이터가 업서요</div>
+          ) :
+            API.map((cocktail) =>
+            (<Card
+              key={cocktail._id.$oid}
+              id={cocktail._id.$oid}
+              img={cocktail.S3_img}
+              name={cocktail.name}
+            />
+            ))
           )
-          )}
+          }
         </div>
-
-
-        {/* <div className={mainStyles.result}>
-                    <Link to="/desc">
-                        <div className={appStyles.card}>
-                            <img className={mainStyles.imgCocktail} src="https://images.cocktailflow.com/v1/cocktail/w_300,h_540/cocktail_mango_lime_virgin_margarita-1.png" />
-                            칵테일
-                        </div>
-                    </Link>
-
-                    <Link to="/desc">
-                        <div className={appStyles.card}>
-                            칵테일
-                        </div>
-                    </Link>
-                    <Link to="/desc">
-                        <div className={appStyles.card}>
-                            칵테일
-                        </div>
-                    </Link>
-                    <Link to="/desc">
-                        <div className={appStyles.card}>
-                            칵테일
-                        </div>
-                    </Link> 
-                    
-
-                </div> */}
       </div>
     </div>
   );

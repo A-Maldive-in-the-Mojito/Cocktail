@@ -1,7 +1,7 @@
 import mainStyles from './Main.module.css'
 import styles from '../Card.module.css'
 
-import {useState} from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from 'react-redux';
 
 // Import Swiper React components
@@ -14,10 +14,32 @@ import 'swiper/css';
 import 'swiper/css/navigation'; //좌우 화살표
 import 'swiper/css/pagination'; //하단 이동 버튼
 import 'swiper/css/autoplay'; //자동 넘기기
-
+//contect
+import { useContext } from 'react';
+import { APIContext } from '../../context/APIContext';
 
 function Top100() {
-    const cocktail_api = useSelector((state) => state)
+    const API = useContext(APIContext);
+    // console.log(API[0].S3_img);
+    
+    const makeRandom = () => {
+        const randomArray = [];
+        for (let i = 0; i < 5; i++) {
+            //랜덤한 숫자 뽑기
+            const random = Math.floor(Math.random() * API.length);
+            const randomCocktail = API[random]
+            // console.log(randomCocktail)
+            randomArray.push(randomCocktail);   
+        }
+        console.log(randomArray);
+        // console.log(randomArray.map(item => item.S3_img))
+
+    };
+    makeRandom()
+    // useEffect(()=> {
+    //     makeRandom()
+    // },[])
+
 
     // let swiper = new Swiper()
     let [slide, setSlide] = useState(mainStyles.slide)
@@ -28,7 +50,7 @@ function Top100() {
     return (
         <div className={mainStyles.Top100}>
             <h1>World's Top 100
-            <p>Cocktails</p></h1>
+                <p>Cocktails</p></h1>
 
             <Swiper className={mainStyles.swiper}
                 // install Swiper modules
@@ -44,6 +66,8 @@ function Top100() {
                 // }}
                 navigation={true}
                 pagination={{ clickable: true }}
+
+
                 onSlideChange={() => console.log('slide change')}
                 onSwiper={(swiper) => console.log(swiper)}
             >
@@ -55,7 +79,8 @@ function Top100() {
                         )}
                     </SwiperSlide> */}
                     <SwiperSlide className={slide}>
-                        <img src="https://images.cocktailflow.com/v1/cocktail/w_300,h_540/cocktail_mango_lime_virgin_margarita-1.png" />
+                        {/* {randomArray.map(val=> <img src={val.img}/>)} */}
+
                     </SwiperSlide>
                     <SwiperSlide className={slide}>
                         <img src="https://images.cocktailflow.com/v1/cocktail/w_300,h_540/cocktail_mango_lime_virgin_margarita-1.png" />
