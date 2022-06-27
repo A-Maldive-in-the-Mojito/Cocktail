@@ -40,14 +40,6 @@ function Top100() {
 
 
 
-    const randomCocktail = (TOP100) => {
-        console.log(randomArray)
-        for (let num in randomArray) {
-            console.log(num)
-        }
-    }
-
-
     // let swiper = new Swiper()
     let [slide, setSlide] = useState(mainStyles.slide)
     function changeSlideClass() {
@@ -89,11 +81,7 @@ function Top100() {
                     </SwiperSlide> */}
 
                     {/* //맵 */}
-                    {/* {randomArray.map(item=>
-                        <SwiperSlide key={item._id.$oid} className={mainStyles.slide}>
-                            <img src={item.S3_img}/>
-                        </SwiperSlide>
-                        )} */}
+
                     {randomArray[0] != undefined ? randomArray.map(item =>
                         <SwiperSlide className={mainStyles.slide}>
                             <img src={item.S3_img}/>
