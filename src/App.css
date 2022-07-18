@@ -19,6 +19,38 @@
 #pages{
   padding-top: 70px;
 }
+
+
+/* 스와이퍼 */
+.swiper-initialized{
+
+  width: 100%;
+  background-color: plum;
+}
+
+.swiper-wrapper{
+  align-items: flex-end;
+  justify-content: space-between;
+
+}
+.swiper-slide{
+  height: 100px;
+  width: 100%;
+}
+.swiper-slide img{
+  /* height: 250px; */
+}
+.swiper-slide-active{
+  /* transform: scale(5); */
+  /* margin: 0 20px 0 20px; */
+}
+.swiper-slide-active img{
+  /* transform: scale(3); */
+  background-color: yellow;
+  padding: 20px;
+}
+
+
 /* @font-face {
   font-family: 'IBMPlexSansKR-Medium';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Medium.woff') format('woff');
