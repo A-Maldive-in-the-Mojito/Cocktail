@@ -24,31 +24,6 @@
     width: 300px;
   }
   
-  .swiper {
-    height: 300px;
-    width: 1000px;
-  }
-  .slider_wrapper {
-    align-items: center;
-  }
-  .slide {
-    width: 100px;
-  
-    border-radius: 7px;
-  }
-  .slide img {
-    align-items: center;
-    /* background-color: orange; */
-    width: 100px;
-  
-    border-radius: 7px;
-  }
-  .active img {
-    color: orangered;
-    width: 150px;
-    transform: scale(1.2);
-    transition: 0.4s;
-  }
   .more {
     width: 380px;
     height: 53px;
@@ -62,7 +37,15 @@
     top: 13px;
     font-size: 18px;
   }
-  
+/* 스와이퍼 */
+.swiper {
+  /* height: 300px; */
+  /* width: 1000px; */
+}
+/* .swiper-wrapper{
+  width: 100px;
+} */
+
   /* 필터 */
   .filterSection {
     display: grid;
