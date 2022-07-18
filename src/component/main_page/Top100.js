@@ -3,6 +3,7 @@ import styles from '../Card.module.css'
 
 import { useState, useEffect } from "react";
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -27,16 +28,43 @@ function Top100() {
     const TOP100 = API.filter(item => item.rank !== "no info")
 
     const randomArray = [];
-    let n = 0
-    while (n < 5) {
-        const random = parseInt(Math.floor(Math.random() * 100));
-        console.log(random)
-        const random100 = TOP100[random]
-        console.log(random100)
-        randomArray.push(random100);
-        n++
-    }
-    console.log(randomArray);
+    const randomNumArray = [];
+
+    function Random() {
+        let n = 0
+        while (n < 5) {
+            const randomNum = Math.floor(Math.random() * 100);
+            console.log(randomNum)
+            randomNumArray.push(randomNum);
+
+            const random100 = TOP100[randomNum]
+            console.log(random100)
+            randomArray.push(random100);
+
+            n++
+
+        }
+    };
+
+    console.log(randomNumArray);
+    const removeDuplicate = Array.from(new Set(randomNumArray));
+    console.log(removeDuplicate);
+
+    if (removeDuplicate.length < 5) {
+        Random();
+    };
+
+    // useEffect(()=> {
+    //     Random()
+    // },[])
+    
+
+    // function same(randomNum){
+    //     console.log(randomNumArray.every(val => val == randomNum));
+    // }
+    // console.log(randomNumArray.every(val => val != randomNum));
+
+
 
 
 
@@ -53,10 +81,11 @@ function Top100() {
 
             {/* <Random /> */}
 
-            <Swiper className={mainStyles.swiper}
+            <Swiper 
                 // install Swiper modules
                 modules={[Navigation, Pagination, Autoplay]}
-                spaceBetween={40}
+                // 슬라이드 간 여백
+                // spaceBetween={100}
                 // 한 번에 보여지는 개수
                 slidesPerView={5}
                 centeredSlides={'true'}
@@ -72,7 +101,7 @@ function Top100() {
                 onSlideChange={() => console.log('slide change')}
                 onSwiper={(swiper) => console.log(swiper)}
             >
-                <div className={mainStyles.slider_wrapper}>
+                <div>
                     {/* <SwiperSlide>
                         {({ isActive }) => (
                             <div> {isActive ? changeSlideClass() : 'not active'}</div>
@@ -84,17 +113,14 @@ function Top100() {
 
                     {randomArray[0] != undefined ? randomArray.map(item =>
                         <SwiperSlide className={mainStyles.slide}>
-                            <img src={item.S3_img}/>
+                            <Link to={`/desc:${item._id.$oid}`}>
+                            <img src={item.S3_img} />
+                            </Link>
                         </SwiperSlide>
+                        
                     ) : <div></div>}
 
 
-                    <SwiperSlide className={mainStyles.slide}>
-                        <img src="https://cdn.diffords.com/contrib/stock-images/2015/12/06/2015bc30dbef6fb6d903330c18edf4af1463.jpg" />
-                    </SwiperSlide>
-                    <SwiperSlide className={mainStyles.slide}>
-                        <img src="https://images.cocktailflow.com/v1/cocktail/w_300,h_540/cocktail_mango_lime_virgin_margarita-1.png" />
-                    </SwiperSlide>
                 </div>
 
             </Swiper>
