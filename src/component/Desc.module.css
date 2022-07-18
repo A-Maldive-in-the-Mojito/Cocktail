@@ -39,3 +39,27 @@
   .mix {
     margin-top: 50px;
   }
+  .tags_box{
+    margin-top: 30px;
+    width: 750px;
+    display: flex;
+    grid-template-columns: repeat(6, auto);
+    /* 줄바꿈 */
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    gap: 18px;
+  }
+  .hashtag{
+    color: #3a5ddf;
+    background-color: #c8d4ff;
+    /* border: 2px solid #5271e4; */
+    border-radius: 30px;
+    padding: 4px 7px 4px 7px;    
+  }
+  .TOP{
+    color: rgb(247, 55, 71);
+    background-color: rgb(255, 215, 215);
+  }
+  

@@ -1,6 +1,4 @@
 import styles from "./Desc.module.css";
-import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
 
 import { useParams } from "react-router-dom";
 
@@ -12,9 +10,6 @@ function Desc() {
   //주소에서 id받기
   const { id } = useParams();
   console.log(id);
-
-  // 리덕스로 api받기
-  // const cocktail_api = useSelector((state) => state)
 
   //context API받기
   const API = useContext(APIContext);
@@ -32,6 +27,68 @@ function Desc() {
   const howtomake = API[n].korean;
   const ingredients = API[n].ingredients;
 
+  console.log(hashtag)
+
+  const hashTagArray = [
+    {
+        "name": "#TOP 100🏆",
+        "value": "top100",
+        "key": 1
+    },
+    {
+        "name": "#홈파티🏡",
+        "value": "house-party",
+        "key": 2
+    },
+    {
+        "name": "#데일리",
+        "value": "allseason-classics",
+        "key": 3
+    },
+    {
+        "name": "#산타랑_건배🎅🏻",
+        "value": "christmas",
+        "key": 4
+    },
+    {
+        "name": "#무비나잇🎬",
+        "value": "movie-nights",
+        "key": 5
+    },
+
+    {
+        "name": "#해피뉴이어🎆",
+        "value": "new-years-eve",
+        "key": 6
+    },
+    {
+        "name": "#불금🌈",
+        "value": "downtown",
+        "key": 7
+    },
+    {
+        "name": "#HBD🎂",
+        "value": "birthday",
+        "key": 8
+    },
+    {
+        "name": "#나를위한시️간🕯",
+        "value": "time-for-you",
+        "key": 9
+    },
+    {
+        "name": "#발렌타인데이🍷",
+        "value": "valentines-day",
+        "key": 10
+    },
+    {
+        "name": "#뜨밤🔥",
+        "value": "anniversary",
+        "key": 11
+    },
+
+]
+
   return (
     <div id="desc" className={styles.container}>
       {/* 이미지+설명 */}
@@ -45,13 +102,17 @@ function Desc() {
       {/* 레시피 */}
       <div className={styles.text_box}>
         <h1>{name}</h1>
-        {/* 해시태그 없으면 안보이기 */}
-        {hashtag == "no info" ? "" : <span>#해시태그 {hashtag}</span>}
+        {/* 해시태그 */}
+        <div className={styles.tags_box}>
+          <div className={styles.hashtag}>
+            {hashtag== "no info" ? "" : hashTagArray.map(val => val.value==hashtag ? val.name: null)}
+          </div>
+        </div>
 
         {/* 알콜 당도 정보 */}
         <div id="info" className={styles.info}>
           <div className={styles.base}>베이스 {base}</div>
-          <div>맛 {flavor}</div>
+          <div>맛 { flavor=="no info" ? "❓" : flavor }</div>
           <div>알콜세기 {booziness}</div>
           <div>당도 {sweetness}</div>
         </div>
