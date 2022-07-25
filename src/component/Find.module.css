@@ -1,107 +1,134 @@
-.Find{
-    /* 가운데 정렬 페이지*/
-    display: grid;
-    grid-template-rows: 250px;
-    place-items: center;
-    min-height: 100vh;
+.Find {
+  /* 가운데 정렬 페이지*/
+  display: grid;
+  grid-template-rows: 250px;
+  place-items: center;
+  min-height: 100vh;
 }
 
 /* 검색창 */
-.search_space{
-    margin-top: 60px;
-    display: grid;
-    place-items: center;
+.search_space {
+  margin-top: 60px;
+  /* display: flex;
+  flex-direction: column;
+  place-items: center; */
 }
 .search_space > h3 {
-    font-size: 20px;
-    color: rgb(136, 136, 136);
-    
+  font-size: 20px;
+  color: rgb(136, 136, 136);
 }
 
-.search_box{
-    width: 600px;
-    height: 40px;
-    border: 2px solid var(--main-color);
-    border-radius: 20px;
+.search_box {
+  display: flex;
 
+  width: 600px;
+  height: 40px;
+  border: 2px solid var(--main-color);
+  border-radius: 20px;
 }
 
 .search_btn {
-    color: var(--main-color);
-    float: right;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-right: 10px;
-    margin-top: 7px;
-    /* 사이즈 */
-    transform: scale(1.5);
-   
+  color: var(--main-color);
+  float: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 10px;
+  margin-top: 7px;
+  /* 사이즈 */
+  transform: scale(1.5);
 }
 .search_input {
-    width: 85%;
-    border: none;
-    outline: none;
-    background: none;
-    font-size: 18px;
-    transition: 0.4s;
-    float: left;
-    line-height: 40px;
-    padding-left: 30px;
-    
+  width: 85%;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 18px;
+  transition: 0.4s;
+  float: left;
+  line-height: 40px;
+  padding-left: 150px;
 }
 
+select {
+  /* -webkit-appearance: none; */
+  /* -moz-appearance: none; */
+  -ms-appearance: none;
+  /* appearance: none; */
+
+  outline: 0;
+  background: var(--main-color);
+  box-shadow: none;
+  border: 0;
+  border-radius: 20px;
+
+  font-size: 18px;
+  color: white;
+  padding: 0 10px 0 20px;
+  cursor: pointer;
+}
+.select_box {
+  position: absolute;
+  display: flex;
+  width: 140px;
+  height: 42px;
+
+  background: var(--main-color);
+  box-shadow: none;
+  border: 0;
+  /* border-radius: 20px 0px 0 20px; */
+  border-radius: 20px;
+}
 
 /* 해시태그 */
-.tags_box{
-    margin-top: 30px;
-    width: 750px;
-    display: flex;
-    grid-template-columns: repeat(6, auto);
-    /* 줄바꿈 */
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    justify-items: center;
-    gap: 18px;
+.tags_box {
+  margin-top: 30px;
+  width: 750px;
+  display: flex;
+  grid-template-columns: repeat(6, auto);
+  /* 줄바꿈 */
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  gap: 18px;
 }
-.hashtag{
-    color: #3a5ddf;
-    background-color: #c8d4ff;
-    /* border: 2px solid #5271e4; */
-    border-radius: 30px;
-    padding: 4px 7px 4px 7px;    
+.hashtag {
+  color: #3a5ddf;
+  background-color: #c8d4ff;
+  /* border: 2px solid #5271e4; */
+  border-radius: 30px;
+  padding: 4px 7px 4px 7px;
 }
 
-.TOP{
-    color: rgb(247, 55, 71);
-    background-color: rgb(255, 215, 215);
+.TOP {
+  color: rgb(247, 55, 71);
+  background-color: rgb(255, 215, 215);
 }
 
 /* 체크박스가 체크되면  */
 .cBox:checked + .hashtag {
-    background-color: #476df7;
-    color: white;
-    transition: 0.1s;
-  }
-  /* 체크박스 안보이기 */
-.cBox{
-    appearance: none;
+  background-color: #476df7;
+  color: white;
+  transition: 0.1s;
+}
+/* 체크박스 안보이기 */
+.cBox {
+  appearance: none;
 }
 
 .cBox:checked + .TOP {
-    background-color: rgb(252, 82, 96);
+  background-color: rgb(252, 82, 96);
 }
 
 /* 카드 */
 .cardContainer {
-    margin-top: 70px;
-    width: 800px;
-    /* 아이템 가운데 정렬 */
-    place-items: center center;
-    /* 그리드 */
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 50px;
-    
+  margin-top: 70px;
+  width: 800px;
+  /* 아이템 가운데 정렬 */
+  place-items: center center;
+  /* 그리드 */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
 }
