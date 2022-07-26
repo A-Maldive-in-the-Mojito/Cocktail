@@ -26,41 +26,64 @@ function Top100() {
   const TOP100 = API.filter((item) => item.rank !== "no info");
 
   const randomArray = [];
-  const randomNumArray = [];
+  const reallOnlyArray = [];
+  const [OnlyArray, setOnlyArray] = useState();
+
+//   function PickRandomNum() {
+//     let n = 0;
+//     while (n < 10) {
+//       const randomNum = Math.floor(Math.random() * 100);
+//       randomNumArray.push(randomNum);
+//       n++
+//   }
+//   console.log(randomNumArray);
+// }
+//   function RemoveSameNum() {
+//     const removeDuplicate = Array.from(new Set(randomNumArray));
+//     console.log(removeDuplicate)
+//     setOnlyArray(removeDuplicate)
+//     if (OnlyArray != undefined){
+//       PutRandomCocktails();
+//     } else {
+//       setTimeout(() => PutRandomCocktails(), 4000)
+//     }
+//   }
+
+//   function PutRandomCocktails() {
+//     let i = 0;
+//     while (i<5){
+//       console.log(OnlyArray[i])
+//       i++
+//     }
+//   }
+//   useEffect(() => PickRandomNum(), []);
+//   useEffect(() => RemoveSameNum(), []);
+//   console.log(OnlyArray)
+
 
   function Random() {
     let n = 0;
-    while (n < 5) {
+    while (n < 10) {
       const randomNum = Math.floor(Math.random() * 100);
-      console.log(randomNum);
-      randomNumArray.push(randomNum);
-
+      //랜덤칵테일 배열에 넣기
       const random100 = TOP100[randomNum];
       console.log(random100);
       randomArray.push(random100);
-
-      n++;
+      n = n+1;
     }
+    RemoveSame()
   }
 
-  console.log(randomNumArray);
-  const removeDuplicate = Array.from(new Set(randomNumArray));
-  console.log(removeDuplicate);
-
-  if (removeDuplicate.length < 5) {
-    Random();
+  function RemoveSame() {
+    const removeDuplicate = Array.from(new Set(randomArray));
+    for(let i=0; i<5; i++){
+      reallOnlyArray.push(removeDuplicate[i])
+    }
+    console.log(reallOnlyArray)
   }
 
-  // useEffect(()=> {
-  //     Random()
-  // },[])
+  Random();
 
-  // function same(randomNum){
-  //     console.log(randomNumArray.every(val => val == randomNum));
-  // }
-  // console.log(randomNumArray.every(val => val != randomNum));
-
-  // let swiper = new Swiper()
   let [slide, setSlide] = useState(mainStyles.slide);
   function changeSlideClass() {
     setSlide(mainStyles.active);
@@ -94,16 +117,16 @@ function Top100() {
         onSwiper={(swiper) => console.log(swiper)}
       >
         <div className="swiper-container">
-          {randomArray[0] != undefined ? (
-            randomArray.map((item) => (
-              <SwiperSlide className={mainStyles.slide}>
+          {reallOnlyArray[0] != undefined ? (
+            reallOnlyArray.map((item) => (
+              <SwiperSlide key={item.name} className={mainStyles.slide}>
                 <Link to={`/desc:${item._id.$oid}`}>
-                  <img src={item.S3_img} />
+                  <img   src={item.S3_img} />
                 </Link>
               </SwiperSlide>
             ))
           ) : (
-            <div></div>
+            <div><h2>WE'RE GOING TO SHOW"</h2>"</div>
           )}
         </div>
       </Swiper>
