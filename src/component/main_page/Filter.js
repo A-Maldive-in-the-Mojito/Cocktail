@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 
 import { useContext, useEffect, useState, useRef } from "react";
 import { APIContext } from "../../context/APIContext";
+import { event } from "jquery";
 
 function Filter() {
   //  const cocktail_api = useSelector((state) => state)
@@ -111,25 +112,30 @@ function Filter() {
   };
 
   // 얼마나 취할래 값
+  const [currentBoozy,setCurrentBoozy] = useState();//검색버튼클릭시 지정해둔 값으로 고정하기 위함.
   const boozyValue = useRef(10);
   const boozyOnChange = (event) => {
     const parseBoozyValue = parseInt(event.target.value);
     boozyValue.current = parseBoozyValue * 2;
+    setCurrentBoozy(parseBoozyValue);
   };
 
   // sweet or dry 값
+  const [currentSweet,setCurrentSweet] = useState();//검색버튼클릭시 지정해둔 값으로 고정하기 위함.
   const sweetValue = useRef(6);
   const sweetOnchange = (event) => {
     const parseSweetValue = parseInt(event.target.value);
     sweetValue.current = parseSweetValue * 2;
+    setCurrentSweet(parseSweetValue)
   };
 
   const [클릭함, set클릭함] = useState(0);
   // 필터링
   const [useArry, setUseArray] = useState([]);
 
-  const searchOnClick = () => {
+  const searchOnClick = (event) => {
     set클릭함(1);
+    console.log(event)
     console.log(tastingValue.current);
     console.log(baseValue.current);
     console.log(boozyValue.current);
@@ -342,7 +348,7 @@ function Filter() {
                   onChange={boozyOnChange}
                   min={1}
                   max={5}
-                  defaultValue={5}
+                  defaultValue={currentBoozy}
                   marks={alcoholMarks}
                   valueLabelDisplay="auto"
                 />
@@ -361,7 +367,7 @@ function Filter() {
                   onChange={sweetOnchange}
                   min={1}
                   max={5}
-                  defaultValue={3}
+                  defaultValue={currentSweet}
                   marks={dryMarks}
                   valueLabelDisplay="auto"
                 />
