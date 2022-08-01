@@ -27,38 +27,6 @@ function Top100() {
 
   const randomArray = [];
   const reallOnlyArray = [];
-  const [OnlyArray, setOnlyArray] = useState();
-
-//   function PickRandomNum() {
-//     let n = 0;
-//     while (n < 10) {
-//       const randomNum = Math.floor(Math.random() * 100);
-//       randomNumArray.push(randomNum);
-//       n++
-//   }
-//   console.log(randomNumArray);
-// }
-//   function RemoveSameNum() {
-//     const removeDuplicate = Array.from(new Set(randomNumArray));
-//     console.log(removeDuplicate)
-//     setOnlyArray(removeDuplicate)
-//     if (OnlyArray != undefined){
-//       PutRandomCocktails();
-//     } else {
-//       setTimeout(() => PutRandomCocktails(), 4000)
-//     }
-//   }
-
-//   function PutRandomCocktails() {
-//     let i = 0;
-//     while (i<5){
-//       console.log(OnlyArray[i])
-//       i++
-//     }
-//   }
-//   useEffect(() => PickRandomNum(), []);
-//   useEffect(() => RemoveSameNum(), []);
-//   console.log(OnlyArray)
 
 
   function Random() {
@@ -81,7 +49,7 @@ function Top100() {
     }
     console.log(reallOnlyArray)
   }
-
+  //랜덤함수 실행
   Random();
 
   let [slide, setSlide] = useState(mainStyles.slide);
