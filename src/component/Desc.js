@@ -3,19 +3,19 @@ import styles from "./Desc.module.css";
 import { useParams } from "react-router-dom";
 
 //contect
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { APIContext } from "../context/APIContext";
 
 function Desc() {
   //주소에서 id받기
   const { id } = useParams();
-  console.log(id);
+  console.log(id,"=>Desc의 id 값");
 
   //context API받기
   const API = useContext(APIContext);
 
   const n = API.findIndex((item) => `:${item._id.$oid}` === id);
-  console.log(n);
+  console.log(n,"DB에서의 순서");
 
   const name = API[n].name;
   const img = API[n].img;
@@ -89,6 +89,23 @@ function Desc() {
 
 ]
 
+  //일치하는 hashtag 문자값 찾기 & return 부분에서 쓸 리스트에 넣기
+  const hashtags =[];
+    function FindHashtags() {
+        for(let i=0; i<hashtag.length; i++){
+          for(let j=0; j<hashTagArray.length; j++){
+            if(hashtag[i]==hashTagArray[j].value){
+              hashtags.push(hashTagArray[j].name);
+            } else continue; 
+          }
+          console.log(hashtags,"desc에서 표기될 해시태그 값 리스트");
+        }
+  } 
+  if (hashtag != "no info"){
+    FindHashtags()
+  } else {console.log("메롱")}
+
+
   return (
     <div id="desc" className={styles.container}>
       {/* 이미지+설명 */}
@@ -103,13 +120,11 @@ function Desc() {
       <div className={styles.text_box}>
         <h1>{name}</h1>
         {/* 해시태그 */}
-        <div className={styles.tags_box}>
             {hashtag== "no info" ? "" : 
-            <div className={styles.hashtag}>
-              {hashTagArray.map(val => val.value==hashtag ? val.name: null)}
-            </div>
+              <div className={styles.tags_box}>
+                  {hashtags.map(val => (<div className={styles.hashtag}>{val}</div>))}
+              </div>
             }
-        </div>
         
 
         {/* 알콜 당도 정보 */}
