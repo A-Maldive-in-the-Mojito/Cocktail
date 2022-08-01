@@ -104,10 +104,13 @@ function Desc() {
         <h1>{name}</h1>
         {/* 해시태그 */}
         <div className={styles.tags_box}>
-          <div className={styles.hashtag}>
-            {hashtag== "no info" ? "" : hashTagArray.map(val => val.value==hashtag ? val.name: null)}
-          </div>
+            {hashtag== "no info" ? "" : 
+            <div className={styles.hashtag}>
+              {hashTagArray.map(val => val.value==hashtag ? val.name: null)}
+            </div>
+            }
         </div>
+        
 
         {/* 알콜 당도 정보 */}
         <div id="info" className={styles.info}>
