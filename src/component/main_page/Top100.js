@@ -25,6 +25,7 @@ function Top100() {
 
   const TOP100 = API.filter((item) => item.rank !== "no info");
 
+
   const randomArray = [];
   const reallOnlyArray = [];
 
@@ -35,7 +36,6 @@ function Top100() {
       const randomNum = Math.floor(Math.random() * 100);
       //랜덤칵테일 배열에 넣기
       const random100 = TOP100[randomNum];
-      console.log(random100);
       randomArray.push(random100);
       n = n+1;
     }
@@ -56,6 +56,8 @@ function Top100() {
   function changeSlideClass() {
     setSlide(mainStyles.active);
   }
+
+  const linkTop100 = 1;
 
   return (
     <div className={mainStyles.Top100}>
@@ -99,9 +101,11 @@ function Top100() {
         </div>
       </Swiper>
 
-      <div className={mainStyles.more}>
-        <span>+ Top 100 Cocktails 더보기</span>
-      </div>
+      <Link to={`/find:${linkTop100}`}>
+        <div className={mainStyles.more}>
+            <span>+ Top 100 Cocktails 더보기</span>
+        </div>
+      </Link>
     </div>
   );
 }
