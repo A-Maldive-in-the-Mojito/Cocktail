@@ -7,7 +7,6 @@ import Header from './component/Header.js';
 import Main from './component/main_page/Main.js';
 import Find from './component/Find.js';
 import Storage from './component/Storage.js';
-import Login from './component/Login.js';
 import Home from './component/Home.js';
 import Desc from './component/Desc.js';
 // import { PersistGate } from 'redux-persist/integration/react';
@@ -39,7 +38,7 @@ function App() {
     useEffect(() => {
         getCocktails()
     }, []);
-   
+
 
     return (
         <BrowserRouter>
@@ -51,7 +50,7 @@ function App() {
                     <div id="pages">
                         <Routes>
                             <Route path="/" element={<Main />} /> //Top100+Filter
-                            <Route path="/find" element={<Find />} /> //칵테일 검색(모든칵테일)
+                            <Route path="/find:linkTop100" element={<Find />} /> //칵테일 검색(모든칵테일)
                             <Route path="/home" element={<Home />} /> //고향칵테일
                             <Route path="/storage" element={<Storage />} /> //내 칵테일
                             <Route path="/desc:id" element={<Desc />} />
