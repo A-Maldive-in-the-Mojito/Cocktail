@@ -81,74 +81,47 @@ function Card({ id, img, name, dispatchGetStore }) {
 
   const [cardHover, setCardHover] = useState(0);
   const [starHover, setStarHover] = useState(0);
-
+  console.log(cardHover)
+  console.log(starHover)
   return (
     // 임시 render fale 빼기
-    <div
-      className={cardStyles.card}
-      onMouseOver={() => setCardHover(1)}
-      onMouseOut={() => setCardHover(0)}
-    >
-      {render == 1 ? (
-        <img
-          className={cardStyles.star_clicked}
-          onClick={onClick}
-          src="star.png"
-        />
-      ) : cardHover == 0 ? (
-        ""
-      ) : (
-        <img
-          onClick={onClick}
-          className={cardStyles.star_unclick}
-          src="star.png"
-        />
-      )}
 
-      {/* {cardHover == 0 ? (
-        ""
-      ) : render ? (
-        <img
-          className={cardStyles.star_clicked}
-          onClick={onClick}
-          src="star_clicked.png"
-        />
-      ) : starHover == 1 ? (
-        <img
-          onClick={onClick}
-          className={cardStyles.star_unclick}
-          onMouseOver={() => setStarHover(1)}
-          onMouseOut={() => setStarHover(0)}
-          src="star_unclick.png"
-        />
-      ) : (
-        <img
-          className={cardStyles.star_clicked}
-          onClick={onClick}
-          src="star_clicked.png"
-        />
-      )} */}
-      {/* <img className={cardStyles.star_clicked} src="star_clicked.png" /> */}
-      {/* <StarBorderIcon
-        onClick={() => {
-          onClick();
-        }}
-        className={`${
-          render ? cardStyles.true_star_icon : cardStyles.false_star_icon
-        }`}
-      /> */}
-      <Link to={`/desc:${id}`}>
-        <div className={cardStyles.imgContainer}>
-          <img className={cardStyles.imgCocktail} src={img} />
-          <h3 className={cardStyles.cocktailName}>{name}</h3>
-        </div>
-      </Link>
+    <div>
+      <div className={cardStyles.card} 
+        onMouseEnter={() => setCardHover(1)}
+        onMouseLeave={() => setCardHover(0)}>
+   
+        {cardHover == 1 ? (render == 1 || starHover == 1?
+          <img
+            className={cardStyles.star_clicked}
+            onClick={onClick}
+            src="star.png"
+            onMouseEnter={() => setStarHover(1)}
+            onMouseLeave={() => setStarHover(0)}
+          /> :
+          <img
+            onClick={onClick}
+            className={cardStyles.star_unclick}
+            src="star.png"
+            onMouseEnter={() => setStarHover(1)}
+            onMouseLeave={() => setStarHover(0)}
+          />) : ""
+        }
 
-      {/* 
+     
+        <Link to={`/desc:${id}`}>
+          <div className={cardStyles.imgContainer}>
+            <img className={cardStyles.imgCocktail} src={img} />
+            <h3 className={cardStyles.cocktailName}>{name}</h3>
+          </div>
+        </Link>
+
+        {/* 
       <div className={styles.imgContainer}>
         <img className={styles.imgCocktail} src="https://images.cocktailflow.com/v1/cocktail/w_300,h_540/cocktail_mango_lime_virgin_margarita-1.png" />
         <h3 className={styles.cocktailName}> Cocktail </h3>
       </div> */}
+      </div>
     </div>
   );
 }
