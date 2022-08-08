@@ -90,24 +90,23 @@ function Card({ id, img, name, dispatchGetStore }) {
       <div className={cardStyles.card} 
         onMouseEnter={() => setCardHover(1)}
         onMouseLeave={() => setCardHover(0)}>
-   
-        {cardHover == 1 ? (render == 1 || starHover == 1?
-          <img
-            className={cardStyles.star_clicked}
-            onClick={onClick}
-            src="star.png"
-            onMouseEnter={() => setStarHover(1)}
-            onMouseLeave={() => setStarHover(0)}
-          /> :
-          <img
-            onClick={onClick}
-            className={cardStyles.star_unclick}
-            src="star.png"
-            onMouseEnter={() => setStarHover(1)}
-            onMouseLeave={() => setStarHover(0)}
-          />) : ""
+  
+        {render == 1 || starHover == 1 ?
+        <img
+        className={cardStyles.star_clicked}
+        onClick={onClick}
+        src="star.png"
+        onMouseEnter={() => setStarHover(1)}
+        onMouseLeave={() => setStarHover(0)}
+      /> : (cardHover == 1 ?
+      <img
+        onClick={onClick}
+        className={cardStyles.star_unclick}
+        src="star.png"
+        onMouseEnter={() => setStarHover(1)}
+        onMouseLeave={() => setStarHover(0)}
+      /> : "" )
         }
-
      
         <Link to={`/desc:${id}`}>
           <div className={cardStyles.imgContainer}>
