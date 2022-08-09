@@ -1,0 +1,13 @@
+.wrapper {
+  margin-top: 70px;
+}
+
+.cardContainer {
+  margin-top: 700px;
+  width: 900px;
+  justify-content: center;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 50px;
+}
