@@ -92,6 +92,69 @@ function Desc() {
 
   ]
 
+  const baseArray = [
+    {
+      name: "진",
+      img: "🇬🇧",
+      value: "gin"
+    },
+    {
+      name: "데킬라",
+      img: "🌵",
+      value: "tequila"
+    },
+    {
+      name: "럼",
+      img: "🏝",
+      value: "rum"
+    },
+    {
+      name: "보드카",
+      img: "⛄",
+      value: "vodka"
+    },
+    {
+      name: "위스키",
+      img: "🥃",
+      value: "whiskey"
+    },
+    {
+      name: "브랜디",
+      img: "🍷",
+      value: "brandy"
+    },
+  ]
+
+
+  const flavorArray = [
+    {
+      name: "아이셔",
+      img: "🍋",
+      value: "아이셔"
+    },
+    {
+      name: "허브",
+      img: "🌱",
+      value: "허브"
+    },
+    {
+      name: "프레시",
+      img: "💧",
+      value: "프레시"
+    },
+    {
+      name: "아이써",
+      img: "☕",
+      value: "아이써"
+    },
+    {
+      name: "과일",
+      img: "🍇",
+      value: "프루티"
+    },
+
+  ]
+
   //일치하는 hashtag 문자값 찾기 & return 부분에서 쓸 리스트에 넣기
   const hashtags = [];
   function FindHashtags() {
@@ -108,6 +171,22 @@ function Desc() {
     FindHashtags()
   } else { console.log("메롱") }
 
+  // console.log(base[0])
+  // baseArray.map(val => console.log(val.value == base[0] ? `${val.img} ${val.name}`: null))
+
+  console.log(base, flavor)
+  // 베이스array 비교
+  const baseName = baseArray.map(val => val.value == base[0] ? val.name : null)
+  const baseImg = baseArray.map(val => val.value == base[0] ? val.img : null)
+  // console.log(baseName, baseImg)
+
+  //flavorArray 비교
+  const flavorName = flavorArray.map(val => val.value == flavor[0] ? val.name : null)
+  const flavorImg = flavorArray.map(val => val.value == flavor[0] ? val.img : null)
+  // console.log(flavorName, flavorImg)
+
+  // flavorArray.map(val => console.log(val.value == flavor[0]))
+
   return (
     <div id="desc" className={styles.container}>
       {/* 이미지+설명 */}
@@ -123,22 +202,32 @@ function Desc() {
         {/* 알콜 당도 정보 */}
         <div id="info" className={styles.info}>
           <div className={styles.info_text}>
-            <h1>{name}</h1>
-            
+
             {/* 해시태그 */}
             <div className={styles.tags_box}>
               {hashtag == "no info" ? "" :
                 <div className={styles.tags_box}>
-                  {hashtags.map(val => (<div className={styles.hashtag}>{val}</div>))}
+                  {hashtags.map(val => (<div className={val == "#TOP 100🏆" ? `${styles.TOP} ${styles.hashtag}` : styles.hashtag}>{val}</div>))}
                 </div>
               }
             </div>
+            {/* 칵테일 이름 */}
+            <h1>{name}</h1>
+            {/* 베이스 맛 */}
+            <div className={styles.bf}>
+              <div className={styles.base}>베이스
+                <div className={styles.base_img}> {base == "no info" || base.length < 1 ? "❓" : baseImg} </div>
+                <div className={styles.base_name}> {base == "no info" ? null : baseName} </div>
+              </div>
+              <div className={styles.flavor}>테이스팅 노트
+                <div className={styles.flavor_img}> {flavor == "no info" || flavor.length < 1 ? "❓" : flavorImg} </div>
+                <div className={styles.flavor_name}> {flavor == "no info" ? null : flavorName} </div>
+              </div>
+            </div>
 
 
-            <div className={styles.base}>베이스 {base}</div>
-            <div>맛 {flavor == "no info" ? "❓" : flavor}</div>
-            <div>알콜세기 {booziness}</div>
-            <div>당도 {sweetness}</div>
+            {/* <div>알콜세기 {booziness}</div>
+            <div>당도 {sweetness}</div> */}
           </div>
 
           {/* 재료 */}
@@ -155,7 +244,7 @@ function Desc() {
               <h4>믹스방법</h4>
               <p>{howtomake}</p>
             </div>
-          </div> 
+          </div>
 
         </div>
 
