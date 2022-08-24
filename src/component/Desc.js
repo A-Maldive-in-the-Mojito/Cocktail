@@ -1,26 +1,26 @@
 import styles from "./Desc.module.css";
-import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
 
 import { useParams } from "react-router-dom";
 
 //contect
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { APIContext } from "../context/APIContext";
+
+import Box from "@mui/material/Box";
+import Slider from "@mui/material/Slider";
+import { styled } from "@mui/material/styles";
+import Grid from '@mui/material/Grid';
 
 function Desc() {
   //주소에서 id받기
   const { id } = useParams();
-  console.log(id);
-
-  // 리덕스로 api받기
-  // const cocktail_api = useSelector((state) => state)
+  console.log(id,"=>Desc의 id 값");
 
   //context API받기
   const API = useContext(APIContext);
 
   const n = API.findIndex((item) => `:${item._id.$oid}` === id);
-  console.log(n);
+  console.log(n,"DB에서의 순서");
 
   const name = API[n].name;
   const img = API[n].img;
@@ -32,67 +32,69 @@ function Desc() {
   const howtomake = API[n].korean;
   const ingredients = API[n].ingredients;
 
+  console.log(booziness)
+
   const hashTagArray = [
     {
-      "name": "#TOP 100🏆",
-      "value": "top100",
-      "key": 1
+        "name": "#TOP 100🏆",
+        "value": "top100",
+        "key": 1
     },
     {
-      "name": "#홈파티🏡",
-      "value": "house-party",
-      "key": 2
+        "name": "#홈파티🏡",
+        "value": "house-party",
+        "key": 2
     },
     {
-      "name": "#데일리",
-      "value": "allseason-classics",
-      "key": 3
+        "name": "#데일리",
+        "value": "allseason-classics",
+        "key": 3
     },
     {
-      "name": "#산타랑_건배🎅🏻",
-      "value": "christmas",
-      "key": 4
+        "name": "#산타랑_건배🎅🏻",
+        "value": "christmas",
+        "key": 4
     },
     {
-      "name": "#무비나잇🎬",
-      "value": "movie-nights",
-      "key": 5
+        "name": "#무비나잇🎬",
+        "value": "movie-nights",
+        "key": 5
     },
 
     {
-      "name": "#해피뉴이어🎆",
-      "value": "new-years-eve",
-      "key": 6
+        "name": "#해피뉴이어🎆",
+        "value": "new-years-eve",
+        "key": 6
     },
     {
-      "name": "#불금🌈",
-      "value": "downtown",
-      "key": 7
+        "name": "#불금🌈",
+        "value": "downtown",
+        "key": 7
     },
     {
-      "name": "#HBD🎂",
-      "value": "birthday",
-      "key": 8
+        "name": "#HBD🎂",
+        "value": "birthday",
+        "key": 8
     },
     {
-      "name": "#나를위한시️간🕯",
-      "value": "time-for-you",
-      "key": 9
+        "name": "#나를위한시️간🕯",
+        "value": "time-for-you",
+        "key": 9
     },
     {
-      "name": "#발렌타인데이🍷",
-      "value": "valentines-day",
-      "key": 10
+        "name": "#발렌타인데이🍷",
+        "value": "valentines-day",
+        "key": 10
     },
     {
-      "name": "#뜨밤🔥",
-      "value": "anniversary",
-      "key": 11
+        "name": "#뜨밤🔥",
+        "value": "anniversary",
+        "key": 11
     },
 
-  ]
+]
 
-  const baseArray = [
+const baseArray = [
     {
       name: "진",
       img: "🇬🇧",
@@ -156,36 +158,125 @@ function Desc() {
   ]
 
   //일치하는 hashtag 문자값 찾기 & return 부분에서 쓸 리스트에 넣기
-  const hashtags = [];
-  function FindHashtags() {
-    for (let i = 0; i < hashtag.length; i++) {
-      for (let j = 0; j < hashTagArray.length; j++) {
-        if (hashtag[i] == hashTagArray[j].value) {
-          hashtags.push(hashTagArray[j].name);
-        } else continue;
-      }
-      console.log(hashtags, "desc에서 표기될 해시태그 값 리스트");
-    }
-  }
-  if (hashtag != "no info") {
+  const hashtags =[];
+    function FindHashtags() {
+        for(let i=0; i<hashtag.length; i++){
+          for(let j=0; j<hashTagArray.length; j++){
+            if(hashtag[i]==hashTagArray[j].value){
+              hashtags.push(hashTagArray[j].name);
+            } else continue; 
+          }
+          console.log(hashtags,"desc에서 표기될 해시태그 값 리스트");
+        }
+  } 
+  if (hashtag != "no info"){
     FindHashtags()
-  } else { console.log("메롱") }
+  } else {console.log("메롱")}
 
-  // console.log(base[0])
-  // baseArray.map(val => console.log(val.value == base[0] ? `${val.img} ${val.name}`: null))
+  //slider
+  const SliderStyle = styled(Slider)({
+    color: "#ff9924",
+    height: 6,
+    '&.Mui-disabled': {
+      color: '#ff9924',
+    },
+    // 단추
+    "& .MuiSlider-thumb": {
+      "&:focus, &:hover, &.Mui-active, &.Mui-focusVisible": {
+        boxShadow: "inherit",
+      },
+    },
 
-  console.log(base, flavor)
-  // 베이스array 비교
+    // 밸류값 태그
+    "& .MuiSlider-valueLabel": {
+      lineHeight: 1.3,
+      fontSize: 9,
+      background: "unset",
+      padding: 0,
+      width: 32,
+      height: 32,
+      borderRadius: "50% 50% 50% 0",
+      backgroundColor: "#ff9924",
+      transformOrigin: "bottom left",
+      transform: "translate(50%, -100%) rotate(-45deg) scale(0)",
+      "&:before": { display: "none" },
+      "&.MuiSlider-valueLabelOpen": {
+        transform: "translate(50%, -100%) rotate(-45deg) scale(1)",
+      },
+      "& > *": {
+        transform: "rotate(45deg)",
+      },
+    },
+    // 라벨 이모티콘 사이즈
+    "& .MuiSlider-markLabel": {
+      fontSize: "15px",
+      marginTop: "3px",
+    },
+  });
+
+  //마크
+  const alcoholMarks = [
+    {
+      value: 1,
+      label: "1",
+    },
+    {
+      value: 2,
+      label: "2",
+    },
+    {
+      value: 3,
+      label: "3",
+    },
+    {
+      value: 4,
+      label: "4",
+    },
+    {
+      value: 5,
+      label: "5",
+    }
+  ];
+  const dryMarks = [
+    {
+      value: 1,
+      label: "1",
+    },
+    {
+      value: 2,
+      label: "2",
+    },
+    {
+      value: 3,
+      label: "3",
+    },
+    {
+      value: 4,
+      label: "4",
+    },
+    {
+      value: 5,
+      label: "5",
+    }
+  ];
+  function valuetext(value) {
+    return `${value}`;
+  }
+
+
+
+  //당도 및 알콜세기 값 올림처리
+  const ceilBoozy = Math.ceil(booziness/2)
+  const ceilSweet = Math.ceil(sweetness/2)
+
+   // 베이스array 비교
   const baseName = baseArray.map(val => val.value == base[0] ? val.name : null)
   const baseImg = baseArray.map(val => val.value == base[0] ? val.img : null)
-  // console.log(baseName, baseImg)
+   // console.log(baseName, baseImg)
 
-  //flavorArray 비교
+   //flavorArray 비교
   const flavorName = flavorArray.map(val => val.value == flavor[0] ? val.name : null)
   const flavorImg = flavorArray.map(val => val.value == flavor[0] ? val.img : null)
-  // console.log(flavorName, flavorImg)
-
-  // flavorArray.map(val => console.log(val.value == flavor[0]))
 
   return (
     <div id="desc" className={styles.container}>
@@ -225,9 +316,55 @@ function Desc() {
               </div>
             </div>
 
-
-            {/* <div>알콜세기 {booziness}</div>
-            <div>당도 {sweetness}</div> */}
+              {/* 알콜세기 및 당도 */}
+              <div className={styles.slider}>
+              <Box sx={{ width: 400 }}>
+              <Grid container spacing={2} alignItems="center">
+                <Grid item xs={2.5} textAlign="center">
+                  GENTLE
+                </Grid>
+                  <Grid item xs={7}>
+                      <SliderStyle
+                        aria-label="Always visible"
+                        defaultValue={ceilBoozy}
+                        disabled={true}
+                        getAriaValueText={valuetext}
+                        min={1}
+                        max={5}
+                        step={null}
+                        marks={alcoholMarks} 
+                      />
+                  </Grid>
+                  <Grid item xs={2.5} textAlign="center">
+                    BOOZY
+                  </Grid>
+                </Grid>
+              </Box>
+          </div>
+          <div className={styles.slider}>
+          <Box sx={{ width: 400 }}>
+              <Grid container spacing={2} alignItems="center">
+              <Grid item xs={2.5} textAlign="center">
+              SWEET
+                </Grid>
+                  <Grid item xs={7} >
+                      <SliderStyle
+                        aria-label="Always visible"
+                        defaultValue={ceilSweet}
+                        disabled={true}
+                        getAriaValueText={valuetext}
+                        min={1}
+                        max={5}
+                        step={null}
+                        marks={dryMarks} 
+                      />
+                  </Grid>
+                  <Grid item xs={2.5} textAlign="center">
+                      DRY
+                  </Grid>
+                </Grid>
+              </Box>
+          </div>
           </div>
 
           {/* 재료 */}
