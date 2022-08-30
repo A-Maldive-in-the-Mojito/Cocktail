@@ -23,6 +23,14 @@ def cocktail():
     cocktails = list(db.final_cocktail_real.find({}))
     return jsonify({'all_cocktails': dumps(cocktails)})
 
+# 이모지
+@app.route('/emojis', methods=['GET'])
+def emoji():
+    emojis = list(db.emoji.find({}))
+    return jsonify({'emojis': dumps(emojis)})
+
+
+
 # 로그인
 @app.route('/login', methods=['POST','GET'])
 def saving():
@@ -59,7 +67,7 @@ def like():
     email_receive = data['email_give']
     name_receive = data['name_give']
     checked_receive = data['checked_give']
-    # print(email_receive, name_receive, checked_receive)
+    print(email_receive, name_receive, checked_receive)
 
     if checked_receive == 1:
         db.member_list.update_one({'email': email_receive}, {
