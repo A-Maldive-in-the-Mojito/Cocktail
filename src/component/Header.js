@@ -20,6 +20,11 @@ const URL = 'http://localhost:5000'
 const mainURL = "http://localhost:3000/"
 
 function Header({ dispatchGetEmail, dispatchGetStore, dispatchRemoveEmail, dispatchRemoveStore }) {
+    //리덕스 스토어에 이모지 가져오기
+    const reduxState = useSelector((state) => state);
+    const emoji = reduxState.emoji;
+    const emoji_url = emoji.filter((item)=> item["name"].includes("Desert Island"))[0].url
+    console.log(emoji_url)
 
     //카카오 로그인 허가 토큰 가져오는 코드
     const ValToken = window.Kakao.Auth.getAccessToken();
@@ -119,11 +124,11 @@ function Header({ dispatchGetEmail, dispatchGetStore, dispatchRemoveEmail, dispa
     };
         //member_list 의 store 값 가져오기
         const getMemberInfo = async (email) => {
-        const response = await axios.get(`${URL}/login?email_give=${email}`);
-        const memberInfo = JSON.parse(response.data.member_info);
-        const DBstoreCocktail = memberInfo[0].store
-        console.log(DBstoreCocktail);  
-        dispatchGetStore(DBstoreCocktail)
+            const response = await axios.get(`${URL}/login?email_give=${email}`);
+            const memberInfo = JSON.parse(response.data.member_info);
+            const DBstoreCocktail = memberInfo[0].store
+            console.log(DBstoreCocktail);  
+            dispatchGetStore(DBstoreCocktail)
         };
         
         //로그아웃 상태일 시 내 칵테일 창고 접속 막기 - Link 태그 안에 onClick 함수.
@@ -141,7 +146,7 @@ function Header({ dispatchGetEmail, dispatchGetStore, dispatchRemoveEmail, dispa
                     <li>
                         <h1 className={styles.logo}>
                             <Link to="/">
-                                <span id={styles.emogi}>🏝 </span>
+                                <img className={styles.emoji} src={emoji_url} />
                                 모히또에서 몰디브 한 잔</Link></h1>
                     </li>
                     <li>
