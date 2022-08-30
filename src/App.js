@@ -7,6 +7,7 @@ import Header from './component/Header.js';
 import Main from './component/main_page/Main.js';
 import Find from './component/Find.js';
 import Storage from './component/Storage.js';
+import Login from './component/Login.js';
 import Home from './component/Home.js';
 import Desc from './component/Desc.js';
 // import { PersistGate } from 'redux-persist/integration/react';
@@ -23,9 +24,15 @@ import { createContext } from 'react';
 
 import { APIContext } from './context/APIContext'
 
+
+// 리덕스
+import { getEmoji } from "./redux/getEmoji.js"
+import { connect, useSelector } from "react-redux";
+
+
 const URL = 'http://localhost:5000'
 
-function App() {
+function App({ dispatchGetEmoji }) {
     let [cocktailsInfo, setcocktailsInfo] = useState([]);
 
     // API GET
@@ -39,6 +46,22 @@ function App() {
         getCocktails()
     }, []);
 
+    const getEmojis = async () => {
+        const {data: {emojis}} = await axios.get(`${URL}/emojis`)
+        const emoji = JSON.parse(emojis);
+        dispatchGetEmoji(emoji);
+
+    };
+
+    useEffect(() => {
+        getEmojis()
+    }, []);
+
+
+
+    
+
+   
 
     return (
         <BrowserRouter>
@@ -65,4 +88,10 @@ function App() {
 }
 
 
-export default App;
+function mapDispatchToProps(dispatch) {
+    return {
+        dispatchGetEmoji: emoji => dispatch(getEmoji(emoji)),
+    };
+}
+
+export default connect(null, mapDispatchToProps)(App);
