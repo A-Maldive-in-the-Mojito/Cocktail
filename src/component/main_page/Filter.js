@@ -15,9 +15,39 @@ import { useContext, useEffect, useState, useRef } from "react";
 import { APIContext } from "../../context/APIContext";
 import { event } from "jquery";
 
+
 function Filter() {
   //  const cocktail_api = useSelector((state) => state)
   const API = useContext(APIContext);
+
+  //리덕스 스토어에 이모지 가져오기
+  const reduxState = useSelector((state) => state);
+  const emoji = reduxState.emoji;
+  // const emoji_url = emoji.filter((item) => item["name"].includes("Desert Island"))[0].url
+  console.log(emoji)
+
+  const tastingNoteArray = [
+    {
+      name: "과일",
+      value: "프루티"
+    },
+    {
+      name: "허브",
+      value: "허브"
+    },
+    {
+      name: "아이셔",
+      value: "아이셔"
+    },
+    {
+      name: "아이써",
+      value: "아이써"
+    },
+    {
+      name: "프레시",
+      value: "프레시"
+    },
+  ]
 
   const alcoholMarks = [
     {
@@ -51,6 +81,11 @@ function Filter() {
   const SliderStyle = styled(Slider)({
     color: "#ff9924",
     height: 6,
+    //고정
+    '&.Mui-disabled': {
+      color: '#fe900f'
+    },
+
     // 단추
     "& .MuiSlider-thumb": {
       "&:focus, &:hover, &.Mui-active, &.Mui-focusVisible": {
@@ -95,8 +130,8 @@ function Filter() {
     checked
       ? (tastingValue.current = [eventValue, ...tastingValue.current])
       : (tastingValue.current = tastingValue.current.filter(
-          (val) => val != eventValue
-        ));
+        (val) => val != eventValue
+      ));
   };
 
   // 베이스 값
@@ -107,12 +142,12 @@ function Filter() {
     baseChecked
       ? (baseValue.current = [eventValue, ...baseValue.current])
       : (baseValue.current = baseValue.current.filter(
-          (val) => val != eventValue
-        ));
+        (val) => val != eventValue
+      ));
   };
 
   // 얼마나 취할래 값
-  const [currentBoozy,setCurrentBoozy] = useState();//검색버튼클릭시 지정해둔 값으로 고정하기 위함.
+  const [currentBoozy, setCurrentBoozy] = useState();//검색버튼클릭시 지정해둔 값으로 고정하기 위함.
   const boozyValue = useRef(10);
   const boozyOnChange = (event) => {
     const parseBoozyValue = parseInt(event.target.value);
@@ -121,7 +156,7 @@ function Filter() {
   };
 
   // sweet or dry 값
-  const [currentSweet,setCurrentSweet] = useState();//검색버튼클릭시 지정해둔 값으로 고정하기 위함.
+  const [currentSweet, setCurrentSweet] = useState();//검색버튼클릭시 지정해둔 값으로 고정하기 위함.
   const sweetValue = useRef(6);
   const sweetOnchange = (event) => {
     const parseSweetValue = parseInt(event.target.value);
@@ -223,56 +258,23 @@ function Filter() {
           <div className={mainStyles.tastingNote}>
             <h3>테이스팅 노트</h3>
             <div id={mainStyles.checkBoxList}>
-              <label>
-                <input
-                  onChange={tastingOnChange}
-                  value="프루티"
-                  type="checkbox"
-                  className={mainStyles.cBox}
-                />
-                <i className={mainStyles.circle}></i>
-                <span className={mainStyles.text}>과일</span>
-              </label>
-              <label>
-                <input
-                  onChange={tastingOnChange}
-                  value="허브"
-                  type="checkbox"
-                  className={mainStyles.cBox}
-                />
-                <i className={mainStyles.circle}></i>
-                <span className={mainStyles.text}>허브</span>
-              </label>
-              <label>
-                <input
-                  onChange={tastingOnChange}
-                  value="아이셔"
-                  type="checkbox"
-                  className={mainStyles.cBox}
-                />
-                <i className={mainStyles.circle}></i>
-                <span className={mainStyles.text}>아이셔</span>
-              </label>
-              <label>
-                <input
-                  onChange={tastingOnChange}
-                  value="아이써"
-                  type="checkbox"
-                  className={mainStyles.cBox}
-                />
-                <i className={mainStyles.circle}></i>
-                <span className={mainStyles.text}>아이써</span>
-              </label>
-              <label>
-                <input
-                  onChange={tastingOnChange}
-                  value="프레시"
-                  type="checkbox"
-                  className={mainStyles.cBox}
-                />
-                <i className={mainStyles.circle}></i>
-                <span className={mainStyles.text}>프레시</span>
-              </label>
+
+              {tastingNoteArray.map((val) => (
+                // console.log(val.name)
+                <label>
+                  <input
+                    onChange={tastingOnChange}
+                    value={val.value}
+                    type="checkbox"
+                    className={mainStyles.cBox}
+                  />
+                  <i className={mainStyles.circle}></i>
+                  <span className={mainStyles.text}>{val.name}</span>
+                  <img className={mainStyles.emoji} src={emoji.filter((item)=> item["value"] == val.value)[0].url} />
+                  </label>
+              ))}
+
+
             </div>
           </div>
           <div className="base">
