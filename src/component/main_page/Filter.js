@@ -26,7 +26,7 @@ function Filter() {
   // const emoji_url = emoji.filter((item) => item["name"].includes("Desert Island"))[0].url
   console.log(emoji)
 
-  const tastingNoteArray = [
+  const tastingNoteList = [
     {
       name: "과일",
       value: "프루티"
@@ -47,6 +47,33 @@ function Filter() {
       name: "프레시",
       value: "프레시"
     },
+  ]
+  const baseList = [
+    {
+      name: "진",
+      value: "gin"
+    },
+    {
+      name: "럼",
+      value: "rum"
+    },
+    {
+      name: "위스키",
+      value: "whiskey"
+    },
+    {
+      name: "데킬라",
+      value: "tequila"
+    },
+    {
+      name: "보드카",
+      value: "vodka"
+    },
+    {
+      name: "브랜디",
+      value: "brandy"
+    },
+
   ]
 
   const alcoholMarks = [
@@ -259,8 +286,7 @@ function Filter() {
             <h3>테이스팅 노트</h3>
             <div id={mainStyles.checkBoxList}>
 
-              {tastingNoteArray.map((val) => (
-                // console.log(val.name)
+              {tastingNoteList.map((val) => (
                 <label>
                   <input
                     onChange={tastingOnChange}
@@ -280,66 +306,22 @@ function Filter() {
           <div className="base">
             <h3>베이스</h3>
             <div id={mainStyles.checkBoxList}>
-              <label>
-                <input
-                  onChange={baseOnChange}
-                  value="gin"
-                  type="checkbox"
-                  className={mainStyles.cBox}
-                />
-                <i className={mainStyles.circle}></i>
-                <span className={mainStyles.text}>진</span>
-              </label>
-              <label>
-                <input
-                  onChange={baseOnChange}
-                  value="rum"
-                  type="checkbox"
-                  className={mainStyles.cBox}
-                />
-                <i className={mainStyles.circle}></i>
-                <span className={mainStyles.text}>럼</span>
-              </label>
-              <label>
-                <input
-                  onChange={baseOnChange}
-                  value="whiskey"
-                  type="checkbox"
-                  className={mainStyles.cBox}
-                />
-                <i className={mainStyles.circle}></i>
-                <span className={mainStyles.text}>위스키</span>
-              </label>
-              <label>
-                <input
-                  onChange={baseOnChange}
-                  value="tequila"
-                  type="checkbox"
-                  className={mainStyles.cBox}
-                />
-                <i className={mainStyles.circle}></i>
-                <span className={mainStyles.text}>데킬라</span>
-              </label>
-              <label>
-                <input
-                  onChange={baseOnChange}
-                  value="vodka"
-                  type="checkbox"
-                  className={mainStyles.cBox}
-                />
-                <i className={mainStyles.circle}></i>
-                <span className={mainStyles.text}>보드카</span>
-              </label>
-              <label>
-                <input
-                  onChange={baseOnChange}
-                  value="brandy"
-                  type="checkbox"
-                  className={mainStyles.cBox}
-                />
-                <i className={mainStyles.circle}></i>
-                <span className={mainStyles.text}>브랜디</span>
-              </label>
+              
+            {baseList.map((val) => (
+                <label>
+                  <input
+                    onChange={baseOnChange}
+                    value={val.value}
+                    type="checkbox"
+                    className={mainStyles.cBox}
+                  />
+                  <i className={mainStyles.circle}></i>
+                  <span className={mainStyles.text}>{val.name}</span>
+                  <img className={mainStyles.emoji} src={emoji.filter((item)=> item["value"] == val.value)[0].url} />
+                  </label>
+              ))}
+              
+    
             </div>
           </div>
           <div className="alcohol">
