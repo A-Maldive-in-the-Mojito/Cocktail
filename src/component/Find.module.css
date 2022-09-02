@@ -1,4 +1,4 @@
-.Find {
+.Find{
   /* 가운데 정렬 페이지*/
   display: grid;
   grid-template-rows: 250px;
@@ -7,24 +7,64 @@
 }
 
 /* 검색창 */
-.search_space {
+.search_space{
   margin-top: 60px;
-  /* display: flex;
-  flex-direction: column;
-  place-items: center; */
+  display: grid;
+  place-items: center;
 }
 .search_space > h3 {
   font-size: 20px;
   color: rgb(136, 136, 136);
+  
 }
 
-.search_box {
-  display: flex;
-
+/*form 태그 스타일*/
+.search_box{
   width: 600px;
-  height: 40px;
-  border: 2px solid var(--main-color);
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  border: 1px solid #dcdcdc;
   border-radius: 20px;
+  box-shadow: 1px 1px 8px 1px #dcdcdc;
+
+}
+/* select 태그 스타일*/
+select {
+  -ms-appearance: none;
+  width: 120px;
+  outline: 0;
+  border-color: white;
+  box-shadow: none;
+  font-size: 10px;
+  position: relative;
+  display: flex;
+  font-size: 16px;
+  padding: 0 10px 0 20px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+option {
+  font-size: 15px;
+}
+
+/* input 태그 스타일*/
+.search_input {
+  width: 380px;
+  border: none;
+  outline: none;
+  background: none;
+  font-size: 18px;
+  transition: 0.4s;
+  float: left;
+  line-height: 40px;
+  padding: 10px 25px;
+  position: relative;
+  display: flex;
+}
+.inputSearchBox {
+  display: flex;
 }
 
 .search_btn {
@@ -34,54 +74,13 @@
   justify-content: center;
   align-items: center;
   padding-right: 10px;
-  margin-top: 7px;
+  margin-top: 10px;
   /* 사이즈 */
   transform: scale(1.5);
 }
-.search_input {
-  width: 85%;
-  border: none;
-  outline: none;
-  background: none;
-  font-size: 18px;
-  transition: 0.4s;
-  float: left;
-  line-height: 40px;
-  padding-left: 150px;
-}
-
-select {
-  /* -webkit-appearance: none; */
-  /* -moz-appearance: none; */
-  -ms-appearance: none;
-  /* appearance: none; */
-
-  outline: 0;
-  background: var(--main-color);
-  box-shadow: none;
-  border: 0;
-  border-radius: 20px;
-
-  font-size: 18px;
-  color: white;
-  padding: 0 10px 0 20px;
-  cursor: pointer;
-}
-.select_box {
-  position: absolute;
-  display: flex;
-  width: 140px;
-  height: 42px;
-
-  background: var(--main-color);
-  box-shadow: none;
-  border: 0;
-  /* border-radius: 20px 0px 0 20px; */
-  border-radius: 20px;
-}
 
 /* 해시태그 */
-.tags_box {
+.tags_box{
   margin-top: 30px;
   width: 750px;
   display: flex;
@@ -93,15 +92,15 @@ select {
   justify-items: center;
   gap: 18px;
 }
-.hashtag {
+.hashtag{
   color: #3a5ddf;
   background-color: #c8d4ff;
   /* border: 2px solid #5271e4; */
   border-radius: 30px;
-  padding: 4px 7px 4px 7px;
+  padding: 4px 7px 4px 7px;    
 }
 
-.TOP {
+.TOP{
   color: rgb(247, 55, 71);
   background-color: rgb(255, 215, 215);
 }
@@ -113,7 +112,7 @@ select {
   transition: 0.1s;
 }
 /* 체크박스 안보이기 */
-.cBox {
+.cBox{
   appearance: none;
 }
 
@@ -131,4 +130,6 @@ select {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 50px;
+  
 }
+

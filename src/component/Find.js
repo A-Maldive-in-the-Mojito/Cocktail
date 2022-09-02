@@ -20,21 +20,17 @@ const URL = 'http://localhost:5000'
 
 function Find() {
     const { linkTop100 } = useParams();
-    console.log(linkTop100)
     
     // context API받기
     const API = useContext(APIContext);
-    console.log(API)
     
     const [able, setable]= useState("")
     // API GET
     const getCocktails = async () => {
         const { data: { all_cocktails } } = await axios.get(`${URL}/cocktails`);
         const cocktails = JSON.parse(all_cocktails)
-        console.log(cocktails)
         setable(cocktails)
     }
-    console.log(able)
 
 //해시태그Array
 const [hashArray, setHashArray] = useState([])
@@ -62,7 +58,6 @@ getHash.map(val => hashTagTrueFalseArray.push(val.checked))
 
 const onChangeCheckbox = (event) => {
     const hashValue = event.target.value
-    console.log(event)
     for (let tag of getHash) {
         if (tag.value != hashValue) {
             tag.checked = false
@@ -90,7 +85,9 @@ const onChangeCheckbox = (event) => {
     //검색어 입력 후 엔터 시 검색창 비우기
     const onSubmit = (event) => {
         event.preventDefault();
-        setSearchText("");
+        let submitted = event.target[1].value;
+        setSearchText(submitted);
+        event.target[1].value = ""
     };    
     
     //해쉬태그 안에 들어갈 텍스트 배열
@@ -154,10 +151,9 @@ const onChangeCheckbox = (event) => {
 
     ]
     //이름 & 재료 검색 값 확인 함수
-    const [selectValue, setSelectValue] = useState();
+    const [selectValue, setSelectValue] = useState("name");
     const selectOnChange = (event) =>{
         setSelectValue(event.target.value);
-        console.log(event.target.value);
     };
 
     return (
@@ -168,12 +164,16 @@ const onChangeCheckbox = (event) => {
                 <div className={Styles.search_space}>
                     <h3>칵테일 이름 또는 재료를 검색해보세요</h3>
                     <form onSubmit={onSubmit} className={Styles.search_box}>
-                        <input onChange={onChange} className={Styles.search_input} type="text" value={searchText} />
-                        <select onChange={selectOnChange}>
-                            <option value="name">이름검색</option>
-                            <option value="ingredient">재료검색</option>
-                        </select>
-                        <i ><SearchIcon className={Styles.search_btn} /></i>
+                        <div className={Styles.inputSearchBox}>
+                            <div className='select'>
+                                <select onChange={selectOnChange}>
+                                    <option value="name">이름검색</option>
+                                    <option value="ingredient">재료검색</option>
+                                </select>
+                            </div>
+                            <input  className={Styles.search_input} onChange={onChange} type="text" value={searchText} />
+                            <i ><SearchIcon className={Styles.search_btn} /></i>
+                        </div>
                     </form>
                 </div>
 
@@ -196,7 +196,7 @@ const onChangeCheckbox = (event) => {
                     (hashTagTrueFalseArray.includes(true) ? hashArray : API).filter((val) => {
                         if (searchText == "") {
                             return val
-                            } else if (selectValue == "name" && val.name.toLowerCase().includes(searchText.toLowerCase())) {
+                        } else if (selectValue == "name" && val.name.toLowerCase().includes(searchText.toLowerCase())) {
                                     // console.log(val)
                                 return val
                         } else if ( selectValue == "ingredient" &&
