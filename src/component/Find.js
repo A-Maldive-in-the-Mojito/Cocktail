@@ -24,13 +24,6 @@ function Find() {
     // context API받기
     const API = useContext(APIContext);
     
-    const [able, setable]= useState("")
-    // API GET
-    const getCocktails = async () => {
-        const { data: { all_cocktails } } = await axios.get(`${URL}/cocktails`);
-        const cocktails = JSON.parse(all_cocktails)
-        setable(cocktails)
-    }
 
 //해시태그Array
 const [hashArray, setHashArray] = useState([])
@@ -43,9 +36,6 @@ function top100Check() {
     }
 }
 useEffect(() => {top100Check()}, [])
-
-//해시태그가 바뀔때마다 api를 불러옴.
-useEffect(() => {getCocktails()}, [hashArray])
 
 
 
