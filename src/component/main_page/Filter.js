@@ -24,7 +24,16 @@ function Filter() {
   const reduxState = useSelector((state) => state);
   const emoji = reduxState.emoji;
   // const emoji_url = emoji.filter((item) => item["name"].includes("Desert Island"))[0].url
-  console.log(emoji)
+  
+  const booziness1 = emoji.filter((item) => item["value"].includes("booziness1"))[0].url
+  const booziness3 = emoji.filter((item) => item["value"].includes("booziness3"))[0].url
+  const booziness5 = emoji.filter((item) => item["value"].includes("booziness5"))[0].url
+  console.log(booziness1);
+
+  const sweetness1 = emoji.filter((item) => item["value"].includes("sweetness1"))[0].url
+  const sweetness3 = emoji.filter((item) => item["name"].includes("Wine Glass"))[0].url
+  const sweetness5 = emoji.filter((item) => item["value"].includes("sweetness5"))[0].url
+  
 
   const tastingNoteList = [
     {
@@ -48,6 +57,7 @@ function Filter() {
       value: "프레시"
     },
   ]
+
   const baseList = [
     {
       name: "진",
@@ -73,35 +83,41 @@ function Filter() {
       name: "브랜디",
       value: "brandy"
     },
-
   ]
+
+  // const returnEmoji = (find_emoji) => {
+  //   return (
+  //     <img src={find_emoji} />
+  //   )
+  // }
 
   const alcoholMarks = [
     {
       value: 1,
-      label: "😊",
+      label: (<div className={mainStyles.slider_label}><img src={booziness1} /> <p>사람구실은 <p>해야지</p></p></div>),
     },
     {
       value: 3,
-      label: "🐵",
+      label: (<div className={mainStyles.slider_label}><img src={booziness3} /> <p>오스트랄로피테쿠스 <p>입니다</p></p></div>),
     },
     {
       value: 5,
-      label: "🐶",
+      label: (<div className={mainStyles.slider_label}><img src={booziness5} /> <p>멍멍</p></div>),
     },
   ];
+
   const dryMarks = [
     {
       value: 1,
-      label: "🍯",
+      label: (<div className={mainStyles.slider_label}><img src={sweetness1} /> <p>달달함에 잠겨 <p>죽고싶다</p></p></div>),
     },
     {
       value: 3,
-      label: "🍷",
+      label: (<div className={mainStyles.slider_label}><img src={sweetness3} /> <p>달콤쌉싸름</p></div>),
     },
     {
       value: 5,
-      label: "🚬",
+      label: (<div className={mainStyles.slider_label}><img src={sweetness5} /> <p>인생보다<p>쓴맛으로</p></p></div>),
     },
   ];
 
@@ -300,7 +316,6 @@ function Filter() {
                   </label>
               ))}
 
-
             </div>
           </div>
           <div className="base">
@@ -336,6 +351,11 @@ function Filter() {
                   marks={alcoholMarks}
                   valueLabelDisplay="auto"
                 />
+    
+                {/* <label><img src={find_emoji} /></label> */}
+                
+                {/* {/* <option value="3" label="😣"></option> */}
+                {/* <option value="1" label="개가될거야!!!"></option> */}
               </Box>
             </div>
           </div>
@@ -359,9 +379,9 @@ function Filter() {
             </div>
           </div>
 
-          <div onClick={searchOnClick} id={mainStyles.filterBtn}>
-            검색
-          </div>
+          <button onClick={searchOnClick} id={mainStyles.filterBtn}>
+           검색
+          </button>
         </div>
 
         {/* 결과 칵테일 카드 */}

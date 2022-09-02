@@ -31,6 +31,7 @@
     border-radius: 40px;
     box-shadow: var(--main-box-shadow);
     text-align: center;
+    margin-top: 50px;
   }
   .more > span {
     position: relative;
@@ -38,13 +39,7 @@
     font-size: 18px;
   }
 /* 스와이퍼 */
-.swiper {
-  /* height: 300px; */
-  /* width: 1000px; */
-}
-/* .swiper-wrapper{
-  width: 100px;
-} */
+
 
   /* 필터 */
   .filterSection {
@@ -99,7 +94,7 @@
   }
 
   #checkBoxList > label{
-    margin: 5px;
+    margin: 6px;
   }
 
   .circle{
@@ -130,8 +125,8 @@
   }
 
   .emoji {
-    height: 25px;
-    margin-left: 8px;
+    height: 22px;
+    margin-left: 10px;
     position: relative;
     top:8px;
   }
@@ -150,19 +145,42 @@
   .MuiSlider-markLabel{
     font-size: 20px;
   }
+
+  .slider_label {
+    font-size: 12px;
+    text-align: center;
+  }
+  .slider_label > img {
+    height: 30px;
+    margin-bottom: 5px;
+    
+  }
   
-  /* 버튼 */
+  /* 검색버튼 */
   #filterBtn {
     
     height: 40px;
-    width: 330px;
-    background-color: var(--main-color);
+    width: 300px;
+    background-color: rgb(255, 214, 181);
+    border: none;
     border-radius: 30px;
-    text-align: center;
-    color: white;
+    
+    color: var(--main-color);
+    
     font-size: 18px;
+    font-weight: 700;
+    margin-left: 15px;
     
   }
+  #filterBtn:hover {
+
+    background-color: var(--main-color);
+    color: white;
+    cursor: pointer;
+    /* transform: scale(1.05); */
+    transition: 0.1s;
+  }
+ 
 
   .result {
     display: flex;
