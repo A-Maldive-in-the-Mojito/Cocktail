@@ -59,10 +59,6 @@ function App({ dispatchGetEmoji }) {
 
 
 
-    
-
-   
-
     return (
         <BrowserRouter>
             {/* <Provider store={store}>
