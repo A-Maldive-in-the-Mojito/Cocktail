@@ -105,6 +105,13 @@ option {
   background-color: rgb(255, 215, 215);
 }
 
+.hash_emoji {
+  height: 20px;
+  position: relative;
+  top: 5px;
+  margin-left: 3px;
+}
+
 /* 체크박스가 체크되면  */
 .cBox:checked + .hashtag {
   background-color: #476df7;
@@ -132,4 +139,3 @@ option {
   gap: 50px;
   
 }
-

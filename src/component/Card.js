@@ -81,8 +81,7 @@ function Card({ id, img, name, dispatchGetStore }) {
 
   const [cardHover, setCardHover] = useState(0);
   const [starHover, setStarHover] = useState(0);
-  console.log(cardHover)
-  console.log(starHover)
+
   return (
     // 임시 render fale 빼기
 

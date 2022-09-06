@@ -73,10 +73,17 @@
   padding: 4px 7px 4px 7px;
   /* margin: 10px; */
   /* width: 200px; */
+
+  display: flex;
 }
 .TOP {
   color: rgb(247, 55, 71);
   background-color: rgb(255, 215, 215);
+}
+
+.hash_emoji {
+height: 20px;
+margin-left: 3px;
 }
 
 /* base falvor */
@@ -90,14 +97,24 @@
   color: rgb(121, 121, 121);
 }
 .base_img, .flavor_img{
-  font-size: 70px;
+  display: flex;
+  height : 70px;
   padding: 15px 40px 15px 40px;
+  
 }
 .base_name, .flavor_name{
   /* color: var(--main-color); */
   font-weight: 500;
   font-size: 22px;
   color: black;
+}
+
+/* 알콜세기 */
+.slider {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+
 }
 
 
@@ -152,6 +169,9 @@
   font-weight: 600;
   color: white;
   width: 40%;
+  line-height: 2.5em;
+  /* white-space: pre-line; */
+  word-break: keep-all;
 }
   
 .MuiSlider-markLabel {

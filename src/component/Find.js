@@ -20,51 +20,67 @@ const URL = 'http://localhost:5000'
 
 function Find() {
     const { linkTop100 } = useParams();
-    
+
+    //리덕스 스토어에 이모지 가져오기
+    const reduxState = useSelector((state) => state);
+    const emoji = reduxState.emoji;
+
+
+
     // context API받기
     const API = useContext(APIContext);
-    
 
-//해시태그Array
-const [hashArray, setHashArray] = useState([])
-const getHashElements = document.getElementsByName("check")
-
-//top100을 통해 들어왔을 때 실행되는 함수
-function top100Check() {
-    if(linkTop100 == ":1"){
-    getHashElements[0].click()
-    }
-}
-useEffect(() => {top100Check()}, [])
-
-
-
-// 해시태그 checked 판별
-const getHash = Array.prototype.slice.call(getHashElements);
-
-const hashTagTrueFalseArray = []
-getHash.map(val => hashTagTrueFalseArray.push(val.checked))
-
-
-const onChangeCheckbox = (event) => {
-    const hashValue = event.target.value
-    for (let tag of getHash) {
-        if (tag.value != hashValue) {
-            tag.checked = false
-        } 
+    const [able, setable] = useState("")
+    // API GET
+    const getCocktails = async () => {
+        const { data: { all_cocktails } } = await axios.get(`${URL}/cocktails`);
+        const cocktails = JSON.parse(all_cocktails)
+        setable(cocktails)
     }
 
-    for (var i = 0; i < 4; i++) {
-        const findHash0 = API.filter(item => item.hashtag[0] === hashValue);
-        const findHash1 = API.filter(item => item.hashtag[1] === hashValue);
-        const findHash2 = API.filter(item => item.hashtag[2] === hashValue);
-        const findHash3 = API.filter(item => item.hashtag[3] === hashValue);
-        // 노가다로 합치기~~!
-        const allHash = findHash0.concat(findHash1).concat(findHash2).concat(findHash3)
+    //해시태그Array
+    const [hashArray, setHashArray] = useState([])
+    const getHashElements = document.getElementsByName("check")
 
-        setHashArray(allHash);
+    //top100을 통해 들어왔을 때 실행되는 함수
+    function top100Check() {
+        if (linkTop100 == ":1") {
+            getHashElements[0].click()
+        }
     }
-}
+    useEffect(() => { top100Check() }, [])
+
+    //해시태그가 바뀔때마다 api를 불러옴.
+    useEffect(() => { getCocktails() }, [hashArray])
+
+
+
+    // 해시태그 checked 판별
+    const getHash = Array.prototype.slice.call(getHashElements);
+
+    const hashTagTrueFalseArray = []
+    getHash.map(val => hashTagTrueFalseArray.push(val.checked))
+
+
+    const onChangeCheckbox = (event) => {
+        const hashValue = event.target.value
+        for (let tag of getHash) {
+            if (tag.value != hashValue) {
+                tag.checked = false
+            }
+        }
+
+        for (var i = 0; i < 4; i++) {
+            const findHash0 = API.filter(item => item.hashtag[0] === hashValue);
+            const findHash1 = API.filter(item => item.hashtag[1] === hashValue);
+            const findHash2 = API.filter(item => item.hashtag[2] === hashValue);
+            const findHash3 = API.filter(item => item.hashtag[3] === hashValue);
+            // 노가다로 합치기~~!
+            const allHash = findHash0.concat(findHash1).concat(findHash2).concat(findHash3)
+
+            setHashArray(allHash);
+        }
+    }
 
     //검색기능
     const [searchText, setSearchText] = useState("");
@@ -78,17 +94,17 @@ const onChangeCheckbox = (event) => {
         let submitted = event.target[1].value;
         setSearchText(submitted);
         event.target[1].value = ""
-    };    
-    
+    };
+
     //해쉬태그 안에 들어갈 텍스트 배열
     const hashTagArray = [
         {
-            "name": "#TOP 100🏆",
+            "name": "#TOP 100",
             "value": "top100",
             "key": 1
         },
         {
-            "name": "#홈파티🏡",
+            "name": "#홈파티",
             "value": "house-party",
             "key": 2
         },
@@ -98,43 +114,43 @@ const onChangeCheckbox = (event) => {
             "key": 3
         },
         {
-            "name": "#산타랑_건배🎅🏻",
+            "name": "#산타랑_건배",
             "value": "christmas",
             "key": 4
         },
         {
-            "name": "#무비나잇🎬",
+            "name": "#무비나잇",
             "value": "movie-nights",
             "key": 5
         },
 
         {
-            "name": "#해피뉴이어🎆",
+            "name": "#해피뉴이어",
             "value": "new-years-eve",
             "key": 6
         },
         {
-            "name": "#불금🌈",
+            "name": "#불금",
             "value": "downtown",
             "key": 7
         },
         {
-            "name": "#HBD🎂",
+            "name": "#HBD",
             "value": "birthday",
             "key": 8
         },
         {
-            "name": "#나를위한시️간🕯",
+            "name": "#나를위한시️간",
             "value": "time-for-you",
             "key": 9
         },
         {
-            "name": "#발렌타인데이🍷",
+            "name": "#발렌타인데이",
             "value": "valentines-day",
             "key": 10
         },
         {
-            "name": "#뜨밤🔥",
+            "name": "#뜨밤",
             "value": "anniversary",
             "key": 11
         },
@@ -142,7 +158,7 @@ const onChangeCheckbox = (event) => {
     ]
     //이름 & 재료 검색 값 확인 함수
     const [selectValue, setSelectValue] = useState("name");
-    const selectOnChange = (event) =>{
+    const selectOnChange = (event) => {
         setSelectValue(event.target.value);
     };
 
@@ -161,7 +177,7 @@ const onChangeCheckbox = (event) => {
                                     <option value="ingredient">재료검색</option>
                                 </select>
                             </div>
-                            <input  className={Styles.search_input} onChange={onChange} type="text" value={searchText} />
+                            <input className={Styles.search_input} onChange={onChange} type="text" value={searchText} />
                             <i ><SearchIcon className={Styles.search_btn} /></i>
                         </div>
                     </form>
@@ -174,7 +190,10 @@ const onChangeCheckbox = (event) => {
                             <input type="checkbox" name="check" onChange={onChangeCheckbox} value={val.value} className={Styles.cBox} />
                             <span className={
                                 (val.value == "top100" ? `${Styles.TOP} ${Styles.hashtag}` : Styles.hashtag)
-                            }>{val.name}</span>
+                                }>{val.name}
+                                <img className={Styles.hash_emoji} src={emoji.filter((item) => item["value"].includes(val.value))[0].url} />
+                            </span>
+
                         </label>
                     )}
                 </div>
@@ -187,9 +206,9 @@ const onChangeCheckbox = (event) => {
                         if (searchText == "") {
                             return val
                         } else if (selectValue == "name" && val.name.toLowerCase().includes(searchText.toLowerCase())) {
-                                    // console.log(val)
-                                return val
-                        } else if ( selectValue == "ingredient" &&
+                            // console.log(val)
+                            return val
+                        } else if (selectValue == "ingredient" &&
                             val.ingredients.map(val => val["재료"].toLowerCase().includes(searchText.toLowerCase())).includes(true)
                         ) {
                             // console.log(val)
