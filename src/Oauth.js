@@ -13,38 +13,51 @@ import { createStore } from 'redux';
 import { Provider, useSelector, useDispatch } from 'react-redux';
 import { Email } from "@material-ui/icons";
 
-// email
-// nickname
-// img
 
 function Oauth() {
+    const URL = 'http://localhost:5000'
 
-    // function kakaoLogin() {
-        // window.Kakao.Auth.login({
-        //     scope: 'profile_nickname, profile_image', //동의항목 페이지에 있는 개인정보 보호 테이블의 활성화된 ID값을 넣습니다.
-        //     success: function (response) {
-        //         console.log(response) // 로그인 성공하면 받아오는 데이터
-        //         window.Kakao.API.request({ // 사용자 정보 가져오기
-        //             url: '/v2/user/me',
-        //             success: (res) => {
-        //                 const kakao_account = res.kakao_account;
-        //                 console.log("로그인", kakao_account)
-        //             }
-        //         });
-        //         // window.location.href='/ex/kakao_login.html' //리다이렉트 되는 코드
-        //     },
-        //     fail: function (error) {
-        //         console.log(error);
-        //     }
-        // });
+
+
+    // function test() {
+    //     axios.post(
+    //         `${URL}/kakao`,
+
+    //         {
+    //             hi: "hihi",
+
+    //         })
+    //         .then((res) => {
+    //             console.log(res);
+    //             alert("성공");
+    //             // history.push("/main/feed");
+    //         })
+    //         .catch((error) => {
+    //             // console.log(error);
+    //             console.error(error);
+    //             alert("카카오 로그인 에러?");
+    //         });
+
     // };
 
-    // useEffect(() => {
-    //     kakaoLogin()
-    // });
 
+    function test() {
+        $.ajax({
+          type: "post",
+          url: `${URL}/kakao`,
+          data: {hi: "hihi"},
+          success: function (response) {        
+          }
+        })
+      };
 
+    useEffect(() => {test()},[]);
+        
+    return (
+        <div></div>
+    );
 
+    
     // const code = useSelector(state=> state.code);
     // console.log(code)
 
