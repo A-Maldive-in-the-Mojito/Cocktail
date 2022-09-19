@@ -79,6 +79,7 @@ function Top100() {
         centeredSlides={"true"}
         grabCursor={"true"}
         
+        
         // autoplay={{
         //     delay: 2000,
         //     disableOnInteraction: false,
