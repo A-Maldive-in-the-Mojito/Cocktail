@@ -1,39 +1,50 @@
-import * as React from "react";
-// import appStyles from '../../App.module.css'
+import React from 'react';
+import { useContext, useEffect, useState, useRef } from "react";
+
 import mainStyles from "./Main.module.css";
 import Card from "../Card.js";
-
-import { Link } from "react-router-dom";
-import { Form } from "react-bootstrap";
 
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import { styled } from "@mui/material/styles";
-import { useSelector } from "react-redux";
 
-import { useContext, useEffect, useState, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { APIContext } from "../../context/APIContext";
-import { event } from "jquery";
-
 
 function Filter() {
-  //  const cocktail_api = useSelector((state) => state)
   const API = useContext(APIContext);
 
   //리덕스 스토어에 이모지 가져오기
-  const reduxState = useSelector((state) => state);
-  const emoji = reduxState.emoji;
-  // const emoji_url = emoji.filter((item) => item["name"].includes("Desert Island"))[0].url
-  
-  const booziness1 = emoji.filter((item) => item["value"].includes("booziness1"))[0].url
-  const booziness3 = emoji.filter((item) => item["value"].includes("booziness3"))[0].url
-  const booziness5 = emoji.filter((item) => item["value"].includes("booziness5"))[0].url
-  console.log(booziness1);
+  const emoji = useSelector((state) => state.emoji);
+  console.log(emoji);
+  let [booz1, setb1] = useState("");
+  let [booz3, setb3] = useState("");
+  let [booz5, setb5] = useState("");
+  let [swt1, sets1] = useState("");
+  let [swt3, sets3] = useState("");
+  let [swt5, sets5] = useState("");
 
-  const sweetness1 = emoji.filter((item) => item["value"].includes("sweetness1"))[0].url
-  const sweetness3 = emoji.filter((item) => item["name"].includes("Wine Glass"))[0].url
-  const sweetness5 = emoji.filter((item) => item["value"].includes("sweetness5"))[0].url
-  
+
+
+  function isIN() {
+    if(emoji.length>1){
+      setb1(emoji.filter((item) => item["value"].includes("booziness1"))[0].url) 
+      setb3(emoji.filter((item) => item["value"].includes("booziness3"))[0].url)
+      setb5(emoji.filter((item) => item["value"].includes("booziness5"))[0].url)
+    
+      sets1(emoji.filter((item) => item["value"].includes("sweetness1"))[0].url)
+      sets3(emoji.filter((item) => item["name"].includes("Wine Glass"))[0].url)
+      sets5(emoji.filter((item) => item["value"].includes("sweetness5"))[0].url)
+    } 
+  }
+  useEffect(() =>  isIN(), [emoji]);
+  // let booziness1 = emoji.filter((item) => item["value"].includes("booziness1"))[0].url
+  // let booziness3 = emoji.filter((item) => item["value"].includes("booziness3"))[0];
+  // let booziness5 = emoji.filter((item) => item["value"].includes("booziness5"))[0];
+ 
+  // let sweetness1 = emoji.filter((item) => item["value"].includes("sweetness1"))[0];
+  // let sweetness3 = emoji.filter((item) => item["name"].includes("Wine Glass"))[0];
+  // let sweetness5 = emoji.filter((item) => item["value"].includes("sweetness5"))[0];
 
   const tastingNoteList = [
     {
@@ -85,42 +96,36 @@ function Filter() {
     },
   ]
 
-  // const returnEmoji = (find_emoji) => {
-  //   return (
-  //     <img src={find_emoji} />
-  //   )
-  // }
 
   const alcoholMarks = [
     {
       value: 1,
-      label: (<div className={mainStyles.slider_label}><img src={booziness1} /> <p>사람구실은 <p>해야지</p></p></div>),
+      label: (<div className={mainStyles.slider_label}><img src={booz1} /> <p>사람구실은 <p>해야지</p></p></div>),
     },
     {
       value: 3,
-      label: (<div className={mainStyles.slider_label}><img src={booziness3} /> <p>오스트랄로피테쿠스 <p>입니다</p></p></div>),
+      label: (<div className={mainStyles.slider_label}><img src={booz3} /> <p>오스트랄로피테쿠스 <p>입니다</p></p></div>),
     },
     {
       value: 5,
-      label: (<div className={mainStyles.slider_label}><img src={booziness5} /> <p>멍멍</p></div>),
+      label: (<div className={mainStyles.slider_label}><img src={booz5} /> <p>멍멍</p></div>),
     },
   ];
 
   const dryMarks = [
     {
       value: 1,
-      label: (<div className={mainStyles.slider_label}><img src={sweetness1} /> <p>달달함에 잠겨 <p>죽고싶다</p></p></div>),
+      label: (<div className={mainStyles.slider_label}><img src={swt1} /> <p>달달함에 잠겨 <p>죽고싶다</p></p></div>),
     },
     {
       value: 3,
-      label: (<div className={mainStyles.slider_label}><img src={sweetness3} /> <p>달콤쌉싸름</p></div>),
+      label: (<div className={mainStyles.slider_label}><img src={swt3} /> <p>달콤쌉싸름</p></div>),
     },
     {
       value: 5,
-      label: (<div className={mainStyles.slider_label}><img src={sweetness5} /> <p>인생보다<p>쓴맛으로</p></p></div>),
+      label: (<div className={mainStyles.slider_label}><img src={swt5} /> <p>인생보다<p>쓴맛으로</p></p></div>),
     },
   ];
-
   const SliderStyle = styled(Slider)({
     color: "#ff9924",
     height: 6,
@@ -303,7 +308,7 @@ function Filter() {
             <div id={mainStyles.checkBoxList}>
 
               {tastingNoteList.map((val) => (
-                <label>
+                <label key = {val.name}>
                   <input
                     onChange={tastingOnChange}
                     value={val.value}
@@ -312,7 +317,7 @@ function Filter() {
                   />
                   <i className={mainStyles.circle}></i>
                   <span className={mainStyles.text}>{val.name}</span>
-                  <img className={mainStyles.emoji} src={emoji.filter((item)=> item["value"] == val.value)[0].url} />
+                  {/* <img className={mainStyles.emoji} src={emoji.filter((item)=> item["value"] == val.value)[0].url} /> */}
                   </label>
               ))}
 
@@ -323,7 +328,7 @@ function Filter() {
             <div id={mainStyles.checkBoxList}>
               
             {baseList.map((val) => (
-                <label>
+                <label key = {val.name}>
                   <input
                     onChange={baseOnChange}
                     value={val.value}
@@ -332,8 +337,7 @@ function Filter() {
                   />
                   <i className={mainStyles.circle}></i>
                   <span className={mainStyles.text}>{val.name}</span>
-                  <img className={mainStyles.emoji} src={emoji.filter((item)=> item["value"] == val.value)[0].url} />
-                  </label>
+                </label>
               ))}
               
     
